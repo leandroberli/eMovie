@@ -22,8 +22,6 @@ class HTTPClient: HTTPClientProtocol {
         case upcomingMovieList = "movie/upcoming"
         case movieDetail = "movie/{movie_id}"
     }
-    
-    private let apiKey = "08d44b3e7e0dbcc89da8843aad55d48b"
    
     func getTopRatedMovies(completion: @escaping ([Movie]?, Error?) -> Void) {
         let urlString = baseURL + ApiPath.topRatedMovieList.rawValue
@@ -64,6 +62,7 @@ class CoreHTTPClient {
         
         let request = generateURLRequest(with: url, andQuery: params)
         
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let err = error {
                 print(err.localizedDescription)
@@ -103,6 +102,8 @@ class CoreHTTPClient {
         }
         
         request.url?.append(queryItems: queryItems)
+        //request.cachePolicy = .returnCacheDataDontLoad
+        
         return request
     }
 }

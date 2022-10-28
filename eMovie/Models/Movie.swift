@@ -43,15 +43,3 @@ struct Movie: Codable, Hashable {
         return year ?? 0
     }
 }
-
-struct MovieDetail: Codable {
-    var id: Int
-    var spoken_languages: [Language]
-    var release_date: String
-}
-
-struct Language: Codable {
-    var iso_639_1: String
-    var name: String
-}
-

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol HomePresenterProtocol: AnyObject {
     var view: HomeViewProtocol? { get set }
@@ -17,6 +18,7 @@ protocol HomePresenterProtocol: AnyObject {
     func getUpcomingMovies()
     func getTopRatedMovies()
     func handleFilterOption(_ option: FilterButton.FilterOption)
+    func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section)
 }
 
 class HomePresenter: HomePresenterProtocol {
@@ -82,6 +84,29 @@ class HomePresenter: HomePresenterProtocol {
         self.recommendedMovies = Array(self.recommendedMovies.suffix(6))
         DispatchQueue.main.async {
             self.view?.updateCollectionData()
+        }
+    }
+    
+    func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section) {
+        guard let homeController = self.view as? UIViewController else {
+            return
+        }
+        
+        let movie = getMovie(withIndex: movieIndex, andSection: fromSection)
+        let detail = MovieDetailViewController()
+        let presenter = MovieDetailPresenter(movie: movie, view: detail, httpClient: HTTPClient())
+        detail.presenter = presenter
+        homeController.navigationController?.pushViewController(detail, animated: true)
+    }
+    
+    private func getMovie(withIndex: Int, andSection: HomeViewController.Section) -> Movie {
+        switch andSection {
+        case .recommended:
+            return recommendedMovies[withIndex]
+        case .topRated:
+            return topRatedMovies[withIndex]
+        case .upcoming:
+            return upcomingMovies[withIndex]
         }
     }
 }

@@ -179,5 +179,9 @@ class HomeViewController: UIViewController, HomeViewProtocol {
 }
 
 extension HomeViewController: UICollectionViewDelegate {
-    //TODO: didSelect
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = Section.allCases[indexPath.section]
+        let index = indexPath.item
+        self.presenter?.navigateToMovieDetail(movieIndex: index, fromSection: section)
+    }
 }
