@@ -16,8 +16,8 @@ protocol HomePresenterProtocol: AnyObject {
     
     func getUpcomingMovies()
     func getTopRatedMovies()
+    func handleFilterOption(_ option: FilterButton.FilterOption)
 }
-
 
 class HomePresenter: HomePresenterProtocol {
     
@@ -26,6 +26,9 @@ class HomePresenter: HomePresenterProtocol {
     var upcomingMovies: [Movie] = []
     var topRatedMovies: [Movie] = []
     var recommendedMovies: [Movie] = []
+    var movieDetails: [MovieDetail] = []
+    var selectedDate = 2003
+    var selectedLang = "en"
 
     init(view: HomeViewProtocol, httpClient: HTTPClient) {
         self.view = view
@@ -44,10 +47,41 @@ class HomePresenter: HomePresenterProtocol {
     func getTopRatedMovies() {
         httpClient?.getTopRatedMovies { movies, error in
             self.topRatedMovies = movies ?? []
-            self.recommendedMovies = Array(self.topRatedMovies.suffix(6))
-            DispatchQueue.main.async {
-                self.view?.updateCollectionData()
-            }
+            self.generateReccomendedMoviesByLang()
+        }
+    }
+    
+    func handleFilterOption(_ option: FilterButton.FilterOption) {
+        switch option {
+        case .date:
+            self.generateRecommendedMoviewByYear()
+        case .lang:
+            self.selectedLang = "en"
+            generateReccomendedMoviesByLang()
+        }
+    }
+    
+    func generateReccomendedMoviesByLang() {
+        self.filterMoviesByLang(self.selectedLang)
+    }
+    
+    func generateRecommendedMoviewByYear() {
+        self.filterMoviesByYear(self.selectedDate)
+    }
+    
+    func filterMoviesByYear(_ year: Int) {
+        self.recommendedMovies = self.topRatedMovies.filter({ $0.getReleaseYear() == year })
+        self.recommendedMovies = Array(self.recommendedMovies.suffix(6))
+        DispatchQueue.main.async {
+            self.view?.updateCollectionData()
+        }
+    }
+    
+    func filterMoviesByLang(_ lang: String) {
+        self.recommendedMovies = self.topRatedMovies.filter({ $0.original_language == lang })
+        self.recommendedMovies = Array(self.recommendedMovies.suffix(6))
+        DispatchQueue.main.async {
+            self.view?.updateCollectionData()
         }
     }
 }

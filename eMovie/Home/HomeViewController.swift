@@ -10,7 +10,6 @@ import Kingfisher
 
 protocol HomeViewProtocol: AnyObject {
     var presenter: HomePresenterProtocol? { get set }
-    func configureDataSource()
     func updateCollectionData()
 }
 
@@ -26,8 +25,6 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     
     var presenter: HomePresenterProtocol?
     var dataSource: UICollectionViewDiffableDataSource<Section, Movie>! = nil
-    
-    //@IBOutlet weak var collectionView: UICollectionView!
     var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -43,7 +40,6 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     private func setupCollection() {
         let layout = generateLayout()
         collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
-        //collectionView.contentInset = UIEdgeInsets(top: 0, left: 17, bottom: 0, right: 0)
         self.view.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -56,13 +52,13 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         collectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: HomeViewController.sectionHeaderElementKind,
           withReuseIdentifier: SectionHeaderView.reuseIdentifier)
+        collectionView.register(RecommendedHeaderView.self, forSupplementaryViewOfKind: HomeViewController.sectionHeaderElementKind,
+          withReuseIdentifier: RecommendedHeaderView.reuseIdentifier)
     }
     
-    //
     func configureDataSource() {
-        //For cells
+        //Setup cells view with the data
         dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, movie: Movie) -> UICollectionViewCell? in
-            
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else {
                 fatalError("Could not create new cell")
             }
@@ -86,11 +82,22 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         
         //For header views
         dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-            guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as? SectionHeaderView else {
-                fatalError("Cannot create header view")
+            let section = Section.allCases[indexPath.section]
+            
+            if section == .recommended {
+                guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RecommendedHeaderView.reuseIdentifier, for: indexPath) as? RecommendedHeaderView else {
+                    fatalError("Cannot create header view")
+                }
+                supplementaryView.presenter = self.presenter
+                supplementaryView.label.text = Section.allCases[indexPath.section].rawValue
+                return supplementaryView
+            } else {
+                guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as? SectionHeaderView else {
+                    fatalError("Cannot create header view")
+                }
+                supplementaryView.label.text = Section.allCases[indexPath.section].rawValue
+                return supplementaryView
             }
-            supplementaryView.label.text = Section.allCases[indexPath.section].rawValue
-            return supplementaryView
         }
     }
     
@@ -119,27 +126,8 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         return snapshot
     }
     
-    func generateUpcomingLayout() -> NSCollectionLayoutSection {
-        //Upcomig movies layout configuration
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let fullPhotoItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        fullPhotoItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(138), heightDimension: .estimated(181))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: fullPhotoItem, count: 1)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: HomeViewController.sectionHeaderElementKind, alignment: .top)
-        
-        let section = NSCollectionLayoutSection(group: group)
-
-        section.boundarySupplementaryItems = [sectionHeader]
-        section.orthogonalScrollingBehavior = .continuous
-        
-        return section
-    }
-    
-    func generateTopRatedLayout() -> NSCollectionLayoutSection {
+    //For upcoming and top rated movies layout.
+    func generateHorizontalSliderLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let fullPhotoItem = NSCollectionLayoutItem(layoutSize: itemSize)
         fullPhotoItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
@@ -166,7 +154,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(2/3))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [fullPhotoItem])
         
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: HomeViewController.sectionHeaderElementKind, alignment: .top)
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [sectionHeader]
@@ -179,9 +167,9 @@ class HomeViewController: UIViewController, HomeViewProtocol {
             let section = Section.allCases[sectionIndex]
             switch section {
             case .upcoming:
-                return self.generateUpcomingLayout()
+                return self.generateHorizontalSliderLayout()
             case .topRated:
-                return self.generateTopRatedLayout()
+                return self.generateHorizontalSliderLayout()
             case .recommended:
                 return self.generateReccomendedLayout()
             }

@@ -14,12 +14,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        self.window = initHome(scene: scene)
+        self.window = generateHomeWindow(scene: scene)
         //*let enabled = UserDefaults.standard.bool(forKey: "darkMode")
         self.window?.overrideUserInterfaceStyle = .dark
     }
     
-    func initHome(scene: UIWindowScene) -> UIWindow {
+    func generateHomeWindow(scene: UIWindowScene) -> UIWindow {
         let home = HomeViewController()
         let presenter = HomePresenter(view: home, httpClient: HTTPClient())
         home.presenter = presenter
