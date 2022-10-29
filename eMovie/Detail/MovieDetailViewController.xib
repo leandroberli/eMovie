@@ -220,7 +220,7 @@
                                     <rect key="frame" x="0.0" y="252" width="390" height="335"/>
                                     <subviews>
                                         <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mhx-yW-elB">
-                                            <rect key="frame" x="20" y="0.0" width="350" height="315"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="315"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="315" id="7F6-q5-Nfm"/>
@@ -235,8 +235,8 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="Mhx-yW-elB" secondAttribute="bottom" constant="20" id="7rt-pG-nyc"/>
                                         <constraint firstItem="Mhx-yW-elB" firstAttribute="top" secondItem="asW-gy-WXb" secondAttribute="top" id="CL9-S8-Odc"/>
-                                        <constraint firstAttribute="trailing" secondItem="Mhx-yW-elB" secondAttribute="trailing" constant="20" id="DcJ-1S-pqU"/>
-                                        <constraint firstItem="Mhx-yW-elB" firstAttribute="leading" secondItem="asW-gy-WXb" secondAttribute="leading" constant="20" id="SXV-dh-UwT"/>
+                                        <constraint firstAttribute="trailing" secondItem="Mhx-yW-elB" secondAttribute="trailing" id="DcJ-1S-pqU"/>
+                                        <constraint firstItem="Mhx-yW-elB" firstAttribute="leading" secondItem="asW-gy-WXb" secondAttribute="leading" id="SXV-dh-UwT"/>
                                         <constraint firstItem="Mhx-yW-elB" firstAttribute="centerX" secondItem="asW-gy-WXb" secondAttribute="centerX" id="mfy-T8-d3z"/>
                                     </constraints>
                                 </view>

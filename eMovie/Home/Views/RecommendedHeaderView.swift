@@ -84,7 +84,6 @@ class RecommendedHeaderView: UICollectionReusableView {
         filterButtonsStackView.heightAnchor.constraint(equalToConstant: 34).isActive = true
         filterButtonsStackView.spacing = 8
         
-        var aux = 0
         FilterButton.FilterOption.allCases.forEach({
             let button = FilterButton()
             button.option = $0
@@ -122,5 +121,5 @@ class RecommendedHeaderView: UICollectionReusableView {
         setActiveFilterButton(option: sender.option)
         presenter?.handleFilterOption(sender.option)
     }
-    
+
 }

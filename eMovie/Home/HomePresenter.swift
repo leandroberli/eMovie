@@ -50,7 +50,7 @@ class HomePresenter: HomePresenterProtocol {
         }
     }
     
-    private func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper] {
+    func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper] {
         let wrappers = movies.map({ return MovieWrapper(section: forSection, movie: $0)})
         return wrappers
     }
@@ -69,11 +69,11 @@ class HomePresenter: HomePresenterProtocol {
         }
     }
     
-    func generateReccomendedMoviesByLang() {
+    private func generateReccomendedMoviesByLang() {
         self.filterMoviesByLang(self.selectedLang)
     }
     
-    func filterMoviesByLang(_ lang: String) {
+    private func filterMoviesByLang(_ lang: String) {
         let filtredArray = self.topRatedMovies.filter({ $0.movie.original_language == lang })
         let movieWrappers = filtredArray.map({ return MovieWrapper(section: .recommended, movie: $0.movie) })
         self.recommendedMovies = Array(movieWrappers.suffix(6))
@@ -89,11 +89,11 @@ class HomePresenter: HomePresenterProtocol {
         }
     }
     
-    func generateRecommendedMoviesByYear() {
+    private func generateRecommendedMoviesByYear() {
         self.filterMoviesByYear(self.selectedDate)
     }
     
-    func filterMoviesByYear(_ year: Int) {
+    private func filterMoviesByYear(_ year: Int) {
         let filtredMovies = self.topRatedMovies.filter({ $0.movie.getReleaseYear() == year })
         self.recommendedMovies = filtredMovies.suffix(6).map({ MovieWrapper(section: .recommended, movie: $0.movie) })
         self.updateCollectionViewData()
