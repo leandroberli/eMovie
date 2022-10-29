@@ -11,6 +11,7 @@ protocol HTTPClientProtocol {
     func getUpcomingMovies(completion: @escaping ([Movie]?,Error?) -> Void)
     func getTopRatedMovies(completion: @escaping ([Movie]?,Error?) -> Void)
     func getDetailMovie(withId: Int, completion: @escaping (MovieDetail?,Error?) -> Void)
+    func getMovieVideo(withId: Int, completion: @escaping ([Video]?,Error?) -> Void)
 }
 
 class HTTPClient: HTTPClientProtocol {
@@ -21,6 +22,7 @@ class HTTPClient: HTTPClientProtocol {
         case topRatedMovieList = "movie/top_rated"
         case upcomingMovieList = "movie/upcoming"
         case movieDetail = "movie/{movie_id}"
+        case movieVideos = "movie/{movie_id}/videos"
     }
    
     func getTopRatedMovies(completion: @escaping ([Movie]?, Error?) -> Void) {
@@ -43,6 +45,13 @@ class HTTPClient: HTTPClientProtocol {
             completion(res,err)
         }
     }
+    
+    func getMovieVideo(withId: Int, completion: @escaping ([Video]?,Error?) -> Void) {
+        let url = baseURL + ApiPath.movieVideos.rawValue.replacingOccurrences(of: "{movie_id}", with: "\(withId)")
+        CoreHTTPClient.shared.getData(url: url, responseType: VideoResponse.self) { res, err in
+            completion(res?.results,err)
+        }
+    }
 }
 
 class CoreHTTPClient {
@@ -61,8 +70,6 @@ class CoreHTTPClient {
         }
         
         let request = generateURLRequest(with: url, andQuery: params)
-        
-        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let err = error {
                 print(err.localizedDescription)
@@ -96,13 +103,13 @@ class CoreHTTPClient {
         
         if let queryDict = params {
             queryDict.forEach({
-                print($0)
                 queryItems.append(URLQueryItem(name: $0.key, value: $0.value))
             })
         }
         
+        let connectionAvailable = NetworkStatusHandler.shared.connectionAvailable
         request.url?.append(queryItems: queryItems)
-        //request.cachePolicy = .returnCacheDataDontLoad
+        request.cachePolicy = connectionAvailable ? .reloadIgnoringLocalCacheData : .returnCacheDataDontLoad
         
         return request
     }

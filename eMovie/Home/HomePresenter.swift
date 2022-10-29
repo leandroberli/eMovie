@@ -37,15 +37,21 @@ class HomePresenter: HomePresenterProtocol {
         self.httpClient = httpClient
     }
     
+    //Próximos estrenos
     func getUpcomingMovies() {
         httpClient?.getUpcomingMovies { movies, error in
             self.upcomingMovies = movies ?? []
-            DispatchQueue.main.async {
-                self.view?.updateCollectionData()
-            }
+            self.updateCollectionViewData()
         }
     }
     
+    private func updateCollectionViewData() {
+        DispatchQueue.main.async {
+            self.view?.updateCollectionData()
+        }
+    }
+    
+    //Tendencia
     func getTopRatedMovies() {
         httpClient?.getTopRatedMovies { movies, error in
             self.topRatedMovies = movies ?? []
@@ -53,45 +59,39 @@ class HomePresenter: HomePresenterProtocol {
         }
     }
     
-    func handleFilterOption(_ option: FilterButton.FilterOption) {
-        switch option {
-        case .date:
-            self.generateRecommendedMoviewByYear()
-        case .lang:
-            self.selectedLang = "en"
-            generateReccomendedMoviesByLang()
-        }
-    }
-    
     func generateReccomendedMoviesByLang() {
         self.filterMoviesByLang(self.selectedLang)
     }
     
-    func generateRecommendedMoviewByYear() {
+    func filterMoviesByLang(_ lang: String) {
+        self.recommendedMovies = self.topRatedMovies.filter({ $0.original_language == lang })
+        self.recommendedMovies = Array(self.recommendedMovies.suffix(6))
+        self.updateCollectionViewData()
+    }
+    
+    func handleFilterOption(_ option: FilterButton.FilterOption) {
+        switch option {
+        case .date:
+            self.generateRecommendedMoviesByYear()
+        case .lang:
+            self.generateReccomendedMoviesByLang()
+        }
+    }
+    
+    func generateRecommendedMoviesByYear() {
         self.filterMoviesByYear(self.selectedDate)
     }
     
     func filterMoviesByYear(_ year: Int) {
         self.recommendedMovies = self.topRatedMovies.filter({ $0.getReleaseYear() == year })
         self.recommendedMovies = Array(self.recommendedMovies.suffix(6))
-        DispatchQueue.main.async {
-            self.view?.updateCollectionData()
-        }
-    }
-    
-    func filterMoviesByLang(_ lang: String) {
-        self.recommendedMovies = self.topRatedMovies.filter({ $0.original_language == lang })
-        self.recommendedMovies = Array(self.recommendedMovies.suffix(6))
-        DispatchQueue.main.async {
-            self.view?.updateCollectionData()
-        }
+        self.updateCollectionViewData()
     }
     
     func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section) {
         guard let homeController = self.view as? UIViewController else {
             return
         }
-        
         let movie = getMovie(withIndex: movieIndex, andSection: fromSection)
         let detail = MovieDetailViewController()
         let presenter = MovieDetailPresenter(movie: movie, view: detail, httpClient: HTTPClient())

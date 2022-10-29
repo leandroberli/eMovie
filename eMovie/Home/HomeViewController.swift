@@ -48,6 +48,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
         collectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: HomeViewController.sectionHeaderElementKind,

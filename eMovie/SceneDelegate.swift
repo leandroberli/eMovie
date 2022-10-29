@@ -15,8 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = generateHomeWindow(scene: scene)
-        //*let enabled = UserDefaults.standard.bool(forKey: "darkMode")
         self.window?.overrideUserInterfaceStyle = .dark
+        NetworkStatusHandler.shared.startMonitor()
     }
     
     func generateHomeWindow(scene: UIWindowScene) -> UIWindow {

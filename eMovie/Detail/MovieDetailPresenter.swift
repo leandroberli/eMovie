@@ -11,8 +11,9 @@ protocol MovieDetailPresenterProtocol {
     var movie: Movie? { get set }
     var view: MovieDetailViewProtocol? { get set }
     var httpClient: HTTPClientProtocol? { get set }
-    
+
     func getMovieDetail()
+    func getMovieVideos()
 }
 
 class MovieDetailPresenter: MovieDetailPresenterProtocol {
@@ -31,6 +32,18 @@ class MovieDetailPresenter: MovieDetailPresenterProtocol {
         httpClient?.getDetailMovie(withId: self.movie?.id ?? 0) { detail, error in
             DispatchQueue.main.async {
                 self.view?.updateViewWithMovie(data: detail)
+            }
+        }
+    }
+    
+    func getMovieVideos() {
+        httpClient?.getMovieVideo(withId: self.movie?.id ?? 0) { videos, error in
+            guard let trailer = videos?.first(where: { $0.type == "Trailer" }),
+                  let url = trailer.getVideoURLRequest() else {
+                return
+            }
+            DispatchQueue.main.async {
+                self.view?.updateWebiewWith(url: url)
             }
         }
     }

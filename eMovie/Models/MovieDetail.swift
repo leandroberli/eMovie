@@ -15,9 +15,9 @@ struct MovieDetail: Codable {
     var adult: Bool?
     var overview: String?
     var original_language: String?
-    var genre_ids: [Int]?
     var original_title: String?
     var vote_average: Float?
+    var genres: [Genre]?
     
     func getPosterURL() -> String {
         return "https://image.tmdb.org/t/p/w1280" + (poster_path ?? "")
@@ -37,6 +37,25 @@ struct MovieDetail: Codable {
         let year = comps.year
         return year ?? 0
     }
+    
+    func getGenresString() -> String {
+        if let genres = genres {
+            var str = ""
+            var count = 1
+            genres.forEach({
+                str += $0.name
+                count != genres.count ? str.append(" - ") : ()
+                count += 1
+            })
+            return str
+        }
+        return ""
+    }
+}
+
+struct Genre: Codable {
+    var id: Int
+    var name: String
 }
 
 struct Language: Codable {

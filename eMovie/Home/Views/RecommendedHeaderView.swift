@@ -11,7 +11,7 @@ class FilterButton: UIButton {
     
     enum FilterOption: String, CaseIterable {
         case lang = "   En inglés   "
-        case date = "   Lanzado en 1995   "
+        case date = "   Lanzado en 2003   "
     }
     
     var option: FilterOption = .lang
