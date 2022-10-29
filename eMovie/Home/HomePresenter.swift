@@ -34,8 +34,8 @@ class HomePresenter: HomePresenterProtocol {
     var topRatedMovies: [MovieWrapper] = []
     var recommendedMovies: [MovieWrapper] = []
     var movieDetails: [MovieDetail] = []
-    var selectedDate = 2003
-    var selectedLang = "en"
+    var selectedDate = 2020
+    var selectedLang = "ja"
 
     init(view: HomeViewProtocol, httpClient: HTTPClient) {
         self.view = view
@@ -51,10 +51,7 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     private func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper] {
-        var wrappers: [MovieWrapper] = []
-        for m in movies {
-            wrappers.append(MovieWrapper(section: forSection, movie: m))
-        }
+        let wrappers = movies.map({ return MovieWrapper(section: forSection, movie: $0)})
         return wrappers
     }
     
@@ -77,7 +74,8 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func filterMoviesByLang(_ lang: String) {
-        var movieWrappers = self.topRatedMovies.map({ return MovieWrapper(section: .recommended, movie: $0.movie) })
+        let filtredArray = self.topRatedMovies.filter({ $0.movie.original_language == lang })
+        let movieWrappers = filtredArray.map({ return MovieWrapper(section: .recommended, movie: $0.movie) })
         self.recommendedMovies = Array(movieWrappers.suffix(6))
         self.updateCollectionViewData()
     }
@@ -96,7 +94,7 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func filterMoviesByYear(_ year: Int) {
-        var filtredMovies = self.topRatedMovies.filter({ $0.movie.getReleaseYear() == year })
+        let filtredMovies = self.topRatedMovies.filter({ $0.movie.getReleaseYear() == year })
         self.recommendedMovies = filtredMovies.suffix(6).map({ MovieWrapper(section: .recommended, movie: $0.movie) })
         self.updateCollectionViewData()
     }

@@ -10,8 +10,8 @@ import UIKit
 class FilterButton: UIButton {
     
     enum FilterOption: String, CaseIterable {
-        case lang = "   En inglés   "
-        case date = "   Lanzado en 2003   "
+        case lang = "   En Japones   "
+        case date = "   Lanzado en 2020   "
     }
     
     var option: FilterOption = .lang
@@ -84,6 +84,7 @@ class RecommendedHeaderView: UICollectionReusableView {
         filterButtonsStackView.heightAnchor.constraint(equalToConstant: 34).isActive = true
         filterButtonsStackView.spacing = 8
         
+        var aux = 0
         FilterButton.FilterOption.allCases.forEach({
             let button = FilterButton()
             button.option = $0

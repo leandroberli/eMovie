@@ -53,6 +53,10 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         watchTrailerButton.layer.borderColor = UIColor.white.cgColor
         watchTrailerButton.layer.cornerRadius = 8
         watchTrailerButton.addTarget(self, action: #selector(didTapViewTrailer), for: .touchUpInside)
+        
+        //For fade animation
+        posterImageView.alpha = 0
+        overlayPosterView.alpha = 0
     }
     
     override func viewDidLayoutSubviews() {
@@ -113,6 +117,22 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
     
     func updateViewWithMovie(data: MovieDetail?) {
         posterImageView.kf.setImage(with: URL(string: data?.getPosterURL() ?? ""))
+        
+        let url = URL(string: data?.getPosterURL() ?? "")
+        posterImageView.kf.setImage(with: url) { result in
+            switch result {
+            case .success( _):
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.5) {
+                        self.posterImageView.alpha = 1
+                        self.overlayPosterView.alpha = 1
+                    }
+                }
+            case .failure(let error):
+                print(#function, error.localizedDescription)
+            }
+        }
+        
         titleLabel.text = data?.original_title ?? ""
         overviewLabel.text = data?.overview ?? ""
         releaseYearLabel.text = "\(data?.getReleaseYear() ?? 0)"
