@@ -8,12 +8,17 @@
 import Foundation
 import UIKit
 
+struct MovieWrapper: Hashable {
+    var section: HomeViewController.Section
+    var movie: Movie
+}
+
 protocol HomePresenterProtocol: AnyObject {
     var view: HomeViewProtocol? { get set }
     var httpClient: HTTPClientProtocol? { get set }
-    var upcomingMovies: [Movie] { get set }
-    var topRatedMovies: [Movie] { get set }
-    var recommendedMovies: [Movie] { get set }
+    var upcomingMovies: [MovieWrapper] { get set }
+    var topRatedMovies: [MovieWrapper] { get set }
+    var recommendedMovies: [MovieWrapper] { get set }
     
     func getUpcomingMovies()
     func getTopRatedMovies()
@@ -25,9 +30,9 @@ class HomePresenter: HomePresenterProtocol {
     
     weak var view: HomeViewProtocol?
     var httpClient: HTTPClientProtocol?
-    var upcomingMovies: [Movie] = []
-    var topRatedMovies: [Movie] = []
-    var recommendedMovies: [Movie] = []
+    var upcomingMovies: [MovieWrapper] = []
+    var topRatedMovies: [MovieWrapper] = []
+    var recommendedMovies: [MovieWrapper] = []
     var movieDetails: [MovieDetail] = []
     var selectedDate = 2003
     var selectedLang = "en"
@@ -40,9 +45,17 @@ class HomePresenter: HomePresenterProtocol {
     //Próximos estrenos
     func getUpcomingMovies() {
         httpClient?.getUpcomingMovies { movies, error in
-            self.upcomingMovies = movies ?? []
+            self.upcomingMovies = self.generateMoviesWarappers(movies ?? [], forSection: .upcoming)
             self.updateCollectionViewData()
         }
+    }
+    
+    private func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper] {
+        var wrappers: [MovieWrapper] = []
+        for m in movies {
+            wrappers.append(MovieWrapper(section: forSection, movie: m))
+        }
+        return wrappers
     }
     
     private func updateCollectionViewData() {
@@ -54,7 +67,7 @@ class HomePresenter: HomePresenterProtocol {
     //Tendencia
     func getTopRatedMovies() {
         httpClient?.getTopRatedMovies { movies, error in
-            self.topRatedMovies = movies ?? []
+            self.topRatedMovies = self.generateMoviesWarappers(movies ?? [], forSection: .topRated)
             self.generateReccomendedMoviesByLang()
         }
     }
@@ -64,8 +77,8 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func filterMoviesByLang(_ lang: String) {
-        self.recommendedMovies = self.topRatedMovies.filter({ $0.original_language == lang })
-        self.recommendedMovies = Array(self.recommendedMovies.suffix(6))
+        var movieWrappers = self.topRatedMovies.map({ return MovieWrapper(section: .recommended, movie: $0.movie) })
+        self.recommendedMovies = Array(movieWrappers.suffix(6))
         self.updateCollectionViewData()
     }
     
@@ -83,8 +96,8 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func filterMoviesByYear(_ year: Int) {
-        self.recommendedMovies = self.topRatedMovies.filter({ $0.getReleaseYear() == year })
-        self.recommendedMovies = Array(self.recommendedMovies.suffix(6))
+        var filtredMovies = self.topRatedMovies.filter({ $0.movie.getReleaseYear() == year })
+        self.recommendedMovies = filtredMovies.suffix(6).map({ MovieWrapper(section: .recommended, movie: $0.movie) })
         self.updateCollectionViewData()
     }
     
@@ -102,11 +115,11 @@ class HomePresenter: HomePresenterProtocol {
     private func getMovie(withIndex: Int, andSection: HomeViewController.Section) -> Movie {
         switch andSection {
         case .recommended:
-            return recommendedMovies[withIndex]
+            return recommendedMovies[withIndex].movie
         case .topRated:
-            return topRatedMovies[withIndex]
+            return topRatedMovies[withIndex].movie
         case .upcoming:
-            return upcomingMovies[withIndex]
+            return upcomingMovies[withIndex].movie
         }
     }
 }

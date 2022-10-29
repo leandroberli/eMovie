@@ -24,7 +24,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     }
     
     var presenter: HomePresenterProtocol?
-    var dataSource: UICollectionViewDiffableDataSource<Section, Movie>! = nil
+    var dataSource: UICollectionViewDiffableDataSource<Section, MovieWrapper>! = nil
     var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     
     func configureDataSource() {
         //Setup cells view with the data
-        dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, movie: Movie) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, MovieWrapper>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, movie: MovieWrapper) -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else {
                 fatalError("Could not create new cell")
             }
@@ -67,16 +67,16 @@ class HomeViewController: UIViewController, HomeViewProtocol {
             let section = Section.allCases[indexPath.section]
             switch section {
             case .upcoming:
-                let movie = self.presenter?.upcomingMovies[indexPath.item]
-                cell.setupMovie(movie)
+                let wrapper = self.presenter?.upcomingMovies[indexPath.item]
+                cell.setupMovie(wrapper?.movie)
                 return cell
             case .topRated:
-                let movie = self.presenter?.topRatedMovies[indexPath.item]
-                cell.setupMovie(movie)
+                let wrapper = self.presenter?.topRatedMovies[indexPath.item]
+                cell.setupMovie(wrapper?.movie)
                 return cell
             case .recommended:
-                let movie = self.presenter?.recommendedMovies[indexPath.item]
-                cell.setupMovie(movie)
+                let wrapper = self.presenter?.recommendedMovies[indexPath.item]
+                cell.setupMovie(wrapper?.movie)
                 return cell
             }
         }
@@ -105,15 +105,15 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     //This function trigger configureDataSource function.
     func updateCollectionData() {
         let snapshot = snapshotForCurrentState()
-        dataSource.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
     
-    func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, Movie> {
+    func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, MovieWrapper> {
         let upcomingMovies = presenter?.upcomingMovies ?? []
         let trendingMoviews = presenter?.topRatedMovies ?? []
         let recommendedMovies = presenter?.recommendedMovies ?? []
         
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieWrapper>()
         
         snapshot.appendSections([Section.upcoming])
         snapshot.appendItems(upcomingMovies)
