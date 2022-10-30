@@ -26,6 +26,7 @@ class FilterButton: UIButton {
     }
     
     func configure() {
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         self.layer.cornerRadius = 34/2
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.white.cgColor
@@ -64,24 +65,25 @@ class RecommendedHeaderView: UICollectionReusableView {
         backgroundColor = .systemBackground
         
         addSubview(label)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         
-        let inset = CGFloat(10)
+        let inset = CGFloat(8)
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
             label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: inset)
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 27)
         ])
-        label.font = UIFont.preferredFont(forTextStyle: .title3)
         
         filterButtonsStackView.axis = .horizontal
         addSubview(filterButtonsStackView)
         
         filterButtonsStackView.translatesAutoresizingMaskIntoConstraints = false
         filterButtonsStackView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 12).isActive = true
-        filterButtonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
+        filterButtonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8).isActive = true
         filterButtonsStackView.heightAnchor.constraint(equalToConstant: 34).isActive = true
+        filterButtonsStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20).isActive = true
         filterButtonsStackView.spacing = 8
         
         FilterButton.FilterOption.allCases.forEach({
@@ -96,8 +98,6 @@ class RecommendedHeaderView: UICollectionReusableView {
         if let firstOption = filterButtonsStackView.subviews[0] as? FilterButton {
             firstOption.turnActive()
         }
-        
-        self.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
     
     func resetAllFilterButtonsState() {

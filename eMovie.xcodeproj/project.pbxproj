@@ -143,9 +143,9 @@
 		9A5CA7A4290A018000C6FD0D /* eMovie */ = {
 			isa = PBXGroup;
 			children = (
-				9AB49952290C0E880084B7CC /* Detail */,
 				9A5CA7E8290A0D2600C6FD0D /* Models */,
 				9A5CA7E0290A039C00C6FD0D /* Common */,
+				9AB49952290C0E880084B7CC /* Detail */,
 				9A5CA7DA290A01F900C6FD0D /* Home */,
 				9A5CA7A5290A018000C6FD0D /* AppDelegate.swift */,
 				9A5CA7A7290A018000C6FD0D /* SceneDelegate.swift */,
@@ -160,6 +160,7 @@
 		9A5CA7BB290A018200C6FD0D /* eMovieTests */ = {
 			isa = PBXGroup;
 			children = (
+				9AAFB5C5290EE44E00DBD790 /* Detail */,
 				9A77B8F0290D99B6003EEE36 /* Home */,
 				9A5CA7BC290A018200C6FD0D /* eMovieTests.swift */,
 			);
@@ -181,7 +182,6 @@
 				9A5CA7F3290AD45400C6FD0D /* Views */,
 				9A5CA7DC290A030300C6FD0D /* HomeViewController.swift */,
 				9A5CA7DD290A030300C6FD0D /* HomeViewController.xib */,
-				9A5CA7EF290AB84F00C6FD0D /* HTTPClient.swift */,
 				9A5CA7F1290ABA9B00C6FD0D /* HomePresenter.swift */,
 			);
 			path = Home;
@@ -190,6 +190,7 @@
 		9A5CA7E0290A039C00C6FD0D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9A5CA7EF290AB84F00C6FD0D /* HTTPClient.swift */,
 				9A5CA7E5290A0B9A00C6FD0D /* UIView+Extension.swift */,
 				9A77B8EE290D5AB7003EEE36 /* NetworkStatusHandler.swift */,
 			);
@@ -224,6 +225,13 @@
 				9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		9AAFB5C5290EE44E00DBD790 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		9AB49952290C0E880084B7CC /* Detail */ = {

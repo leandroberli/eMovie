@@ -34,6 +34,8 @@ class HomePresenter: HomePresenterProtocol {
     var topRatedMovies: [MovieWrapper] = []
     var recommendedMovies: [MovieWrapper] = []
     var movieDetails: [MovieDetail] = []
+    //Set year and langague values for filter.
+    //Change string labels form RecommendedHeaderView.
     var selectedDate = 2020
     var selectedLang = "ja"
 

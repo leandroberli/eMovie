@@ -9,7 +9,6 @@ import Foundation
 
 struct MovieDetail: Codable {
     var id: Int?
-    //var spoken_languages: [Language]
     var release_date: String?
     var poster_path: String?
     var adult: Bool?

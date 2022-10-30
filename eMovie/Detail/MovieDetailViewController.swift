@@ -39,16 +39,24 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         presenter?.getMovieVideos()
     }
     
-    private func configViews() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configNavbar()
+    }
+    
+    private func configNavbar() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .black
         appearance.accessibilityPath?.lineWidth = 0
         appearance.shadowColor = nil
         appearance.shadowImage = nil
+        appearance.setBackIndicatorImage(UIImage(systemName: "arrow.left"), transitionMaskImage: UIImage(systemName: "arrow.left"))
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.tintColor = .white
-        
+    }
+    
+    private func configViews() {
         watchTrailerButton.layer.borderWidth = 1
         watchTrailerButton.layer.borderColor = UIColor.white.cgColor
         watchTrailerButton.layer.cornerRadius = 8
@@ -80,9 +88,8 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         gradient.locations = [0.0, 0.75, 1]
         topGradientView.layer.insertSublayer(gradient, at: 0)
         self.topGradient = gradient
-        
-        self.view.addSubview(topGradientView)
-        self.view.bringSubviewToFront(topGradientView)
+        topGradient?.isHidden = true
+        self.posterImageView.addSubview(topGradientView)
         topGradientView.translatesAutoresizingMaskIntoConstraints = false
         topGradientView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
         topGradientView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true

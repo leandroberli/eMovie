@@ -10,7 +10,7 @@ import UIKit
 class SectionHeaderView: UICollectionReusableView {
     static let reuseIdentifier = "header-reuse-identifier"
     
-    let label = UILabel()
+    var label = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,15 +29,15 @@ extension SectionHeaderView {
         addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
-        let inset = CGFloat(10)
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset)
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8),
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 27),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
-        label.font = UIFont.preferredFont(forTextStyle: .title3)
+       
     }
 }
 

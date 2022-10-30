@@ -29,12 +29,18 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "eMovie"
-        
         setupCollection()
         configureDataSource()
         presenter?.getTopRatedMovies()
         presenter?.getUpcomingMovies()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationItem.title = "eMovie"
+        self.navigationItem.backButtonTitle = ""
+        self.navigationController?.navigationBar.standardAppearance = UINavigationBarAppearance()
+        self.navigationController?.navigationBar.standardAppearance.configureWithDefaultBackground()
+        self.navigationController?.navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
     }
     
     private func setupCollection() {
@@ -89,6 +95,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
                 guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RecommendedHeaderView.reuseIdentifier, for: indexPath) as? RecommendedHeaderView else {
                     fatalError("Cannot create header view")
                 }
+                //Presenter handles filter buttons logic.
                 supplementaryView.presenter = self.presenter
                 supplementaryView.label.text = Section.allCases[indexPath.section].rawValue
                 return supplementaryView
@@ -140,7 +147,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: HomeViewController.sectionHeaderElementKind, alignment: .top)
         
         let section = NSCollectionLayoutSection(group: group)
-
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
         section.boundarySupplementaryItems = [sectionHeader]
         section.orthogonalScrollingBehavior = .continuous
         
@@ -150,7 +157,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     func generateReccomendedLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
         let fullPhotoItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        fullPhotoItem.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 7.5, bottom: 12, trailing: 7.5)
+        fullPhotoItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(2/3))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [fullPhotoItem])
@@ -158,6 +165,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: HomeViewController.sectionHeaderElementKind, alignment: .top)
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section

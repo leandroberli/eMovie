@@ -19,7 +19,6 @@ struct Video: Codable {
     var type: String
     
     func getVideoURL() -> String {
-        //https://www.youtube.com/watch?v=eZHsmb4ezEk
         return "https://www.youtube.com/embed/" + key
     }
     
