@@ -33,6 +33,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         configureDataSource()
         presenter?.getTopRatedMovies()
         presenter?.getUpcomingMovies()
+        presenter?.getRecommendedMovies()
     }
     
     override func viewWillAppear(_ animated: Bool) {

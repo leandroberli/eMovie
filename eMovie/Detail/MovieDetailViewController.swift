@@ -88,7 +88,7 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         gradient.locations = [0.0, 0.75, 1]
         topGradientView.layer.insertSublayer(gradient, at: 0)
         self.topGradient = gradient
-        topGradient?.isHidden = true
+        self.topGradient?.isHidden = true
         self.posterImageView.addSubview(topGradientView)
         topGradientView.translatesAutoresizingMaskIntoConstraints = false
         topGradientView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true

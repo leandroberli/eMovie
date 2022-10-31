@@ -19,9 +19,11 @@ protocol HomePresenterProtocol: AnyObject {
     var upcomingMovies: [MovieWrapper] { get set }
     var topRatedMovies: [MovieWrapper] { get set }
     var recommendedMovies: [MovieWrapper] { get set }
+    var interactor: HomeInteractorProtocol? { get set }
     
     func getUpcomingMovies()
     func getTopRatedMovies()
+    func getRecommendedMovies()
     func handleFilterOption(_ option: FilterButton.FilterOption)
     func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section)
 }
@@ -30,12 +32,13 @@ class HomePresenter: HomePresenterProtocol {
     
     weak var view: HomeViewProtocol?
     var httpClient: HTTPClientProtocol?
+    var interactor: HomeInteractorProtocol?
     var upcomingMovies: [MovieWrapper] = []
     var topRatedMovies: [MovieWrapper] = []
     var recommendedMovies: [MovieWrapper] = []
     var movieDetails: [MovieDetail] = []
     //Set year and langague values for filter.
-    //Change string labels form RecommendedHeaderView.
+    //Change string labels from RecommendedHeaderView.
     var selectedDate = 2020
     var selectedLang = "ja"
 
@@ -46,15 +49,10 @@ class HomePresenter: HomePresenterProtocol {
     
     //Próximos estrenos
     func getUpcomingMovies() {
-        httpClient?.getUpcomingMovies { movies, error in
-            self.upcomingMovies = self.generateMoviesWarappers(movies ?? [], forSection: .upcoming)
+        interactor?.getUpcomingMovies { movies, error in
+            self.upcomingMovies = movies ?? []
             self.updateCollectionViewData()
         }
-    }
-    
-    func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper] {
-        let wrappers = movies.map({ return MovieWrapper(section: forSection, movie: $0)})
-        return wrappers
     }
     
     private func updateCollectionViewData() {
@@ -65,20 +63,26 @@ class HomePresenter: HomePresenterProtocol {
     
     //Tendencia
     func getTopRatedMovies() {
-        httpClient?.getTopRatedMovies { movies, error in
-            self.topRatedMovies = self.generateMoviesWarappers(movies ?? [], forSection: .topRated)
-            self.generateReccomendedMoviesByLang()
+        interactor?.getTopRatedMovies { movies, error in
+            self.topRatedMovies = movies ?? []
+            self.updateCollectionViewData()
+        }
+    }
+    
+    func getRecommendedMovies() {
+        interactor?.getRecommendedMovies { movies, error in
+            self.recommendedMovies = movies ?? []
+            self.updateCollectionViewData()
         }
     }
     
     private func generateReccomendedMoviesByLang() {
-        self.filterMoviesByLang(self.selectedLang)
+        self.filterMoviesByLang(selectedLang)
     }
     
     private func filterMoviesByLang(_ lang: String) {
-        let filtredArray = self.topRatedMovies.filter({ $0.movie.original_language == lang })
-        let movieWrappers = filtredArray.map({ return MovieWrapper(section: .recommended, movie: $0.movie) })
-        self.recommendedMovies = Array(movieWrappers.suffix(6))
+        let filtredArray = self.recommendedMovies.filter({ $0.movie.original_language == lang })
+        self.recommendedMovies = Array(filtredArray.suffix(6))
         self.updateCollectionViewData()
     }
     
