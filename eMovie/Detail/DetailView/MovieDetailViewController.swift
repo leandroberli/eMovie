@@ -36,7 +36,7 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         super.viewDidLoad()
         configViews()
         presenter?.getMovieDetail()
-        presenter?.getMovieVideos()
+        presenter?.getMovieVideoTrailer()
     }
     
     override func viewWillAppear(_ animated: Bool) {

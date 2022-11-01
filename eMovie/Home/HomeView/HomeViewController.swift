@@ -82,7 +82,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
                 cell.setupMovie(wrapper?.movie)
                 return cell
             case .recommended:
-                let wrapper = self.presenter?.recommendedMovies[indexPath.item]
+                let wrapper = self.presenter?.filtredRecommendedMovies[indexPath.item]
                 cell.setupMovie(wrapper?.movie)
                 return cell
             }
@@ -119,7 +119,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<Section, MovieWrapper> {
         let upcomingMovies = presenter?.upcomingMovies ?? []
         let trendingMoviews = presenter?.topRatedMovies ?? []
-        let recommendedMovies = presenter?.recommendedMovies ?? []
+        let recommendedMovies = presenter?.filtredRecommendedMovies ?? []
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, MovieWrapper>()
         

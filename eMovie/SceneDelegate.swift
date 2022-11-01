@@ -20,12 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func generateHomeWindow(scene: UIWindowScene) -> UIWindow {
-        let home = HomeViewController()
-        let presenter = HomePresenter(view: home, httpClient: HTTPClient())
-        presenter.interactor = HomeInteractor()
-        home.presenter = presenter
-        
-        let navController = UINavigationController(rootViewController: home)
+        let navController = HomeRouter.createHomeModule()
         let window = UIWindow(windowScene: scene)
         window.rootViewController = navController
         window.makeKeyAndVisible()

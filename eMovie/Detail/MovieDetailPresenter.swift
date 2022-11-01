@@ -10,36 +10,35 @@ import Foundation
 protocol MovieDetailPresenterProtocol {
     var movie: Movie? { get set }
     var view: MovieDetailViewProtocol? { get set }
-    var httpClient: HTTPClientProtocol? { get set }
+    var interactor: MovieDetailInteractorProtocol? { get set }
 
     func getMovieDetail()
-    func getMovieVideos()
+    func getMovieVideoTrailer()
 }
 
 class MovieDetailPresenter: MovieDetailPresenterProtocol {
     
     weak var view: MovieDetailViewProtocol?
     var movie: Movie?
-    var httpClient: HTTPClientProtocol?
+    var interactor: MovieDetailInteractorProtocol?
     
-    init(movie: Movie, view: MovieDetailViewProtocol, httpClient: HTTPClientProtocol) {
+    init(movie: Movie, view: MovieDetailViewProtocol, interactor: MovieDetailInteractorProtocol) {
         self.movie = movie
         self.view = view
-        self.httpClient = httpClient
+        self.interactor = interactor
     }
     
     func getMovieDetail() {
-        httpClient?.getDetailMovie(withId: self.movie?.id ?? 0) { detail, error in
+        interactor?.getMovieDetail(withId: movie?.id ?? 0) { detail, error in
             DispatchQueue.main.async {
                 self.view?.updateViewWithMovie(data: detail)
             }
         }
     }
     
-    func getMovieVideos() {
-        httpClient?.getMovieVideo(withId: self.movie?.id ?? 0) { videos, error in
-            guard let trailer = videos?.first(where: { $0.type == "Trailer" }),
-                  let url = trailer.getVideoURLRequest() else {
+    func getMovieVideoTrailer() {
+        interactor?.getVideoTrailer(withId: movie?.id ?? 0) { trailer, error in
+            guard let url = trailer?.getVideoURLRequest() else {
                 return
             }
             DispatchQueue.main.async {
