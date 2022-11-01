@@ -13,12 +13,12 @@ final class HomePresenterTests: XCTestCase {
     var sut: HomePresenter!
     var mockView: MockHomeView!
     var mockInteractor: MockHomeInteractor!
-    var router: HomeRouter!
+    var router: MockHomeRouter!
 
     override func setUpWithError() throws {
         mockView = MockHomeView()
         mockInteractor = MockHomeInteractor()
-        router = HomeRouter()
+        router = MockHomeRouter()
         sut = HomePresenter(view: mockView, interactor: mockInteractor, router: router)
     }
 
@@ -47,5 +47,19 @@ final class HomePresenterTests: XCTestCase {
         sut.filtredRecommendedMovies.forEach({
             XCTAssertTrue($0.movie.original_language == sut.selectedLang)
         })
+    }
+    
+    func testDidSelectUpcomingMovie_shouldNavigateToMovieDetail() throws {
+        let exp = self.expectation(description: "Expect navigate to upcoming movie detail.")
+        let index = 4
+        router.expectation = exp
+        sut.getUpcomingMovies()
+        
+        sut.navigateToMovieDetail(movieIndex: index, fromSection: .upcoming)
+        
+        self.wait(for: [exp], timeout: 5)
+        
+        XCTAssertTrue(router.selectedMovie?.id == sut.upcomingMovies[index].movie.id)
+        XCTAssertTrue(router.navigateMovieDetailCalled)
     }
 }

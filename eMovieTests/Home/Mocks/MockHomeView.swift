@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import XCTest
 @testable import eMovie
 
-class MockHomeView: HomeViewProtocol {
+class MockHomeView: UIViewController, HomeViewProtocol {
     var presenter: eMovie.HomePresenterProtocol?
+    var expectation: XCTestExpectation?
+    var updateCollectionDataCalled = false
     
     func updateCollectionData() {
-        
+        updateCollectionDataCalled = true
+        expectation?.fulfill()
     }
 }
