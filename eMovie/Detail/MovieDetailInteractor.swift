@@ -11,7 +11,7 @@ protocol MovieDetailInteractorProtocol {
     var httpClient: HTTPClientProtocol? { get set }
     
     func getMovieDetail(withId: Int, completion: @escaping (MovieDetail?, Error?) -> Void)
-    func getVideoTrailer(withId: Int, completion: @escaping (Video?,Error?) -> Void)
+    func getMovieVideoTrailer(withId: Int, completion: @escaping (Video?,Error?) -> Void)
 }
 
 class MovieDetailInteractor: MovieDetailInteractorProtocol {
@@ -29,7 +29,7 @@ class MovieDetailInteractor: MovieDetailInteractorProtocol {
         }
     }
     
-    func getVideoTrailer(withId: Int, completion: @escaping (Video?,Error?) -> Void) {
+    func getMovieVideoTrailer(withId: Int, completion: @escaping (Video?,Error?) -> Void) {
         httpClient?.getMovieVideo(withId: withId) { videos, error in
             guard let trailer = videos?.first(where: { $0.type == "Trailer" }) else {
                 completion(nil, nil)

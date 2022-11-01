@@ -37,12 +37,12 @@ class MovieDetailPresenter: MovieDetailPresenterProtocol {
     }
     
     func getMovieVideoTrailer() {
-        interactor?.getVideoTrailer(withId: movie?.id ?? 0) { trailer, error in
+        interactor?.getMovieVideoTrailer(withId: movie?.id ?? 0) { trailer, error in
             guard let url = trailer?.getVideoURLRequest() else {
                 return
             }
             DispatchQueue.main.async {
-                self.view?.updateWebiewWith(url: url)
+                self.view?.updateTrailerWebview(withURLRequest: url)
             }
         }
     }

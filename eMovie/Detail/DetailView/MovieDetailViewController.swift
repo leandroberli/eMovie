@@ -12,7 +12,7 @@ protocol MovieDetailViewProtocol: AnyObject {
     var presenter: MovieDetailPresenterProtocol? { get set }
     
     func updateViewWithMovie(data: MovieDetail?)
-    func updateWebiewWith(url: URLRequest)
+    func updateTrailerWebview(withURLRequest: URLRequest)
 }
 
 class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
@@ -148,7 +148,7 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         genreLabel.text = data?.getGenresString()
     }
     
-    func updateWebiewWith(url: URLRequest) {
-        self.webView.load(url)
+    func updateTrailerWebview(withURLRequest: URLRequest) {
+        self.webView.load(withURLRequest)
     }
 }
