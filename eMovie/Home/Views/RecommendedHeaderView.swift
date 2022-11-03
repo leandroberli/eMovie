@@ -16,6 +16,12 @@ class FilterButton: UIButton {
     
     var option: FilterOption = .lang
     
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted ? UIColor.systemGray4 : UIColor.white
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()

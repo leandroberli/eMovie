@@ -12,9 +12,4 @@ pod 'Kingfisher'
     inherit! :search_paths
     # Pods for testing
   end
-
-  target 'eMovieUITests' do
-    # Pods for testing
-  end
-
 end

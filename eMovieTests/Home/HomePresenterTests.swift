@@ -53,8 +53,8 @@ final class HomePresenterTests: XCTestCase {
         let exp = self.expectation(description: "Expect navigate to upcoming movie detail.")
         let index = 4
         router.expectation = exp
-        sut.getUpcomingMovies()
         
+        sut.getUpcomingMovies()
         sut.navigateToMovieDetail(movieIndex: index, fromSection: .upcoming)
         
         self.wait(for: [exp], timeout: 5)

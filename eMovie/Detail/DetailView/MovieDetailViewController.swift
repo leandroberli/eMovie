@@ -54,6 +54,7 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.tintColor = .white
+        navigationItem.title = presenter?.movie?.original_title ?? ""
     }
     
     private func configViews() {
