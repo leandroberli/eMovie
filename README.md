@@ -15,3 +15,13 @@
 
   Manejo de errores en el servicio: Agregar enum : Error y funciones, UI.
   Router: Separar código de navegación del home presenter.
+  
+  
+  <h1> Screenshots </h1>
+  
+  <img src="https://user-images.githubusercontent.com/38466738/199310105-2739556d-a814-46a0-81c1-424e0f0b4ea3.png" align="left" height="844" width="390" >
+  
+  <img src="https://user-images.githubusercontent.com/38466738/199310151-f57eb7e6-e2ee-4aee-8689-e226053affbf.png" align="left" height="844" width="390" >
+  
+  <img src="https://user-images.githubusercontent.com/38466738/199310165-708239c4-765d-4a9b-9c8c-00dec4e90039.png" align="left" height="844" width="390" >
+  
