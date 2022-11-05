@@ -37,8 +37,6 @@ class HomeViewController: UIViewController, HomeViewProtocol {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationItem.title = "eMovie"
-        self.navigationItem.backButtonTitle = ""
         self.navigationController?.navigationBar.standardAppearance = UINavigationBarAppearance()
         self.navigationController?.navigationBar.standardAppearance.configureWithDefaultBackground()
         self.navigationController?.navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
