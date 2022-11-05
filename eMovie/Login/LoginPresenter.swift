@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol LoginPresenterProtocol {
     var interactor: LoginInteractorProtocol? { get set }
@@ -14,6 +15,7 @@ protocol LoginPresenterProtocol {
     
     func didReceivedRequestToken(_ token: String)
     func didReceivedSessionToken(_ token: String)
+    func didReceivedError(_ error: MovieError)
     func didValidateLogin(requestToken: String)
     func getRequestToken()
     func validateLogin(witData: LoginRequest)
@@ -37,7 +39,6 @@ class LoginPresenter: LoginPresenterProtocol {
     func didTapLoginButton(usermane: String, password: String) {
         self.username = usermane
         self.password = password
-        
         getRequestToken()
     }
     
@@ -62,6 +63,13 @@ class LoginPresenter: LoginPresenterProtocol {
     
     func didReceivedSessionToken(_ token: String) {
         router?.finishLoginProcess(fromView: self.view)
+    }
+    
+    func didReceivedError(_ error: MovieError) {
+        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Okay", style: .default)
+        alertController.addAction(action)
+        self.view?.present(alertController, animated: true)
     }
   
 }

@@ -29,6 +29,9 @@ class LoginInteractor: LoginInteractorProtocol {
         httpClient?.createRequestToken { res, err in
             if let e = err {
                 print(e.localizedDescription)
+                DispatchQueue.main.async {
+                    self.presenter?.didReceivedError(e)
+                }
                 return
             }
             DispatchQueue.main.async {
@@ -38,10 +41,14 @@ class LoginInteractor: LoginInteractorProtocol {
     }
     
     //Second. Validate the request token received with username and password.
+    //TODO: Handle error
     func validateWithLogin(withData: LoginRequest) {
         httpClient?.validateWithLogin(loginData: withData) { res, error in
             if let e = error {
                 print(e.localizedDescription)
+                DispatchQueue.main.async {
+                    self.presenter?.didReceivedError(e)
+                }
                 return
             }
             DispatchQueue.main.async {
