@@ -45,7 +45,7 @@ class CoreHTTPClient {
                 } else {
                     do {
                         let data = try JSONDecoder().decode(ApiResponseError.self, from: data)
-                        let error = MovieError(rawValue: data.status_code) ?? .unknownError
+                        let error = MovieError(rawValue: data.status_code ?? 0) ?? .unknownError
                         completion(nil,error)
                     } catch {
                         print("JSON Error: ", error.localizedDescription)
@@ -65,6 +65,11 @@ class CoreHTTPClient {
         var queryItems: [URLQueryItem] = []
         let apiQuery = URLQueryItem(name: "api_key", value: apiKey)
         queryItems.append(apiQuery)
+        
+        if let sessionToken = UserDefaults.standard.value(forKey: "sessionToken") as? String {
+            let sessionTokenItem = URLQueryItem(name: "session_id", value: sessionToken)
+            queryItems.append(sessionTokenItem)
+        }
         
         if let queryDict = params {
             queryDict.forEach({

@@ -12,9 +12,14 @@ protocol ProfileViewProtocol {
     var presenter: ProfilePresenterProtocol? { get set }
     
     func updateAccountDetail(withData: Account?)
+    func updateFavoriteMovies(data: [MovieWrapper])
 }
 
 class ProfileViewController: UIViewController, ProfileViewProtocol {
+    func updateFavoriteMovies(data: [MovieWrapper]) {
+        
+    }
+    
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -24,8 +29,8 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         generateLogoutButton()
-        
         presenter?.getAccountDetails()
+        presenter?.getFavoriteMovies()
     }
     
     func updateAccountDetail(withData: Account?) {

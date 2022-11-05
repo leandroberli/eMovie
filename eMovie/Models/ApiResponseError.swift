@@ -8,9 +8,9 @@
 import Foundation
 
 struct ApiResponseError: Codable {
-    var success: Bool
-    var status_code: Int
-    var status_message: String
+    var success: Bool?
+    var status_code: Int?
+    var status_message: String?
 }
 
 enum MovieError: Int, Error, LocalizedError {

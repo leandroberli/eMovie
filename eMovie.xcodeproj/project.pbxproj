@@ -31,6 +31,7 @@
 		9A3B79732916ED58009268A7 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B79722916ED58009268A7 /* LoginButton.swift */; };
 		9A3B79752916FFA9009268A7 /* ApiResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B79742916FFA9009268A7 /* ApiResponseError.swift */; };
 		9A3B797729170023009268A7 /* CoreHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B797629170023009268A7 /* CoreHTTPClient.swift */; };
+		9A3B797A29170116009268A7 /* MarkFavoriteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B797929170116009268A7 /* MarkFavoriteRequest.swift */; };
 		9A5CA7A6290A018000C6FD0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5CA7A5290A018000C6FD0D /* AppDelegate.swift */; };
 		9A5CA7A8290A018000C6FD0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5CA7A7290A018000C6FD0D /* SceneDelegate.swift */; };
 		9A5CA7AD290A018000C6FD0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A5CA7AB290A018000C6FD0D /* Main.storyboard */; };
@@ -100,6 +101,7 @@
 		9A3B79722916ED58009268A7 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
 		9A3B79742916FFA9009268A7 /* ApiResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponseError.swift; sourceTree = "<group>"; };
 		9A3B797629170023009268A7 /* CoreHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHTTPClient.swift; sourceTree = "<group>"; };
+		9A3B797929170116009268A7 /* MarkFavoriteRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkFavoriteRequest.swift; sourceTree = "<group>"; };
 		9A5CA7A2290A018000C6FD0D /* eMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A5CA7A5290A018000C6FD0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A5CA7A7290A018000C6FD0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				9A3B79692916B6F9009268A7 /* SessionToken.swift */,
 				9A3B796B2916B726009268A7 /* Account.swift */,
 				9A3B79742916FFA9009268A7 /* ApiResponseError.swift */,
+				9A3B797929170116009268A7 /* MarkFavoriteRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 				9A1D1E2529116C7600E286AE /* HomeRouter.swift in Sources */,
 				9A3B796029169C76009268A7 /* TabBarRouter.swift in Sources */,
 				9AB49955290C0E9D0084B7CC /* MovieDetailViewController.swift in Sources */,
+				9A3B797A29170116009268A7 /* MarkFavoriteRequest.swift in Sources */,
 				9A5CA7F0290AB84F00C6FD0D /* HTTPClient.swift in Sources */,
 				9A3B796A2916B6F9009268A7 /* SessionToken.swift in Sources */,
 				9A3B795E29169BC8009268A7 /* TabBarController.swift in Sources */,

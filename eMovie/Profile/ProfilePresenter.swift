@@ -14,11 +14,17 @@ protocol ProfilePresenterProtocol {
     
     func didTapLogoutButton()
     func didReceivedDeleteSessionData()
+    func didReceivedFavoriteMoviesData(_ data: [MovieWrapper])
     func didReceivedAccountDetailsData(_ data: Account?)
     func getAccountDetails()
+    func getFavoriteMovies()
 }
 
 class ProfilePresenter: ProfilePresenterProtocol {
+    func didReceivedFavoriteMoviesData(_ data: [MovieWrapper]) {
+        self.view?.updateFavoriteMovies(data: data)
+    }
+    
     var view: ProfileViewController?
     var interactor: ProfileInteractorProtocol?
     var router: ProfileRouterProtocol?
@@ -31,6 +37,10 @@ class ProfilePresenter: ProfilePresenterProtocol {
     
     func getAccountDetails() {
         self.interactor?.getAccountDetail()
+    }
+    
+    func getFavoriteMovies() {
+        self.interactor?.getFavoriteMovies()
     }
     
     func didTapLogoutButton() {

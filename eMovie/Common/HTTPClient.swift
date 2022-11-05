@@ -16,9 +16,19 @@ protocol HTTPClientProtocol {
     func validateWithLogin(loginData: LoginRequest, completion: @escaping (LoginResponse?,MovieError?) -> Void)
     func createSessionToken(sessionTokenRequest: SessionTokenRequest, completion: @escaping (String?,MovieError?) -> Void)
     func getAccountDetails(completion: @escaping (Account?,MovieError?) -> Void)
+    func markAsFavorite(favoriteData: MarkFavoriteRequest, completion: @escaping (ApiResponseError?) -> Void)
+    func getFavoritedMovies(completion: @escaping ([Movie]?,MovieError?) -> Void)
 }
 
 class HTTPClient: HTTPClientProtocol {
+    func getFavoritedMovies(completion: @escaping ([Movie]?, MovieError?) -> Void) {
+        let url = baseURL + ApiPath.getFavoriteMovies.rawValue.replacingOccurrences(of: "{account_id}", with: "8872462")
+        CoreHTTPClient.shared.request(url: url, responseType: ResultReponse<Movie>.self) { res, err in
+            completion(res?.results, err)
+        }
+    }
+    
+    
     private let baseURL = "https://api.themoviedb.org/3/"
     
     enum ApiPath: String {
@@ -30,14 +40,20 @@ class HTTPClient: HTTPClientProtocol {
         case createLoginSession = "authentication/token/validate_with_login"
         case createSessionToken = "authentication/session/new"
         case account = "account"
+        case favorite = "account/{account_id}/favorite"
+        case getFavoriteMovies = "account/{account_id}/favorite/movies"
     }
     
     //MARK: User services
-    func getAccountDetails(completion: @escaping (Account?,MovieError?) -> Void) {
-        guard let sessionToken = UserDefaults.standard.value(forKey: "sessionToken") as? String else {
-            return
+    func markAsFavorite(favoriteData: MarkFavoriteRequest, completion: @escaping (ApiResponseError?) -> Void) {
+        let url = baseURL + ApiPath.favorite.rawValue.replacingOccurrences(of: "{account_id}", with: "8872462")
+        CoreHTTPClient.shared.request(url: url, data: favoriteData, responseType: ApiResponseError.self) { res, err in
+            completion(res)
         }
-        CoreHTTPClient.shared.request(url: baseURL + ApiPath.account.rawValue, params: ["session_id": sessionToken], responseType: Account.self) { res, error in
+    }
+    
+    func getAccountDetails(completion: @escaping (Account?,MovieError?) -> Void) {
+        CoreHTTPClient.shared.request(url: baseURL + ApiPath.account.rawValue, responseType: Account.self) { res, error in
             completion(res,error)
         }
     }
