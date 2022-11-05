@@ -8,14 +8,43 @@
 import UIKit
 import WebKit
 
-class ProfileViewController: UIViewController {
+protocol ProfileViewProtocol {
+    var presenter: ProfilePresenterProtocol? { get set }
     
-    let loginUrl = "https://www.themoviedb.org/authenticate/{REQUEST_TOKEN}?redirect_to=http://emovie"
-    var webView: WKWebView!
+    func updateAccountDetail(withData: Account?)
+}
 
+class ProfileViewController: UIViewController, ProfileViewProtocol {
+    
+    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    
+    var presenter: ProfilePresenterProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        generateLogoutButton()
         
+        presenter?.getAccountDetails()
+    }
+    
+    func updateAccountDetail(withData: Account?) {
+        usernameLabel.text = withData?.username ?? ""
+    }
+    
+    private func generateLogoutButton() {
+        let button = UIButton()
+        button.setTitle("Logout", for: .normal)
+        button.setTitleColor(.red, for: .normal)
+        button.addTarget(self, action: #selector(logoutAction), for: .touchUpInside)
+        self.view.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        button.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+    }
+    
+    @objc func logoutAction(_ sender: Any) {
+        presenter?.didTapLogoutButton()
     }
     
 }

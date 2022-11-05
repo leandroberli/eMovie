@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 protocol LoginRouterProtocol {
-   // static func createMovieDetailModule(forMovie: Movie) -> UIViewController
     static func createLoginModule() -> UIViewController
+    func finishLoginProcess(fromView: LoginViewController?)
 }
 
 class LoginRouter: LoginRouterProtocol {
@@ -22,6 +22,19 @@ class LoginRouter: LoginRouterProtocol {
         
         loginController.presenter = presenter
         interactor.presenter = presenter
+        
+        let item3 = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
+        loginController.tabBarItem = item3
+        
         return loginController
+    }
+    
+    func finishLoginProcess(fromView: LoginViewController?) {
+        let profileModule = ProfileRouter.createProfileModule()
+        
+        fromView?.tabBarController?.viewControllers?.append(profileModule)
+        fromView?.tabBarController?.viewControllers?.removeAll(where: { $0 == fromView })
+        
+        fromView?.navigationController?.pushViewController(profileModule, animated: true)
     }
 }

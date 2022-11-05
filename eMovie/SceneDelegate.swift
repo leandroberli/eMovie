@@ -14,15 +14,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-        self.window = generateHomeWindow(scene: scene)
+        self.window = generateWindow(scene: scene)
         self.window?.overrideUserInterfaceStyle = .dark
         NetworkStatusHandler.shared.startMonitor()
     }
     
-    func generateHomeWindow(scene: UIWindowScene) -> UIWindow {
-        let navController = HomeRouter.createHomeModule()
+    func generateWindow(scene: UIWindowScene) -> UIWindow {
+        let rootController = TabBarRouter.createTabBarModule()
         let window = UIWindow(windowScene: scene)
-        window.rootViewController = navController
+        window.rootViewController = rootController
         window.makeKeyAndVisible()
         return window
     }

@@ -19,16 +19,16 @@ protocol HTTPClientProtocol {
     func getDetailMovie(withId: Int, completion: @escaping (MovieDetail?,Error?) -> Void)
     func getMovieVideo(withId: Int, completion: @escaping ([Video]?,Error?) -> Void)
     
-    func createRequestToken(completion: @escaping (RequestToken?,Error?) -> Void)
+    func createRequestToken(completion: @escaping (RequestTokenResponse?,Error?) -> Void)
     func validateWithLogin(loginData: LoginRequest, completion: @escaping (LoginResponse?,Error?) -> Void)
-    func createSessionToken(sessionTokenRequest: SessionTokenData, completion: @escaping (String?,Error?) -> Void)
+    func createSessionToken(sessionTokenRequest: SessionTokenRequest, completion: @escaping (String?,Error?) -> Void)
     
     
     func getAccountDetails(completion: @escaping (Account?,Error?) -> Void)
 }
 
 class HTTPClient: HTTPClientProtocol {
-    func createSessionToken(sessionTokenRequest: SessionTokenData, completion: @escaping (String?, Error?) -> Void) {
+    func createSessionToken(sessionTokenRequest: SessionTokenRequest, completion: @escaping (String?, Error?) -> Void) {
         let url = baseURL + ApiPath.createSessionToken.rawValue
         CoreHTTPClient.shared.request(url: url, data: sessionTokenRequest, responseType: SessionTokenResponse.self) { res, err in
             completion(res?.session_id, err)
@@ -62,9 +62,9 @@ class HTTPClient: HTTPClientProtocol {
         }
     }
     
-    func createRequestToken(completion: @escaping (RequestToken?,Error?) -> Void) {
+    func createRequestToken(completion: @escaping (RequestTokenResponse?,Error?) -> Void) {
         let urlString = baseURL + ApiPath.createRequestToken.rawValue
-        CoreHTTPClient.shared.request(url: urlString, responseType: RequestToken.self) { res, error in
+        CoreHTTPClient.shared.request(url: urlString, responseType: RequestTokenResponse.self) { res, error in
             completion(res,error)
         }
     }

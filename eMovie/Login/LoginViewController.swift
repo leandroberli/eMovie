@@ -21,7 +21,6 @@ class LoginViewController: UIViewController, LoginViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         generateForm()
-        //presenter?.getRequestToken()
     }
     
     func generateForm() {
@@ -62,7 +61,7 @@ class LoginViewController: UIViewController, LoginViewProtocol {
             password = "g4t0r4d309"
         }
         
-        presenter?.didTapLogin(usermane: username, password: password)
+        presenter?.didTapLoginButton(usermane: username, password: password)
     }
 
 }

@@ -19,6 +19,14 @@
 		9A3B7957291537A0009268A7 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B7956291537A0009268A7 /* LoginPresenter.swift */; };
 		9A3B7959291537AA009268A7 /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B7958291537AA009268A7 /* LoginInteractor.swift */; };
 		9A3B795B291537B2009268A7 /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B795A291537B2009268A7 /* LoginRouter.swift */; };
+		9A3B795E29169BC8009268A7 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B795D29169BC8009268A7 /* TabBarController.swift */; };
+		9A3B796029169C76009268A7 /* TabBarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B795F29169C76009268A7 /* TabBarRouter.swift */; };
+		9A3B79622916A35E009268A7 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B79612916A35E009268A7 /* ProfilePresenter.swift */; };
+		9A3B79642916A36B009268A7 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B79632916A36B009268A7 /* ProfileRouter.swift */; };
+		9A3B79662916A376009268A7 /* ProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B79652916A376009268A7 /* ProfileInteractor.swift */; };
+		9A3B79682916B6B4009268A7 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B79672916B6B4009268A7 /* Login.swift */; };
+		9A3B796A2916B6F9009268A7 /* SessionToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B79692916B6F9009268A7 /* SessionToken.swift */; };
+		9A3B796C2916B726009268A7 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B796B2916B726009268A7 /* Account.swift */; };
 		9A5CA7A6290A018000C6FD0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5CA7A5290A018000C6FD0D /* AppDelegate.swift */; };
 		9A5CA7A8290A018000C6FD0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5CA7A7290A018000C6FD0D /* SceneDelegate.swift */; };
 		9A5CA7AD290A018000C6FD0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A5CA7AB290A018000C6FD0D /* Main.storyboard */; };
@@ -36,8 +44,6 @@
 		9A77B8EF290D5AB7003EEE36 /* NetworkStatusHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77B8EE290D5AB7003EEE36 /* NetworkStatusHandler.swift */; };
 		9A77B8F2290D99C9003EEE36 /* HomePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */; };
 		9A77B8F4290DE8F8003EEE36 /* movies.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A77B8F3290DE8F8003EEE36 /* movies.json */; };
-		9A9E04342914579E00C11AF4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9E04322914579E00C11AF4 /* MapViewController.swift */; };
-		9A9E04352914579E00C11AF4 /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A9E04332914579E00C11AF4 /* MapViewController.xib */; };
 		9A9E043729149BF800C11AF4 /* RequesToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9E043629149BF800C11AF4 /* RequesToken.swift */; };
 		9A9E043B29149DB500C11AF4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9E043929149DB500C11AF4 /* ProfileViewController.swift */; };
 		9A9E043C29149DB500C11AF4 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A9E043A29149DB500C11AF4 /* ProfileViewController.xib */; };
@@ -78,6 +84,14 @@
 		9A3B7956291537A0009268A7 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		9A3B7958291537AA009268A7 /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		9A3B795A291537B2009268A7 /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		9A3B795D29169BC8009268A7 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		9A3B795F29169C76009268A7 /* TabBarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarRouter.swift; sourceTree = "<group>"; };
+		9A3B79612916A35E009268A7 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		9A3B79632916A36B009268A7 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		9A3B79652916A376009268A7 /* ProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInteractor.swift; sourceTree = "<group>"; };
+		9A3B79672916B6B4009268A7 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		9A3B79692916B6F9009268A7 /* SessionToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionToken.swift; sourceTree = "<group>"; };
+		9A3B796B2916B726009268A7 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		9A5CA7A2290A018000C6FD0D /* eMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A5CA7A5290A018000C6FD0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A5CA7A7290A018000C6FD0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,8 +114,6 @@
 		9A77B8EE290D5AB7003EEE36 /* NetworkStatusHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusHandler.swift; sourceTree = "<group>"; };
 		9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterTests.swift; sourceTree = "<group>"; };
 		9A77B8F3290DE8F8003EEE36 /* movies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = movies.json; sourceTree = "<group>"; };
-		9A9E04322914579E00C11AF4 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		9A9E04332914579E00C11AF4 /* MapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		9A9E043629149BF800C11AF4 /* RequesToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequesToken.swift; sourceTree = "<group>"; };
 		9A9E043929149DB500C11AF4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9A9E043A29149DB500C11AF4 /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -192,6 +204,15 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		9A3B795C29169B80009268A7 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				9A3B795D29169BC8009268A7 /* TabBarController.swift */,
+				9A3B795F29169C76009268A7 /* TabBarRouter.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		9A5CA799290A018000C6FD0D = {
 			isa = PBXGroup;
 			children = (
@@ -216,13 +237,13 @@
 		9A5CA7A4290A018000C6FD0D /* eMovie */ = {
 			isa = PBXGroup;
 			children = (
+				9A3B795C29169B80009268A7 /* TabBar */,
 				9A3B795129153781009268A7 /* Login */,
 				9A5CA7E8290A0D2600C6FD0D /* Models */,
 				9A5CA7E0290A039C00C6FD0D /* Common */,
 				9A9E043829149D8D00C11AF4 /* Profile */,
 				9AB49952290C0E880084B7CC /* Detail */,
 				9A5CA7DA290A01F900C6FD0D /* Home */,
-				9A9E04312914578700C11AF4 /* Map */,
 				9A5CA7A5290A018000C6FD0D /* AppDelegate.swift */,
 				9A5CA7A7290A018000C6FD0D /* SceneDelegate.swift */,
 				9A5CA7AB290A018000C6FD0D /* Main.storyboard */,
@@ -280,6 +301,9 @@
 				9AB49959290C19C40084B7CC /* MovieDetail.swift */,
 				9AB4995B290C4C8E0084B7CC /* Video.swift */,
 				9A9E043629149BF800C11AF4 /* RequesToken.swift */,
+				9A3B79672916B6B4009268A7 /* Login.swift */,
+				9A3B79692916B6F9009268A7 /* SessionToken.swift */,
+				9A3B796B2916B726009268A7 /* Account.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,20 +328,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		9A9E04312914578700C11AF4 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				9A9E04322914579E00C11AF4 /* MapViewController.swift */,
-				9A9E04332914579E00C11AF4 /* MapViewController.xib */,
-			);
-			path = Map;
-			sourceTree = "<group>";
-		};
 		9A9E043829149D8D00C11AF4 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				9A9E043929149DB500C11AF4 /* ProfileViewController.swift */,
 				9A9E043A29149DB500C11AF4 /* ProfileViewController.xib */,
+				9A3B79612916A35E009268A7 /* ProfilePresenter.swift */,
+				9A3B79632916A36B009268A7 /* ProfileRouter.swift */,
+				9A3B79652916A376009268A7 /* ProfileInteractor.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -439,7 +457,6 @@
 				9A9E043C29149DB500C11AF4 /* ProfileViewController.xib in Resources */,
 				9AB49956290C0E9D0084B7CC /* MovieDetailViewController.xib in Resources */,
 				9A5CA7DF290A030300C6FD0D /* HomeViewController.xib in Resources */,
-				9A9E04352914579E00C11AF4 /* MapViewController.xib in Resources */,
 				9A5CA7AD290A018000C6FD0D /* Main.storyboard in Resources */,
 				9A5CA7EE290A10F800C6FD0D /* MovieCollectionViewCell.xib in Resources */,
 				9A3B795529153792009268A7 /* LoginViewController.xib in Resources */,
@@ -528,23 +545,30 @@
 				9A3B7957291537A0009268A7 /* LoginPresenter.swift in Sources */,
 				9AB49958290C11750084B7CC /* MovieDetailPresenter.swift in Sources */,
 				9A5CA7F7290AD50900C6FD0D /* SectionHeaderView.swift in Sources */,
+				9A3B79682916B6B4009268A7 /* Login.swift in Sources */,
 				9A3B7959291537AA009268A7 /* LoginInteractor.swift in Sources */,
 				9A5CA7DE290A030300C6FD0D /* HomeViewController.swift in Sources */,
 				9A3B795429153792009268A7 /* LoginViewController.swift in Sources */,
-				9A9E04342914579E00C11AF4 /* MapViewController.swift in Sources */,
 				9AAFB5C729100B7A00DBD790 /* HomeInteractor.swift in Sources */,
 				9A5CA7E6290A0B9A00C6FD0D /* UIView+Extension.swift in Sources */,
 				9A9E043B29149DB500C11AF4 /* ProfileViewController.swift in Sources */,
 				9A5CA7A6290A018000C6FD0D /* AppDelegate.swift in Sources */,
+				9A3B79622916A35E009268A7 /* ProfilePresenter.swift in Sources */,
 				9AB4995C290C4C8E0084B7CC /* Video.swift in Sources */,
 				9A5CA7A8290A018000C6FD0D /* SceneDelegate.swift in Sources */,
 				9A1D1E2529116C7600E286AE /* HomeRouter.swift in Sources */,
+				9A3B796029169C76009268A7 /* TabBarRouter.swift in Sources */,
 				9AB49955290C0E9D0084B7CC /* MovieDetailViewController.swift in Sources */,
 				9A5CA7F0290AB84F00C6FD0D /* HTTPClient.swift in Sources */,
+				9A3B796A2916B6F9009268A7 /* SessionToken.swift in Sources */,
+				9A3B795E29169BC8009268A7 /* TabBarController.swift in Sources */,
 				9AB4995A290C19C40084B7CC /* MovieDetail.swift in Sources */,
 				9A5CA7ED290A10F800C6FD0D /* MovieCollectionViewCell.swift in Sources */,
 				9A1D1E2B291174D400E286AE /* MovieDetailInteractor.swift in Sources */,
+				9A3B796C2916B726009268A7 /* Account.swift in Sources */,
 				9A5CA7EA290A0D3200C6FD0D /* Movie.swift in Sources */,
+				9A3B79662916A376009268A7 /* ProfileInteractor.swift in Sources */,
+				9A3B79642916A36B009268A7 /* ProfileRouter.swift in Sources */,
 				9A9E043729149BF800C11AF4 /* RequesToken.swift in Sources */,
 				9A77B8EF290D5AB7003EEE36 /* NetworkStatusHandler.swift in Sources */,
 				9A1D1E2729116FD100E286AE /* MovieDetailRouter.swift in Sources */,
