@@ -21,7 +21,7 @@ class LoginTextfield: UITextField {
     
     func configure() {
         self.backgroundColor = .systemGray4
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 10
         self.clipsToBounds = true
         self.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         self.clearButtonMode = .whileEditing

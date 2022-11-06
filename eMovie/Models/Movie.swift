@@ -15,17 +15,17 @@ struct ResultReponse<Result: Codable>: Codable {
 }
 
 struct Movie: Codable, Hashable {
-    var poster_path: String
-    var adult: Bool
-    var overview: String
-    var release_date: String
-    var original_language: String
-    var genre_ids: [Int]
-    var id: Int
-    var original_title: String
+    var poster_path: String?
+    var adult: Bool?
+    var overview: String?
+    var release_date: String?
+    var original_language: String?
+    var genre_ids: [Int]?
+    var id: Int?
+    var original_title: String?
     
     func getPosterURL() -> String {
-        return "https://image.tmdb.org/t/p/w1280" + poster_path
+        return "https://image.tmdb.org/t/p/w1280" + (poster_path ?? "")
     }
     
     func getReleaseYear() -> Int {
@@ -33,7 +33,7 @@ struct Movie: Codable, Hashable {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        guard let date = dateFormatter.date(from: self.release_date) else {
+        guard let date = dateFormatter.date(from: (self.release_date ?? "")) else {
             return 0
         }
         

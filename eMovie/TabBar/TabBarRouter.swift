@@ -20,6 +20,9 @@ class TabBarRouter: TabBarRouterProtocol {
         let homeModule = HomeRouter.createHomeModule()
         tabBarController.viewControllers = [homeModule]
         
+        let searchController = SearchRouter.createSearchModule()
+        tabBarController.viewControllers?.append(searchController)
+        
         if let _ = UserDefaults.standard.value(forKey: "sessionToken") {
             let profileModule = ProfileRouter.createProfileModule()
             tabBarController.viewControllers?.append(profileModule)

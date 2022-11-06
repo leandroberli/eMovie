@@ -22,7 +22,7 @@ class LoginButton: UIButton {
     func configure() {
         //self.buttonType = .custom
         self.backgroundColor = .systemBlue
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 10
         self.clipsToBounds = true
         self.setTitleColor(.white, for: .normal)
         self.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
