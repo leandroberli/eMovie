@@ -10,8 +10,8 @@ import UIKit
 class FilterButton: UIButton {
     
     enum FilterOption: String, CaseIterable {
-        case lang = "   En Japones   "
-        case date = "   Lanzado en 2020   "
+        case lang = "   En inglés   "
+        case date = "   Lanzado en 2019   "
     }
     
     var option: FilterOption = .lang

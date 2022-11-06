@@ -55,26 +55,27 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.tintColor = .white
         navigationItem.title = presenter?.movie?.original_title ?? ""
-        
+       generateFavItem()
+    }
+    
+    private func generateFavItem() {
         let favorited = self.presenter?.favorite ?? false
         let image = favorited ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        let color = favorited ? UIColor.systemRed : UIColor.white
         let favItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(favoriteButtonAction))
-        
+        favItem.tintColor = color
         navigationItem.rightBarButtonItem = favItem
     }
     
     @objc func favoriteButtonAction(_ sender: Any) {
-        let fav = self.presenter?.favorite ?? false
-        let image = !fav ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
-        let favItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(favoriteButtonAction))
-        navigationItem.rightBarButtonItem = favItem
-        
         self.presenter?.didTapFavoriteButton()
+        generateFavItem()
     }
     
     private func configViews() {
         watchTrailerButton.layer.borderWidth = 1
-        watchTrailerButton.layer.borderColor = UIColor.white.cgColor
+        watchTrailerButton.layer.borderColor = UIColor.systemBlue.cgColor
+        watchTrailerButton.backgroundColor = UIColor.systemBlue
         watchTrailerButton.layer.cornerRadius = 8
         watchTrailerButton.addTarget(self, action: #selector(didTapViewTrailer), for: .touchUpInside)
         

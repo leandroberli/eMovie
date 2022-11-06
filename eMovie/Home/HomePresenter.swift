@@ -42,8 +42,8 @@ class HomePresenter: HomePresenterProtocol {
     var filtredRecommendedMovies: [MovieWrapper] = []
     //Set year and langague values for filter.
     //Change string labels from RecommendedHeaderView.
-    var selectedDate = 2020
-    var selectedLang = "ja"
+    var selectedDate = 2019
+    var selectedLang = "en"
 
     init(view: HomeViewProtocol, interactor: HomeInteractorProtocol, router: HomeRouterProtocol) {
         self.view = view
@@ -94,12 +94,12 @@ class HomePresenter: HomePresenterProtocol {
     
     private func filterMoviesBy(lang: String, movies: [MovieWrapper]) -> [MovieWrapper] {
         let filtredArray = movies.filter({ $0.movie.original_language == lang })
-        return Array(filtredArray.suffix(6))
+        return Array(filtredArray)
     }
     
     private func filterMoviesBy(year: Int, movies: [MovieWrapper]) -> [MovieWrapper] {
         let filtredMovies = movies.filter({ $0.movie.getReleaseYear() == year })
-        return Array(filtredMovies.suffix(6))
+        return Array(filtredMovies)
     }
     
     func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section) {

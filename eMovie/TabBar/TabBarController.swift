@@ -13,7 +13,7 @@ class TabBarController: UITabBarController {
     let normalFont = UIFont.systemFont(ofSize: 14, weight: .regular)
     let selectedFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
     let normalColor = UIColor.systemGray
-    let selectedColor = UIColor.white
+    let selectedColor = UIColor.systemBlue
     
     override func viewDidLoad() {
         super.viewDidLoad()

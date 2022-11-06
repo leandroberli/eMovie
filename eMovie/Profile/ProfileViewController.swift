@@ -48,7 +48,7 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
         appearance.setBackIndicatorImage(UIImage(systemName: "arrow.left"), transitionMaskImage: UIImage(systemName: "arrow.left"))
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = .systemBlue
         self.navigationItem.backButtonTitle = ""
     }
     
