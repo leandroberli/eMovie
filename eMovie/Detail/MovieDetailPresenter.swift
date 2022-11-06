@@ -11,9 +11,11 @@ protocol MovieDetailPresenterProtocol {
     var movie: Movie? { get set }
     var view: MovieDetailViewProtocol? { get set }
     var interactor: MovieDetailInteractorProtocol? { get set }
+    var favorite: Bool { get set }
 
     func getMovieDetail()
     func getMovieVideoTrailer()
+    func didTapFavoriteButton()
 }
 
 class MovieDetailPresenter: MovieDetailPresenterProtocol {
@@ -21,6 +23,7 @@ class MovieDetailPresenter: MovieDetailPresenterProtocol {
     weak var view: MovieDetailViewProtocol?
     var movie: Movie?
     var interactor: MovieDetailInteractorProtocol?
+    var favorite: Bool = false
     
     init(movie: Movie, view: MovieDetailViewProtocol, interactor: MovieDetailInteractorProtocol) {
         self.movie = movie
@@ -34,6 +37,12 @@ class MovieDetailPresenter: MovieDetailPresenterProtocol {
                 self.view?.updateViewWithMovie(data: detail)
             }
         }
+    }
+    
+    func didTapFavoriteButton() {
+        let fav = self.favorite
+        self.favorite = !fav
+        interactor?.markAsFavorite(favorite: favorite, movieId: movie?.id ?? 0)
     }
     
     func getMovieVideoTrailer() {

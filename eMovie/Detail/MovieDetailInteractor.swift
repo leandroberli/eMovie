@@ -12,6 +12,7 @@ protocol MovieDetailInteractorProtocol {
     
     func getMovieDetail(withId: Int, completion: @escaping (MovieDetail?, Error?) -> Void)
     func getMovieVideoTrailer(withId: Int, completion: @escaping (Video?,Error?) -> Void)
+    func markAsFavorite(favorite: Bool, movieId: Int)
 }
 
 class MovieDetailInteractor: MovieDetailInteractorProtocol {
@@ -19,6 +20,19 @@ class MovieDetailInteractor: MovieDetailInteractorProtocol {
     
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient
+    }
+    
+    func markAsFavorite(favorite: Bool, movieId: Int) {
+        var data = MarkFavoriteRequest()
+        data.favorite = favorite
+        data.media_id = movieId
+        httpClient?.markAsFavorite(favoriteData: data) { res in
+            if res?.success ?? false {
+                
+            } else {
+                
+            }
+        }
     }
     
     func getMovieDetail(withId: Int, completion: @escaping (MovieDetail?, Error?) -> Void) {

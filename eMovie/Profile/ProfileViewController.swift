@@ -27,7 +27,6 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
         super.viewDidLoad()
         generateLogoutButton()
         presenter?.getAccountDetails()
-        presenter?.getFavoriteMovies()
         
         let layout = HomeCollectionBuilder.generateRecommendedLayout()
         collectionView = HomeCollectionBuilder.setupCollection(viewController: self, layout: layout)
@@ -36,6 +35,7 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        presenter?.getFavoriteMovies()
         configNavbar()
     }
     

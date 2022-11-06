@@ -33,7 +33,7 @@ class ProfileInteractor: ProfileInteractorProtocol {
         httpClient?.getFavoritedMovies { res, err in
             DispatchQueue.main.async {
                 let data = self.generateMoviesWarappers(res ?? [], forSection: .recommended)
-                self.presenter?.didReceivedFavoriteMoviesData(data)
+                self.presenter?.didReceivedFavoriteMoviesData(data.reversed())
             }
         }
     }

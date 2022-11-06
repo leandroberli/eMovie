@@ -40,6 +40,8 @@ class ProfileRouter: ProfileRouterProtocol {
     
     func navigateToMovieDetail(fromView: UIViewController?, movie: Movie) {
         let detailModule = MovieDetailRouter.createMovieDetailModule(forMovie: movie)
+        guard let detail = detailModule as? MovieDetailViewController else { return }
+        detail.presenter?.favorite = true
         fromView?.navigationController?.pushViewController(detailModule, animated: true)
     }
     

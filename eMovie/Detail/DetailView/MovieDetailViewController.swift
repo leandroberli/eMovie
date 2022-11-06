@@ -55,6 +55,21 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.tintColor = .white
         navigationItem.title = presenter?.movie?.original_title ?? ""
+        
+        let favorited = self.presenter?.favorite ?? false
+        let image = favorited ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        let favItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(favoriteButtonAction))
+        
+        navigationItem.rightBarButtonItem = favItem
+    }
+    
+    @objc func favoriteButtonAction(_ sender: Any) {
+        let fav = self.presenter?.favorite ?? false
+        let image = !fav ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        let favItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(favoriteButtonAction))
+        navigationItem.rightBarButtonItem = favItem
+        
+        self.presenter?.didTapFavoriteButton()
     }
     
     private func configViews() {
