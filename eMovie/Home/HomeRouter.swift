@@ -25,7 +25,9 @@ class HomeRouter: HomeRouterProtocol {
         let item = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         homeController.tabBarItem = item
         
-        return homeController
+        let nav = UINavigationController(rootViewController: homeController)
+        
+        return nav
     }
     
     func navigateMovieDetailScreen(from view: UIViewController, andMovie: Movie) {

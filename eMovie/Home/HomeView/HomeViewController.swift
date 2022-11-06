@@ -40,26 +40,14 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         self.navigationController?.navigationBar.standardAppearance = UINavigationBarAppearance()
         self.navigationController?.navigationBar.standardAppearance.configureWithDefaultBackground()
         self.navigationController?.navigationBar.scrollEdgeAppearance?.configureWithDefaultBackground()
+        self.navigationItem.backButtonTitle = ""
+        self.navigationItem.title = "eMovie"
     }
     
     private func setupCollection() {
-        let layout = generateLayout()
-        collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
-        self.view.addSubview(collectionView)
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        
-        collectionView.showsVerticalScrollIndicator = false
+        let layout = HomeCollectionBuilder.generateCombinedLayout()
+        collectionView = HomeCollectionBuilder.setupCollection(viewController: self, layout: layout)
         collectionView.delegate = self
-        collectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
-        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: HomeViewController.sectionHeaderElementKind,
-          withReuseIdentifier: SectionHeaderView.reuseIdentifier)
-        collectionView.register(RecommendedHeaderView.self, forSupplementaryViewOfKind: HomeViewController.sectionHeaderElementKind,
-          withReuseIdentifier: RecommendedHeaderView.reuseIdentifier)
     }
     
     func configureDataSource() {
@@ -131,58 +119,6 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         snapshot.appendItems(recommendedMovies)
         
         return snapshot
-    }
-    
-    //For upcoming and top rated movies layout.
-    func generateHorizontalSliderLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let fullPhotoItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        fullPhotoItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(138), heightDimension: .estimated(181))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: fullPhotoItem, count: 1)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(44))
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: HomeViewController.sectionHeaderElementKind, alignment: .top)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-        section.boundarySupplementaryItems = [sectionHeader]
-        section.orthogonalScrollingBehavior = .continuous
-        
-        return section
-    }
-    
-    func generateReccomendedLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
-        let fullPhotoItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        fullPhotoItem.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(2/3))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [fullPhotoItem])
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
-        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: HomeViewController.sectionHeaderElementKind, alignment: .top)
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-        section.boundarySupplementaryItems = [sectionHeader]
-        
-        return section
-    }
-    
-    func generateLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            let section = Section.allCases[sectionIndex]
-            switch section {
-            case .upcoming:
-                return self.generateHorizontalSliderLayout()
-            case .topRated:
-                return self.generateHorizontalSliderLayout()
-            case .recommended:
-                return self.generateReccomendedLayout()
-            }
-        }
-        return layout
     }
 }
 

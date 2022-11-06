@@ -28,7 +28,7 @@ class TabBarRouter: TabBarRouterProtocol {
             tabBarController.viewControllers?.append(loginModule)
         }
         
-        let navController = UINavigationController(rootViewController: tabBarController)
+        let navController = tabBarController
         return navController
     }
 }

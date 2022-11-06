@@ -11,6 +11,7 @@ import UIKit
 protocol ProfileRouterProtocol {
     static func createProfileModule() -> UIViewController
     func navigateAfterLogoutAction(fromView: UIViewController?)
+    func navigateToMovieDetail(fromView: UIViewController?, movie: Movie)
 }
 
 class ProfileRouter: ProfileRouterProtocol {
@@ -25,16 +26,21 @@ class ProfileRouter: ProfileRouterProtocol {
         let item3 = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
         viewController.tabBarItem = item3
         
-        return viewController
+        let nav = UINavigationController(rootViewController: viewController)
+        
+        return nav
     }
     
     func navigateAfterLogoutAction(fromView: UIViewController?) {
         let loginModule = LoginRouter.createLoginModule()
         
         fromView?.tabBarController?.viewControllers?.append(loginModule)
-        fromView?.tabBarController?.viewControllers?.removeAll(where: { $0 == fromView })
-        
-        fromView?.navigationController?.pushViewController(loginModule, animated: true)
+        fromView?.tabBarController?.viewControllers?.remove(at: 1)
+    }
+    
+    func navigateToMovieDetail(fromView: UIViewController?, movie: Movie) {
+        let detailModule = MovieDetailRouter.createMovieDetailModule(forMovie: movie)
+        fromView?.navigationController?.pushViewController(detailModule, animated: true)
     }
     
 }

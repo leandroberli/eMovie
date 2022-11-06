@@ -13,6 +13,7 @@ protocol ProfilePresenterProtocol {
     var router: ProfileRouterProtocol? { get set }
     
     func didTapLogoutButton()
+    func didTapFavoriteItem(at index: Int)
     func didReceivedDeleteSessionData()
     func didReceivedFavoriteMoviesData(_ data: [MovieWrapper])
     func didReceivedAccountDetailsData(_ data: Account?)
@@ -21,13 +22,20 @@ protocol ProfilePresenterProtocol {
 }
 
 class ProfilePresenter: ProfilePresenterProtocol {
+    func didTapFavoriteItem(at index: Int) {
+        let movie = favorites[index]
+        self.router?.navigateToMovieDetail(fromView: self.view, movie: movie.movie)
+    }
+    
     func didReceivedFavoriteMoviesData(_ data: [MovieWrapper]) {
+        self.favorites = data
         self.view?.updateFavoriteMovies(data: data)
     }
     
     var view: ProfileViewController?
     var interactor: ProfileInteractorProtocol?
     var router: ProfileRouterProtocol?
+    var favorites: [MovieWrapper] = []
     
     init(view: ProfileViewController, interactor: ProfileInteractorProtocol, router: ProfileRouterProtocol) {
         self.view = view

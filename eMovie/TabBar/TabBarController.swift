@@ -29,7 +29,6 @@ class TabBarController: UITabBarController {
         style.stackedLayoutAppearance.selected.iconColor = selectedColor
         
         self.tabBar.standardAppearance = style
-        self.navigationItem.title = "eMovie"
-        self.navigationItem.backButtonTitle = ""
+        self.tabBar.scrollEdgeAppearance = style
     }
 }

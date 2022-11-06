@@ -26,15 +26,16 @@ class LoginRouter: LoginRouterProtocol {
         let item3 = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
         loginController.tabBarItem = item3
         
-        return loginController
+        let nav = UINavigationController(rootViewController: loginController)
+        
+        return nav
     }
     
     func finishLoginProcess(fromView: LoginViewController?) {
         let profileModule = ProfileRouter.createProfileModule()
         
         fromView?.tabBarController?.viewControllers?.append(profileModule)
-        fromView?.tabBarController?.viewControllers?.removeAll(where: { $0 == fromView })
+        fromView?.tabBarController?.viewControllers?.remove(at: 1)
         
-        fromView?.navigationController?.pushViewController(profileModule, animated: true)
     }
 }
