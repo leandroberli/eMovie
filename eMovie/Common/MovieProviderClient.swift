@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol MovieProviderClientProtocol {
     var core: CoreHTTPClient? { get set }
@@ -46,4 +47,38 @@ struct ItemMovieProvider: Codable {
 struct ProviderPlataform: Codable {
     var name: String?
     var url: String?
+    
+    func getImage() -> UIImage? {
+        for logo in ProviderLogos.allCases {
+            if logo.rawValue == self.name?.lowercased() {
+                return logo.image
+            }
+        }
+        return nil
+    }
+    
+    enum ProviderLogos: String, CaseIterable {
+        case amazon = "amazon prime video"
+        case google = "google play movies"
+        case hbo = "hbo max"
+        case netflix = "netflix"
+        case itunes = "apple itunes"
+        case claroVideo = "claro video"
+        case starPlus = "star plus"
+        
+        var image: UIImage? {
+            switch self {
+            case .amazon:
+                return UIImage(named: "prime-video-icon")
+            case .hbo:
+                return UIImage(named: "hbo-go-icon")
+            case .netflix:
+                return UIImage(named: "netflix_icon")
+            case .itunes:
+                return UIImage(named: "icons8-itunes")
+            default:
+                return UIImage(named: "")
+            }
+        }
+    }
 }

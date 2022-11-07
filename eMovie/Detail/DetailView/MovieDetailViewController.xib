@@ -165,19 +165,19 @@
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="SQd-Ag-4bf">
                             <rect key="frame" x="0.0" y="648.66666666666652" width="390" height="645"/>
                             <subviews>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dha-Yc-jaV">
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dha-Yc-jaV" userLabel="ProvidersView">
                                     <rect key="frame" x="0.0" y="0.0" width="390" height="50"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="LiZ-zx-Pid">
-                                            <rect key="frame" x="20" y="0.0" width="350" height="40"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="390" height="40"/>
                                         </stackView>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="LiZ-zx-Pid" secondAttribute="bottom" id="312-7p-Ncz"/>
                                         <constraint firstItem="LiZ-zx-Pid" firstAttribute="top" secondItem="Dha-Yc-jaV" secondAttribute="top" id="5u2-oL-xer"/>
-                                        <constraint firstAttribute="trailing" secondItem="LiZ-zx-Pid" secondAttribute="trailing" constant="20" id="M3h-T6-oVc"/>
-                                        <constraint firstItem="LiZ-zx-Pid" firstAttribute="leading" secondItem="Dha-Yc-jaV" secondAttribute="leading" constant="20" id="akq-1M-olv"/>
+                                        <constraint firstAttribute="trailing" secondItem="LiZ-zx-Pid" secondAttribute="trailing" id="M3h-T6-oVc"/>
+                                        <constraint firstItem="LiZ-zx-Pid" firstAttribute="leading" secondItem="Dha-Yc-jaV" secondAttribute="leading" id="akq-1M-olv"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X31-uM-r4Z">

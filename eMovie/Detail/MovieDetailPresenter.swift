@@ -6,29 +6,38 @@
 //
 
 import Foundation
+import UIKit
+
+typealias MovieDetailView = MovieDetailViewProtocol & UIViewController
 
 protocol MovieDetailPresenterProtocol {
     var movie: Movie? { get set }
-    var view: MovieDetailViewProtocol? { get set }
+    var platforms: ItemMovieProvider? { get set }
+    var view: MovieDetailView? { get set }
     var interactor: MovieDetailInteractorProtocol? { get set }
     var favorite: Bool { get set }
+    var router: MovieDetailRouterProtocol? { get set }
 
     func getMovieDetail()
     func getMovieVideoTrailer()
     func didTapFavoriteButton()
+    func getAvailablePlatfroms()
+    func navigateToPlatformURL(platformIndex: Int)
 }
 
 class MovieDetailPresenter: MovieDetailPresenterProtocol {
-    
-    weak var view: MovieDetailViewProtocol?
+    var platforms: ItemMovieProvider?
+    var router: MovieDetailRouterProtocol?
+    weak var view: MovieDetailView?
     var movie: Movie?
     var interactor: MovieDetailInteractorProtocol?
     var favorite: Bool = false
     
-    init(movie: Movie, view: MovieDetailViewProtocol, interactor: MovieDetailInteractorProtocol) {
+    init(movie: Movie, view: MovieDetailView, interactor: MovieDetailInteractorProtocol, router: MovieDetailRouterProtocol) {
         self.movie = movie
         self.view = view
         self.interactor = interactor
+        self.router = router
     }
     
     func getMovieDetail() {
@@ -37,12 +46,22 @@ class MovieDetailPresenter: MovieDetailPresenterProtocol {
                 self.view?.updateViewWithMovie(data: detail)
             }
         }
-        
+    }
+    
+    func getAvailablePlatfroms() {
         interactor?.getAvailablePlataforms(movieName: movie?.original_title ?? "") { res, err in
             DispatchQueue.main.async {
-                self.view?.updateMovieProviders(data: res)
+                if let res = res {
+                    self.platforms = res
+                    self.view?.updateMovieProviders(data: res)
+                }
             }
         }
+    }
+    
+    @objc func navigateToPlatformURL(platformIndex: Int) {
+        let url = platforms?.platforms?[platformIndex].url ?? ""
+        router?.navigateToSafariController(fromView: self.view, url: url)
     }
     
     func didTapFavoriteButton() {

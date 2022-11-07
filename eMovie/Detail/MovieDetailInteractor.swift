@@ -17,18 +17,19 @@ protocol MovieDetailInteractorProtocol {
 }
 
 class MovieDetailInteractor: MovieDetailInteractorProtocol {
-    func getAvailablePlataforms(movieName: String, completion: @escaping (ItemMovieProvider?,Error?) -> Void) {
-        providerClient?.getMovieProvider(movieName: movieName) { res, err in
-            completion(res,err)
-        }
-    }
-    
     var httpClient: HTTPClientProtocol?
     var providerClient: MovieProviderClientProtocol?
     
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient
         self.providerClient = MovieProviderClient()
+    }
+    
+    func getAvailablePlataforms(movieName: String, completion: @escaping (ItemMovieProvider?,Error?) -> Void) {
+        providerClient?.getMovieProvider(movieName: movieName) { res, err in
+            completion(res,err)
+            return
+        }
     }
     
     func markAsFavorite(favorite: Bool, movieId: Int) {

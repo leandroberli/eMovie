@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import Kingfisher
 
 protocol MovieDetailViewProtocol: AnyObject {
     var presenter: MovieDetailPresenterProtocol? { get set }
@@ -17,16 +18,6 @@ protocol MovieDetailViewProtocol: AnyObject {
 }
 
 class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
-    func updateMovieProviders(data: ItemMovieProvider?) {
-        movieProvidersButtonsStackView.spacing = 8
-        data?.platforms?.forEach({
-            let button = LoginButton()
-            button.setTitle("Watch it on " + ($0.name ?? ""), for: .normal)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-            self.movieProvidersButtonsStackView.addArrangedSubview(button)
-        })
-    }
     
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var overlayPosterView: UIView!
@@ -49,6 +40,7 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
         configViews()
         presenter?.getMovieDetail()
         presenter?.getMovieVideoTrailer()
+        presenter?.getAvailablePlatfroms()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -179,5 +171,29 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
     
     func updateTrailerWebview(withURLRequest: URLRequest) {
         self.webView.load(withURLRequest)
+    }
+    
+    func updateMovieProviders(data: ItemMovieProvider?) {
+        movieProvidersButtonsStackView.spacing = 1
+        var i = 0
+        data?.platforms?.forEach({
+            let platformView = PlatfromProviderView()
+            platformView.label.text =  "Watch on " + ($0.name ?? "")
+            platformView.imageView.image = $0.getImage()
+            platformView.translatesAutoresizingMaskIntoConstraints = false
+            platformView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+            platformView.tag = i
+            i += 1
+            self.movieProvidersButtonsStackView.addArrangedSubview(platformView)
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(navigateToPlatform))
+            
+            platformView.addGestureRecognizer(tap)
+        })
+    }
+    
+    @objc func navigateToPlatform(sender: Any) {
+        guard let tap = sender as? UITapGestureRecognizer, let tag = tap.view?.tag  else { return }
+        presenter?.navigateToPlatformURL(platformIndex: tag)
     }
 }
