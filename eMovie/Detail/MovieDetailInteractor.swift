@@ -13,13 +13,22 @@ protocol MovieDetailInteractorProtocol {
     func getMovieDetail(withId: Int, completion: @escaping (MovieDetail?, Error?) -> Void)
     func getMovieVideoTrailer(withId: Int, completion: @escaping (Video?,Error?) -> Void)
     func markAsFavorite(favorite: Bool, movieId: Int)
+    func getAvailablePlataforms(movieName: String, completion: @escaping (ItemMovieProvider?,Error?) -> Void)
 }
 
 class MovieDetailInteractor: MovieDetailInteractorProtocol {
+    func getAvailablePlataforms(movieName: String, completion: @escaping (ItemMovieProvider?,Error?) -> Void) {
+        providerClient?.getMovieProvider(movieName: movieName) { res, err in
+            completion(res,err)
+        }
+    }
+    
     var httpClient: HTTPClientProtocol?
+    var providerClient: MovieProviderClientProtocol?
     
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient
+        self.providerClient = MovieProviderClient()
     }
     
     func markAsFavorite(favorite: Bool, movieId: Int) {

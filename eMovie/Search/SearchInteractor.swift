@@ -11,7 +11,7 @@ protocol SearchInteractorProtocol {
     var presenter: SearchPresenterProtocol? { get set }
     var httpClient: HTTPClientProtocol? { get set }
     
-    func searchQuery(param: String)
+    func searchQuery(param: String, page: Int)
 }
 
 class SearchInteractor: SearchInteractorProtocol {
@@ -23,10 +23,10 @@ class SearchInteractor: SearchInteractorProtocol {
         self.httpClient = httpClient
     }
     
-    func searchQuery(param: String) {
-        httpClient?.searchMoviesWithParams(param: param) { res, err in
+    func searchQuery(param: String, page: Int) {
+        httpClient?.searchMoviesWithParams(param: param, page: page) { res, err in
             DispatchQueue.main.async {
-                self.presenter?.didReceivedSearchResults(data: res ?? [])
+                self.presenter?.didReceivedSearchResult(data: res)
             }
         }
     }

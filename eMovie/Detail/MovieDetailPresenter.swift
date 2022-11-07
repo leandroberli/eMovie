@@ -37,6 +37,12 @@ class MovieDetailPresenter: MovieDetailPresenterProtocol {
                 self.view?.updateViewWithMovie(data: detail)
             }
         }
+        
+        interactor?.getAvailablePlataforms(movieName: movie?.original_title ?? "") { res, err in
+            DispatchQueue.main.async {
+                self.view?.updateMovieProviders(data: res)
+            }
+        }
     }
     
     func didTapFavoriteButton() {

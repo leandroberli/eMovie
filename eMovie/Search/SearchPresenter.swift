@@ -11,36 +11,58 @@ protocol SearchPresenterProtocol {
     var view: SearchView? { get set }
     var interactor: SearchInteractorProtocol? { get set }
     var router: SearchRouterProtocol? { get set }
-    var searchResults: [Movie] { get set }
+    var searchData: ResultReponse<Movie>? { get set }
     
     func searchParam(_ string: String)
-    func didReceivedSearchResults(data: [Movie])
+    func didReceivedSearchResult(data: ResultReponse<Movie>?)
     func didTapMovie(index: Int)
 }
 
 class SearchPresenter: SearchPresenterProtocol {
-    var searchResults: [Movie] = []
-    
-    func searchParam(_ string: String) {
-        interactor?.searchQuery(param: string)
-    }
-    
-    func didReceivedSearchResults(data: [Movie]) {
-        searchResults = data
-        self.view?.updateViewWithResults(data: data)
-    }
-    
-    func didTapMovie(index: Int) {
-        router?.navigateToMovieDetail(from: self.view, movie: searchResults[index])
-    }
-    
     var view: SearchView?
     var interactor: SearchInteractorProtocol?
     var router: SearchRouterProtocol?
+    var searchData: ResultReponse<Movie>?
+    var currentEntry = ""
+    var isFetching = false
     
     init(view: SearchView, interactor: SearchInteractorProtocol, router: SearchRouterProtocol) {
         self.view = view
         self.interactor = interactor
         self.router = router
+    }
+    
+    func searchParam(_ string: String) {
+        guard !isFetching else { return }
+        isFetching = true
+        var currentPage = 0
+        //Still same string param ? -> is scrolling
+        //Use page from api response for get last page loaded.
+        if string == currentEntry {
+            currentPage = searchData?.page ?? 0
+        }
+        interactor?.searchQuery(param: string, page: currentPage + 1)
+        currentEntry = string
+    }
+    
+    func didReceivedSearchResult(data: ResultReponse<Movie>?) {
+        isFetching = false
+        //var searchData is nil at first data received.
+        //data.page is the latest page data received.
+        //data.page must be greater than the out updated searchData.
+        if searchData == nil || (data?.page ?? 0 <= searchData?.page ?? 0) {
+            searchData = data
+        } else {
+            searchData?.page = data?.page ?? 0
+            searchData?.results.append(contentsOf: data?.results ?? [])
+            searchData?.total_results = data?.total_results ?? 0
+        }
+        
+        self.view?.updateViewWithResults(data: searchData?.results ?? [])
+    }
+    
+    
+    func didTapMovie(index: Int) {
+        router?.navigateToMovieDetail(from: self.view, movie: searchData!.results[index])
     }
 }

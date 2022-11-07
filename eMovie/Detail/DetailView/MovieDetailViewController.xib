@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieDetailViewController" customModule="eMovie" customModuleProvider="target">
             <connections>
                 <outlet property="genreLabel" destination="JnX-9W-UHK" id="1ef-OS-P4A"/>
+                <outlet property="movieProvidersButtonsStackView" destination="LiZ-zx-Pid" id="tdS-r3-BxS"/>
                 <outlet property="originalLangLabel" destination="SkH-Sw-fm2" id="gd2-iE-njJ"/>
                 <outlet property="overlayPosterView" destination="ZeF-g8-MM6" id="1sw-Z0-0Qp"/>
                 <outlet property="overviewLabel" destination="anZ-c6-Yj4" id="5z7-oa-2Bt"/>
@@ -28,7 +29,7 @@
             <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpJ-NE-UgZ">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpJ-NE-UgZ">
                     <rect key="frame" x="0.0" y="0.0" width="390" height="810"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PH5-7J-59h">
@@ -161,11 +162,26 @@
                                 <constraint firstItem="U9B-Zp-mZB" firstAttribute="top" secondItem="ZeF-g8-MM6" secondAttribute="top" id="v7m-ES-SNj"/>
                             </constraints>
                         </view>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="SQd-Ag-4bf">
-                            <rect key="frame" x="0.0" y="648.66666666666663" width="390" height="586.99999999999989"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="SQd-Ag-4bf">
+                            <rect key="frame" x="0.0" y="648.66666666666652" width="390" height="645"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X31-uM-r4Z">
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dha-Yc-jaV">
                                     <rect key="frame" x="0.0" y="0.0" width="390" height="50"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="LiZ-zx-Pid">
+                                            <rect key="frame" x="20" y="0.0" width="350" height="40"/>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="LiZ-zx-Pid" secondAttribute="bottom" id="312-7p-Ncz"/>
+                                        <constraint firstItem="LiZ-zx-Pid" firstAttribute="top" secondItem="Dha-Yc-jaV" secondAttribute="top" id="5u2-oL-xer"/>
+                                        <constraint firstAttribute="trailing" secondItem="LiZ-zx-Pid" secondAttribute="trailing" constant="20" id="M3h-T6-oVc"/>
+                                        <constraint firstItem="LiZ-zx-Pid" firstAttribute="leading" secondItem="Dha-Yc-jaV" secondAttribute="leading" constant="20" id="akq-1M-olv"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X31-uM-r4Z">
+                                    <rect key="frame" x="0.0" y="58" width="390" height="50"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOVIE PLOT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBO-yn-JMm">
                                             <rect key="frame" x="20" y="20" width="85" height="30"/>
@@ -181,8 +197,8 @@
                                         <constraint firstItem="qBO-yn-JMm" firstAttribute="leading" secondItem="X31-uM-r4Z" secondAttribute="leading" constant="20" id="Iyi-CT-OTs"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dzG-o0-PEz">
-                                    <rect key="frame" x="0.0" y="58" width="390" height="128"/>
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dzG-o0-PEz">
+                                    <rect key="frame" x="0.0" y="116" width="390" height="128"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anZ-c6-Yj4">
                                             <rect key="frame" x="20" y="0.0" width="350" height="108"/>
@@ -199,8 +215,8 @@
                                         <constraint firstAttribute="trailing" secondItem="anZ-c6-Yj4" secondAttribute="trailing" constant="20" id="puh-fM-RIz"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oh0-Bc-U38">
-                                    <rect key="frame" x="0.0" y="194" width="390" height="50"/>
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oh0-Bc-U38">
+                                    <rect key="frame" x="0.0" y="252" width="390" height="50"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TRAILER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gz-Bn-dAO">
                                             <rect key="frame" x="20" y="20" width="58" height="30"/>
@@ -216,8 +232,8 @@
                                         <constraint firstAttribute="bottom" secondItem="7gz-Bn-dAO" secondAttribute="bottom" id="Mm2-j2-0nj"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="asW-gy-WXb">
-                                    <rect key="frame" x="0.0" y="252" width="390" height="335"/>
+                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asW-gy-WXb">
+                                    <rect key="frame" x="0.0" y="310" width="390" height="335"/>
                                     <subviews>
                                         <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mhx-yW-elB">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="315"/>

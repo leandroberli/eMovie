@@ -59,7 +59,8 @@ class SearchViewController: SearchView {
     }
     
     func generateSearchInput() {
-        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17), NSAttributedString.Key.foregroundColor: UIColor.white]
+        //NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = attributes
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
         
@@ -72,10 +73,8 @@ class SearchViewController: SearchView {
         searchController.searchBar.tintColor = .white
         definesPresentationContext = true
         
-        searchController.searchBar.updateHeight(height: 27.5)
         navigationItem.searchController = searchController
     }
-    
     
     func updateViewWithResults(data: [Movie]) {
         noResultsLabel.isHidden = !data.isEmpty
@@ -85,9 +84,6 @@ class SearchViewController: SearchView {
     private func shouldSearchText(_ text: String) {
         presenter?.searchParam(text)
     }
-    
-    var lastContentOffeset: CGFloat = 0.0
-
 }
 
 //MARK: Search bar
@@ -103,7 +99,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.presenter?.searchResults = []
+        self.presenter?.searchData?.results = []
         self.updateViewWithResults(data: [])
     }
 }
@@ -111,11 +107,11 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
 //MARK: Tableview
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.searchResults.count ?? 0
+        return presenter?.searchData?.results.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let movie = self.presenter?.searchResults[indexPath.row]
+        let movie = self.presenter?.searchData?.results[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieSearchResultTableCell", for: indexPath) as! MovieSearchResultTableCell
         cell.setupMovie(movie)
         return cell
@@ -131,45 +127,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //TODO: hide bar when scroll down.
-    }
-    
-}
-
-extension UISearchBar {
-    func updateHeight(height: CGFloat, radius: CGFloat = 10) {
-        let image: UIImage? = UIImage.imageWithColor(color: UIColor.systemGray4, size: CGSize(width: 1, height: height))
-        setSearchFieldBackgroundImage(image, for: .normal)
-        for subview in self.subviews {
-            for subSubViews in subview.subviews {
-                if #available(iOS 13.0, *) {
-                    for child in subSubViews.subviews {
-                        if let textField = child as? UISearchTextField {
-                            textField.layer.cornerRadius = radius
-                            textField.clipsToBounds = true
-                        }
-                    }
-                    continue
-                }
-                if let textField = subSubViews as? UITextField {
-                    textField.layer.cornerRadius = radius
-                    textField.clipsToBounds = true
-                }
+        let currentIndexs = tableView.indexPathsForVisibleRows ?? []
+        
+        currentIndexs.forEach({
+            let rest = (self.presenter?.searchData?.results.count ?? 0) - $0.row
+            if rest < 5 {
+                self.presenter?.searchParam(searchController.searchBar.text ?? "" )
             }
-        }
-    }
+        })
+    }    
 }
 
-private extension UIImage {
-    static func imageWithColor(color: UIColor, size: CGSize) -> UIImage? {
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        color.setFill()
-        UIRectFill(rect)
-        guard let image: UIImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            return nil
-        }
-        UIGraphicsEndImageContext()
-        return image
-    }
-}
+

@@ -13,9 +13,20 @@ protocol MovieDetailViewProtocol: AnyObject {
     
     func updateViewWithMovie(data: MovieDetail?)
     func updateTrailerWebview(withURLRequest: URLRequest)
+    func updateMovieProviders(data: ItemMovieProvider?)
 }
 
 class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
+    func updateMovieProviders(data: ItemMovieProvider?) {
+        movieProvidersButtonsStackView.spacing = 8
+        data?.platforms?.forEach({
+            let button = LoginButton()
+            button.setTitle("Watch it on " + ($0.name ?? ""), for: .normal)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            self.movieProvidersButtonsStackView.addArrangedSubview(button)
+        })
+    }
     
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var overlayPosterView: UIView!
@@ -27,6 +38,7 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var watchTrailerButton: UIButton!
     @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var movieProvidersButtonsStackView: UIStackView!
     
     var presenter: MovieDetailPresenterProtocol?
     var topGradient: CAGradientLayer?

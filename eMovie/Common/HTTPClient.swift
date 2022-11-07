@@ -18,27 +18,10 @@ protocol HTTPClientProtocol {
     func getAccountDetails(completion: @escaping (Account?,MovieError?) -> Void)
     func markAsFavorite(favoriteData: MarkFavoriteRequest, completion: @escaping (ApiResponseError?) -> Void)
     func getFavoritedMovies(completion: @escaping ([Movie]?,MovieError?) -> Void)
-    func searchMoviesWithParams(param: String, completion: @escaping ([Movie]?,MovieError?) -> Void)
+    func searchMoviesWithParams(param: String, page: Int, completion: @escaping (ResultReponse<Movie>?,MovieError?) -> Void)
 }
 
-class HTTPClient: HTTPClientProtocol {
-    
-    func searchMoviesWithParams(param: String, completion: @escaping ([Movie]?, MovieError?) -> Void) {
-        let params = param.replacingOccurrences(of: " ", with: "+")
-        let url = baseURL + ApiPath.search.rawValue.replacingOccurrences(of: "{query}", with: params)
-        CoreHTTPClient.shared.request(url: url, responseType: ResultReponse<Movie>.self) { res, err in
-            completion(res?.results,err)
-        }
-    }
-    
-    func getFavoritedMovies(completion: @escaping ([Movie]?, MovieError?) -> Void) {
-        let url = baseURL + ApiPath.getFavoriteMovies.rawValue.replacingOccurrences(of: "{account_id}", with: "8872462")
-        CoreHTTPClient.shared.request(url: url, responseType: ResultReponse<Movie>.self) { res, err in
-            completion(res?.results, err)
-        }
-    }
-    
-    
+class HTTPClient: HTTPClientProtocol {    
     private let baseURL = "https://api.themoviedb.org/3/"
     
     enum ApiPath: String {
@@ -52,10 +35,26 @@ class HTTPClient: HTTPClientProtocol {
         case account = "account"
         case favorite = "account/{account_id}/favorite"
         case getFavoriteMovies = "account/{account_id}/favorite/movies"
-        case search = "search/movie?query={query}"
+        case search = "search/movie"
+    }
+    
+    //MARK: Search
+    func searchMoviesWithParams(param: String, page: Int, completion: @escaping (ResultReponse<Movie>?, MovieError?) -> Void) {
+        let params = ["query": param, "page": "\(page)"]
+        let url = baseURL + ApiPath.search.rawValue
+        CoreHTTPClient.shared.request(url: url, params: params, responseType: ResultReponse<Movie>.self) { res, err in
+            completion(res,err)
+        }
     }
     
     //MARK: User services
+    func getFavoritedMovies(completion: @escaping ([Movie]?, MovieError?) -> Void) {
+        let url = baseURL + ApiPath.getFavoriteMovies.rawValue.replacingOccurrences(of: "{account_id}", with: "8872462")
+        CoreHTTPClient.shared.request(url: url, responseType: ResultReponse<Movie>.self) { res, err in
+            completion(res?.results, err)
+        }
+    }
+    
     func markAsFavorite(favoriteData: MarkFavoriteRequest, completion: @escaping (ApiResponseError?) -> Void) {
         let url = baseURL + ApiPath.favorite.rawValue.replacingOccurrences(of: "{account_id}", with: "8872462")
         CoreHTTPClient.shared.request(url: url, data: favoriteData, responseType: ApiResponseError.self) { res, err in

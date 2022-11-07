@@ -56,6 +56,8 @@
 		9AA26DA1290B211300C3B2DD /* RecommendedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA26DA0290B211300C3B2DD /* RecommendedHeaderView.swift */; };
 		9AA9B0FA2917FD1A00009888 /* MovieSearchResultTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA9B0F82917FD1A00009888 /* MovieSearchResultTableCell.swift */; };
 		9AA9B0FB2917FD1A00009888 /* MovieSearchResultTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AA9B0F92917FD1A00009888 /* MovieSearchResultTableCell.xib */; };
+		9AA9B0FD29183E8A00009888 /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA9B0FC29183E8A00009888 /* UISearchBar+Extension.swift */; };
+		9AA9B0FF29183F3800009888 /* MovieProviderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA9B0FE29183F3800009888 /* MovieProviderClient.swift */; };
 		9AAC44A7291759EC00266847 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC44A5291759EC00266847 /* SearchViewController.swift */; };
 		9AAC44A8291759EC00266847 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AAC44A6291759EC00266847 /* SearchViewController.xib */; };
 		9AAC44AA29175A0E00266847 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC44A929175A0E00266847 /* SearchRouter.swift */; };
@@ -139,6 +141,8 @@
 		9AA26DA0290B211300C3B2DD /* RecommendedHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedHeaderView.swift; sourceTree = "<group>"; };
 		9AA9B0F82917FD1A00009888 /* MovieSearchResultTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchResultTableCell.swift; sourceTree = "<group>"; };
 		9AA9B0F92917FD1A00009888 /* MovieSearchResultTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieSearchResultTableCell.xib; sourceTree = "<group>"; };
+		9AA9B0FC29183E8A00009888 /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
+		9AA9B0FE29183F3800009888 /* MovieProviderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieProviderClient.swift; sourceTree = "<group>"; };
 		9AAC44A5291759EC00266847 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		9AAC44A6291759EC00266847 /* SearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
 		9AAC44A929175A0E00266847 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
@@ -326,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				9A5CA7EF290AB84F00C6FD0D /* HTTPClient.swift */,
+				9AA9B0FE29183F3800009888 /* MovieProviderClient.swift */,
 				9A3B797629170023009268A7 /* CoreHTTPClient.swift */,
 				9A5CA7E5290A0B9A00C6FD0D /* UIView+Extension.swift */,
 				9A77B8EE290D5AB7003EEE36 /* NetworkStatusHandler.swift */,
@@ -399,6 +404,7 @@
 				9AAC44A929175A0E00266847 /* SearchRouter.swift */,
 				9AAC44AB29175A9200266847 /* SearchInteractor.swift */,
 				9AAC44AD29175B7500266847 /* SearchPresenter.swift */,
+				9AA9B0FC29183E8A00009888 /* UISearchBar+Extension.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -619,6 +625,7 @@
 				9A3B795429153792009268A7 /* LoginViewController.swift in Sources */,
 				9AAFB5C729100B7A00DBD790 /* HomeInteractor.swift in Sources */,
 				9AAC44AA29175A0E00266847 /* SearchRouter.swift in Sources */,
+				9AA9B0FF29183F3800009888 /* MovieProviderClient.swift in Sources */,
 				9A5CA7E6290A0B9A00C6FD0D /* UIView+Extension.swift in Sources */,
 				9AAC44A7291759EC00266847 /* SearchViewController.swift in Sources */,
 				9A9E043B29149DB500C11AF4 /* ProfileViewController.swift in Sources */,
@@ -643,6 +650,7 @@
 				9A3B79642916A36B009268A7 /* ProfileRouter.swift in Sources */,
 				9A9E043729149BF800C11AF4 /* RequesToken.swift in Sources */,
 				9A77B8EF290D5AB7003EEE36 /* NetworkStatusHandler.swift in Sources */,
+				9AA9B0FD29183E8A00009888 /* UISearchBar+Extension.swift in Sources */,
 				9A1D1E2729116FD100E286AE /* MovieDetailRouter.swift in Sources */,
 				9A3B79732916ED58009268A7 /* LoginButton.swift in Sources */,
 				9A3B797C29170B79009268A7 /* HomeCollectionBuilder.swift in Sources */,
