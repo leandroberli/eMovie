@@ -53,8 +53,9 @@ class HomePresenter: HomePresenterProtocol {
     
     //Próximos estrenos
     func getUpcomingMovies() {
-        interactor?.getUpcomingMovies { movies, error in
-            self.upcomingMovies = movies ?? []
+        interactor?.getUpcomingMovies(page: Int.random(in: 0..<20)) { res, error in
+            let movies = res?.results ?? []
+            self.upcomingMovies = (self.interactor?.generateMoviesWarappers(movies, forSection: .upcoming)) ?? []
             self.updateCollectionViewData()
         }
     }
@@ -67,16 +68,21 @@ class HomePresenter: HomePresenterProtocol {
     
     //Tendencia
     func getTopRatedMovies() {
-        interactor?.getTopRatedMovies { movies, error in
-            self.topRatedMovies = movies ?? []
+        interactor?.getTopRatedMovies(page: Int.random(in: 0..<20)) { res, error in
+            //self.topRatedMovies = movies ?? []
+            let movies = res?.results ?? []
+            let wrappers = self.interactor?.generateMoviesWarappers(movies, forSection: .topRated) ?? []
+            self.topRatedMovies = wrappers
             self.updateCollectionViewData()
         }
     }
     
     //Recomendados
     func getRecommendedMovies() {
-        interactor?.getRecommendedMovies { movies, error in
-            self.allRecommendedMovies = movies ?? []
+        interactor?.getRecommendedMovies(page: Int.random(in: 0..<20)) { res, error in
+            let movies = res?.results ?? []
+            let wraperrs = self.interactor?.generateMoviesWarappers(movies, forSection: .recommended) ?? []
+            self.allRecommendedMovies = wraperrs
             self.filtredRecommendedMovies = self.filterMoviesBy(lang: self.selectedLang, movies: self.allRecommendedMovies)
             self.updateCollectionViewData()
         }

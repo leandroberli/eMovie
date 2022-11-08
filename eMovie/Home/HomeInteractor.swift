@@ -9,32 +9,34 @@ import Foundation
 
 protocol HomeInteractorProtocol {
     var httpClient: HTTPClient? { get set }
-    func getTopRatedMovies(completion: @escaping ([MovieWrapper]?,Error?) -> Void)
-    func getUpcomingMovies(completion: @escaping ([MovieWrapper]?,Error?) -> Void)
-    func getRecommendedMovies(completion: @escaping ([MovieWrapper]?,Error?) -> Void)
+    func getTopRatedMovies(page: Int, completion: @escaping (ResultReponse<Movie>?,Error?) -> Void)
+    func getUpcomingMovies(page: Int, completion: @escaping (ResultReponse<Movie>?,Error?) -> Void)
+    func getRecommendedMovies(page: Int, completion: @escaping (ResultReponse<Movie>?,Error?) -> Void)
+    func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper]
 }
 
 class HomeInteractor: HomeInteractorProtocol {
     var httpClient: HTTPClient? = HTTPClient()
     
-    func getTopRatedMovies(completion: @escaping ([MovieWrapper]?, Error?) -> Void) {
-        httpClient?.getTopRatedMovies { movies, error in
-            let wrappers = self.generateMoviesWarappers(movies ?? [], forSection: .topRated)
-            completion(wrappers, error)
+    func getTopRatedMovies(page: Int,completion: @escaping ( ResultReponse<Movie>?, Error?) -> Void) {
+        httpClient?.getTopRatedMovies(page: page) { res, error in
+            guard let data = res, error == nil else {
+                return
+            }
+            //let wrappers = self.generateMoviesWarappers(movies?.results forSection: .topRated)
+            completion(data, error)
         }
     }
     
-    func getUpcomingMovies(completion: @escaping ([MovieWrapper]?, Error?) -> Void) {
-        httpClient?.getUpcomingMovies { movies, error in
-            let wrappers = self.generateMoviesWarappers(movies ?? [], forSection: .upcoming)
-            completion(wrappers, error)
+    func getUpcomingMovies(page: Int,completion: @escaping (ResultReponse<Movie>?, Error?) -> Void) {
+        httpClient?.getUpcomingMovies(page: page) { res, error in
+            completion(res, error)
         }
     }
     
-    func getRecommendedMovies(completion: @escaping ([MovieWrapper]?, Error?) -> Void) {
-        httpClient?.getTopRatedMovies { movies, error in
-            let wrappers = self.generateMoviesWarappers(movies ?? [], forSection: .recommended)
-            completion(wrappers, error)
+    func getRecommendedMovies(page: Int,completion: @escaping (ResultReponse<Movie>?, Error?) -> Void) {
+        httpClient?.getTopRatedMovies(page: page) { res, error in
+            completion(res, error)
         }
     }
     
