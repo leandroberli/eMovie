@@ -8,8 +8,8 @@
 import Foundation
 
 protocol HTTPClientProtocol {
-    func getUpcomingMovies(completion: @escaping ([Movie]?,MovieError?) -> Void)
-    func getTopRatedMovies(completion: @escaping ([Movie]?,MovieError?) -> Void)
+    func getUpcomingMovies(page: Int,completion: @escaping (ResultReponse<Movie>?,MovieError?) -> Void)
+    func getTopRatedMovies(page: Int,completion: @escaping (ResultReponse<Movie>?,MovieError?) -> Void)
     func getDetailMovie(withId: Int, completion: @escaping (MovieDetail?,MovieError?) -> Void)
     func getMovieVideo(withId: Int, completion: @escaping ([Video]?,MovieError?) -> Void)
     func createRequestToken(completion: @escaping (RequestTokenResponse?,MovieError?) -> Void)
@@ -91,17 +91,19 @@ class HTTPClient: HTTPClientProtocol {
     }
    
     //MARK: Home services
-    func getTopRatedMovies(completion: @escaping ([Movie]?, MovieError?) -> Void) {
+    func getTopRatedMovies(page: Int, completion: @escaping (ResultReponse<Movie>?, MovieError?) -> Void) {
         let urlString = baseURL + ApiPath.topRatedMovieList.rawValue
-        CoreHTTPClient.shared.request(url: urlString, responseType: ResultReponse<Movie>.self) { res, error in
-            completion(res?.results,error)
+        let params = ["page": "\(page)"]
+        CoreHTTPClient.shared.request(url: urlString,params: params, responseType: ResultReponse<Movie>.self) { res, error in
+            completion(res,error)
         }
     }
     
-    func getUpcomingMovies(completion: @escaping ([Movie]?,MovieError?) -> Void) {
+    func getUpcomingMovies(page: Int,completion: @escaping (ResultReponse<Movie>?,MovieError?) -> Void) {
         let urlString = baseURL + ApiPath.upcomingMovieList.rawValue
-        CoreHTTPClient.shared.request(url: urlString, responseType: ResultReponse<Movie>.self) { movies, error in
-            completion(movies?.results, error)
+        let params = ["page": "\(page)"]
+        CoreHTTPClient.shared.request(url: urlString,params: params, responseType: ResultReponse<Movie>.self) { movies, error in
+            completion(movies, error)
         }
     }
     
