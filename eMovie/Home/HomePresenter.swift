@@ -22,42 +22,44 @@ protocol HomePresenterProtocol: AnyObject {
     var topRatedMovies: [MovieWrapper] { get set }
     var allRecommendedMovies: [MovieWrapper] { get set }
     var filtredRecommendedMovies: [MovieWrapper] { get set }
+    //Dict with movie name as key. value is a platforms available array.
+    var platformsTopRated: [String:Any] { get set }
     
     func getUpcomingMovies()
     func getTopRatedMovies()
     func getRecommendedMovies()
+    func startFetchTopRatedMovieProviders()
     func handleFilterOption(_ option: FilterButton.FilterOption)
     func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section)
 }
 
 class HomePresenter: HomePresenterProtocol {
-    
     weak var view: HomeViewProtocol?
     var interactor: HomeInteractorProtocol?
     var router: HomeRouterProtocol?
     
     var upcomingMovies: [MovieWrapper] = []
     var topRatedMovies: [MovieWrapper] = []
+    
+    //Filtred movies comes from all movies applying filter.
+    //Collection view shows filtred movies
     var allRecommendedMovies: [MovieWrapper] = []
     var filtredRecommendedMovies: [MovieWrapper] = []
+    
     //Set year and langague values for filter.
     //Change string labels from RecommendedHeaderView.
     var selectedDate = 2019
     var selectedLang = "en"
+    
+    //Platforms availables for top rated movies.
+    //Dictionary with movie name as key and platforms array as value.
+    var platformsTopRated: [String : Any] = [:]
+    var i = 0
 
     init(view: HomeViewProtocol, interactor: HomeInteractorProtocol, router: HomeRouterProtocol) {
         self.view = view
         self.interactor = interactor
         self.router = router
-    }
-    
-    //Próximos estrenos
-    func getUpcomingMovies() {
-        interactor?.getUpcomingMovies(page: Int.random(in: 0..<20)) { res, error in
-            let movies = res?.results ?? []
-            self.upcomingMovies = (self.interactor?.generateMoviesWarappers(movies, forSection: .upcoming)) ?? []
-            self.updateCollectionViewData()
-        }
     }
     
     private func updateCollectionViewData() {
@@ -66,20 +68,52 @@ class HomePresenter: HomePresenterProtocol {
         }
     }
     
-    //Tendencia
+    //MARK: Upcoming movies
+    func getUpcomingMovies() {
+        interactor?.getUpcomingMovies(page: Int.random(in: 1..<10)) { res, error in
+            let movies = res?.results ?? []
+            self.upcomingMovies = (self.interactor?.generateMoviesWarappers(movies, forSection: .upcoming)) ?? []
+            self.updateCollectionViewData()
+        }
+    }
+    
+    //MARK: Top rated
     func getTopRatedMovies() {
-        interactor?.getTopRatedMovies(page: Int.random(in: 0..<20)) { res, error in
+        interactor?.getTopRatedMovies(page: Int.random(in: 1..<10)) { res, error in
             //self.topRatedMovies = movies ?? []
             let movies = res?.results ?? []
             let wrappers = self.interactor?.generateMoviesWarappers(movies, forSection: .topRated) ?? []
             self.topRatedMovies = wrappers
             self.updateCollectionViewData()
+            self.startFetchTopRatedMovieProviders()
         }
     }
     
-    //Recomendados
+    func startFetchTopRatedMovieProviders() {
+        self.topRatedMovies.forEach({
+            getProvidedPlatforms(for: $0.movie.original_title ?? "" )
+        })
+    }
+    
+    private func getProvidedPlatforms(for movieName: String) {
+        interactor?.getMovieProviders(for: movieName) { platforms, error in
+            guard let platforms = platforms else {
+                return
+            }
+            self.platformsTopRated.updateValue(platforms, forKey: movieName)
+            //Realod first 3 items.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                if self.i < 4 {
+                    self.view?.updateTopRatedVisibleCells(index: IndexPath(item: self.i, section: 1))
+                }
+                self.i += 1
+            }
+        }
+    }
+    
+    //MARK: Recommended movies
     func getRecommendedMovies() {
-        interactor?.getRecommendedMovies(page: Int.random(in: 0..<20)) { res, error in
+        interactor?.getRecommendedMovies(page: Int.random(in: 1..<10)) { res, error in
             let movies = res?.results ?? []
             let wraperrs = self.interactor?.generateMoviesWarappers(movies, forSection: .recommended) ?? []
             self.allRecommendedMovies = wraperrs

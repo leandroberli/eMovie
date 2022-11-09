@@ -9,14 +9,27 @@ import Foundation
 
 protocol HomeInteractorProtocol {
     var httpClient: HTTPClient? { get set }
+    
     func getTopRatedMovies(page: Int, completion: @escaping (ResultReponse<Movie>?,Error?) -> Void)
     func getUpcomingMovies(page: Int, completion: @escaping (ResultReponse<Movie>?,Error?) -> Void)
     func getRecommendedMovies(page: Int, completion: @escaping (ResultReponse<Movie>?,Error?) -> Void)
+    func getMovieProviders(for movieName: String, callback: @escaping ([ProviderPlataform]?,Error?) -> Void)
     func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper]
 }
 
 class HomeInteractor: HomeInteractorProtocol {
+    func getMovieProviders(for movieName: String, callback: @escaping ([ProviderPlataform]?,Error?) -> Void) {
+        MovieProviderClient().getMovieProvider(movieName: movieName ) { itemProvider, error in
+            let providersArray = itemProvider?.platforms ?? []
+            callback(providersArray,nil)
+        }
+    }
+    
     var httpClient: HTTPClient? = HTTPClient()
+    
+    init(httpClient: HTTPClient) {
+        self.httpClient = httpClient
+    }
     
     func getTopRatedMovies(page: Int,completion: @escaping ( ResultReponse<Movie>?, Error?) -> Void) {
         httpClient?.getTopRatedMovies(page: page) { res, error in

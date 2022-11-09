@@ -11,6 +11,7 @@ import Kingfisher
 protocol HomeViewProtocol: AnyObject {
     var presenter: HomePresenterProtocol? { get set }
     func updateCollectionData()
+    func updateTopRatedVisibleCells(index: IndexPath)
 }
 
 class HomeViewController: UIViewController, HomeViewProtocol {
@@ -34,6 +35,13 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         presenter?.getTopRatedMovies()
         presenter?.getUpcomingMovies()
         presenter?.getRecommendedMovies()
+    }
+    
+    func updateTopRatedVisibleCells(index: IndexPath) {
+        let item = dataSource.itemIdentifier(for: index)!
+        var newSnapshot = dataSource.snapshot()
+        newSnapshot.reloadItems([item])
+        dataSource.apply(newSnapshot)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +74,9 @@ class HomeViewController: UIViewController, HomeViewProtocol {
             case .topRated:
                 let wrapper = self.presenter?.topRatedMovies[indexPath.item]
                 cell.setupMovie(wrapper?.movie)
+                //Using provider data from dict key-value data source.
+                let providers = self.presenter?.platformsTopRated[wrapper?.movie.original_title ?? ""] as? [ProviderPlataform]
+                cell.setupProviders(providers: providers ?? [])
                 return cell
             case .recommended:
                 let wrapper = self.presenter?.filtredRecommendedMovies[indexPath.item]

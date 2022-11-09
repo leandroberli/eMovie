@@ -28,7 +28,20 @@ class MovieProviderClient: MovieProviderClientProtocol {
         let url = baseURL + APIPath.search.rawValue
         core?.request(url: url ,params: params, responseType: SearchMovieProvidersResponse.self) { res, err in
             if let items = res?.results?.first {
-                completion(items,nil)
+                //Use only providers wich has logo image resource.
+                //Logo images should set at ProvidersLogo enum.
+                let filtredITems = items.platforms?.filter({
+                    for itemConfigured in ProviderPlataform.ProviderLogos.allCases {
+                        if itemConfigured.rawValue == $0.name?.lowercased() {
+                            return true
+                        }
+                    }
+                    return false
+                })
+                var newRes = res?.results?.first
+                newRes?.platforms = filtredITems
+                completion(newRes,nil)
+                return
             }
             completion(nil,nil)
         }
@@ -54,7 +67,9 @@ struct ProviderPlataform: Codable {
                 return logo.image
             }
         }
-        return nil
+        //Default image
+        let img = UIImage(systemName: "play.cirecle.fill")
+        return img
     }
     
     enum ProviderLogos: String, CaseIterable {
@@ -65,6 +80,12 @@ struct ProviderPlataform: Codable {
         case itunes = "apple itunes"
         case claroVideo = "claro video"
         case starPlus = "star plus"
+        case qubitTv = "qubittv"
+        case paramount = "paramount plus"
+        case filmbox = "filmbox+"
+        case movistar = "movistar play"
+        case disney = "disney plus"
+        case appleTv = "apple tv plus"
         
         var image: UIImage? {
             switch self {
@@ -76,8 +97,18 @@ struct ProviderPlataform: Codable {
                 return UIImage(named: "netflix_icon")
             case .itunes:
                 return UIImage(named: "icons8-itunes")
+            case .paramount:
+                return UIImage(named: "icons8-paramount-plus-64")
+            case .starPlus:
+                return UIImage(named: "star-plus")
+            case .google:
+                return UIImage(named: "google-play-movies-tv")
+            case .movistar:
+                return UIImage(named: "movistar-play")
+            case .disney:
+                return UIImage(named: "icons8-disney-plus-64")
             default:
-                return UIImage(named: "")
+                return UIImage(systemName: "play.circle.fill")
             }
         }
     }
