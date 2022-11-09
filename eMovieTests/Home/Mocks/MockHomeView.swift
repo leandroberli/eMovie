@@ -10,6 +10,10 @@ import XCTest
 @testable import eMovie
 
 class MockHomeView: UIViewController, HomeViewProtocol {
+    func updateTopRatedVisibleCells(index: IndexPath) {
+        return
+    }
+    
     var presenter: eMovie.HomePresenterProtocol?
     var expectation: XCTestExpectation?
     var updateCollectionDataCalled = false

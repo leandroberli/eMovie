@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,10 +16,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="278" height="251"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.up.on.square" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2bp-MN-bvE">
-                        <rect key="frame" x="0.0" y="-2" width="278" height="255.33333333333334"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pla" translatesAutoresizingMaskIntoConstraints="NO" id="2bp-MN-bvE">
+                        <rect key="frame" x="0.0" y="0.0" width="278" height="251"/>
                     </imageView>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fv5-7C-21v">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axd-ma-gsi">
                         <rect key="frame" x="118" y="115" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -29,22 +29,22 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstItem="Fv5-7C-21v" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="2Ts-6K-EYb"/>
-                <constraint firstItem="Fv5-7C-21v" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="A3K-fn-DZk"/>
                 <constraint firstAttribute="trailing" secondItem="2bp-MN-bvE" secondAttribute="trailing" id="duD-GF-A4C"/>
+                <constraint firstItem="axd-ma-gsi" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="hUI-el-NIV"/>
                 <constraint firstItem="2bp-MN-bvE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="oO1-me-JYg"/>
                 <constraint firstItem="2bp-MN-bvE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="quQ-0I-1j0"/>
                 <constraint firstAttribute="bottom" secondItem="2bp-MN-bvE" secondAttribute="bottom" id="xe8-S6-mMI"/>
+                <constraint firstItem="axd-ma-gsi" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="xvO-gi-KZX"/>
             </constraints>
             <size key="customSize" width="278" height="251"/>
             <connections>
                 <outlet property="posterImageView" destination="2bp-MN-bvE" id="BV1-xh-jS2"/>
-                <outlet property="titleLabel" destination="Fv5-7C-21v" id="a7a-e0-4uX"/>
+                <outlet property="titleLabel" destination="axd-ma-gsi" id="3Oy-aL-3Dm"/>
             </connections>
             <point key="canvasLocation" x="226.15384615384613" y="92.061611374407576"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="square.and.arrow.up.on.square" catalog="system" width="119" height="128"/>
+        <image name="pla" width="128" height="128"/>
     </resources>
 </document>
