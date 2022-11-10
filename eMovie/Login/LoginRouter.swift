@@ -35,7 +35,6 @@ class LoginRouter: LoginRouterProtocol {
         let profileModule = ProfileRouter.createProfileModule()
         
         fromView?.tabBarController?.viewControllers?.append(profileModule)
-        fromView?.tabBarController?.viewControllers?.remove(at: 1)
-        
+        fromView?.tabBarController?.viewControllers?.remove(at: 2)
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 protocol SearchViewProtocol {
+    var tableView: UITableView! { get set }
     var presenter: SearchPresenterProtocol? { get set }
     func updateViewWithResults(data: [Movie])
 }
@@ -114,6 +115,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
         let movie = self.presenter?.searchData?.results[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieSearchResultTableCell", for: indexPath) as! MovieSearchResultTableCell
         cell.setupMovie(movie)
+        let providers = self.presenter?.platforms[movie?.original_title ?? ""] as? [ProviderPlataform]
+        cell.setupProvidersView(data: providers)
         return cell
     }
     

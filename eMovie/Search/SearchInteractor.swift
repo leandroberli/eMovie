@@ -12,9 +12,21 @@ protocol SearchInteractorProtocol {
     var httpClient: HTTPClientProtocol? { get set }
     
     func searchQuery(param: String, page: Int)
+    func getMovieProviders(for movieName: String)
 }
 
 class SearchInteractor: SearchInteractorProtocol {
+    
+    func getMovieProviders(for movieName: String) {
+        MovieProviderClient().getMovieProvider(movieName: movieName ) { itemProvider, error in
+            let providersArray = itemProvider?.platforms ?? []
+            DispatchQueue.main.async {
+                self.presenter?.platforms.updateValue(providersArray, forKey: movieName)
+                self.presenter?.didReceivedProvidersData(data: providersArray)
+            }
+        }
+    }
+    
     var presenter: SearchPresenterProtocol?
     
     var httpClient: HTTPClientProtocol?

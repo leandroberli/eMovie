@@ -12,19 +12,40 @@ protocol SearchPresenterProtocol {
     var interactor: SearchInteractorProtocol? { get set }
     var router: SearchRouterProtocol? { get set }
     var searchData: ResultReponse<Movie>? { get set }
+    var platforms: [String : Any] { get set }
     
     func searchParam(_ string: String)
+    func startFetchMovieProviders(forMovies: [MovieWrapper])
     func didReceivedSearchResult(data: ResultReponse<Movie>?)
+    func didReceivedProvidersData(data: [ProviderPlataform]?)
     func didTapMovie(index: Int)
 }
 
 class SearchPresenter: SearchPresenterProtocol {
+
+    var platforms: [String : Any] = [:]
+    
+    func startFetchMovieProviders(forMovies: [MovieWrapper]) {
+        forMovies.forEach({
+            getProvidedPlatforms(movie: $0)
+        })
+    }
+    
+    private func getProvidedPlatforms(movie: MovieWrapper) {
+        interactor?.getMovieProviders(for: movie.movie.original_title ?? "")
+    }
+    
+    func didReceivedProvidersData(data: [ProviderPlataform]?) {
+        
+    }
+    
     var view: SearchView?
     var interactor: SearchInteractorProtocol?
     var router: SearchRouterProtocol?
     var searchData: ResultReponse<Movie>?
     var currentEntry = ""
     var isFetching = false
+    
     
     init(view: SearchView, interactor: SearchInteractorProtocol, router: SearchRouterProtocol) {
         self.view = view
@@ -57,6 +78,10 @@ class SearchPresenter: SearchPresenterProtocol {
             searchData?.results.append(contentsOf: data?.results ?? [])
             searchData?.total_results = data?.total_results ?? 0
         }
+        
+        let wrappers = searchData?.results.map({ return MovieWrapper(section: .recommended, movie: $0)}) ?? []
+        
+        self.startFetchMovieProviders(forMovies: wrappers)
         
         self.view?.updateViewWithResults(data: searchData?.results ?? [])
     }

@@ -33,9 +33,8 @@ class ProfileRouter: ProfileRouterProtocol {
     
     func navigateAfterLogoutAction(fromView: UIViewController?) {
         let loginModule = LoginRouter.createLoginModule()
-        
         fromView?.tabBarController?.viewControllers?.append(loginModule)
-        fromView?.tabBarController?.viewControllers?.remove(at: 1)
+        fromView?.tabBarController?.viewControllers?.remove(at: 2)
     }
     
     func navigateToMovieDetail(fromView: UIViewController?, movie: Movie) {
