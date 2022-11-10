@@ -76,11 +76,13 @@ class HomeViewController: UIViewController, HomeViewProtocol {
                 cell.setupMovie(wrapper?.movie)
                 //Using provider data from dict key-value data source.
                 let providers = self.presenter?.platformsTopRated[wrapper?.movie.original_title ?? ""] as? [ProviderPlataform]
-                cell.setupProviders(providers: providers ?? [])
+                cell.setupProvidersView(data: providers)
                 return cell
             case .recommended:
                 let wrapper = self.presenter?.filtredRecommendedMovies[indexPath.item]
                 cell.setupMovie(wrapper?.movie)
+                let providers = self.presenter?.platformsRecommended[wrapper?.movie.original_title ?? ""] as? [ProviderPlataform]
+                cell.setupProvidersView(data: providers)
                 return cell
             }
         }

@@ -23,9 +23,14 @@ struct Movie: Codable, Hashable {
     var genre_ids: [Int]?
     var id: Int?
     var original_title: String?
+    var vote_average: Float?
     
     func getPosterURL() -> String {
         return "https://image.tmdb.org/t/p/w1280" + (poster_path ?? "")
+    }
+    
+    func getVoteAverageToString() -> String {
+        return "\(vote_average ?? 0.0)"
     }
     
     func getReleaseYear() -> Int {

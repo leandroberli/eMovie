@@ -24,11 +24,12 @@ protocol HomePresenterProtocol: AnyObject {
     var filtredRecommendedMovies: [MovieWrapper] { get set }
     //Dict with movie name as key. value is a platforms available array.
     var platformsTopRated: [String:Any] { get set }
+    var platformsRecommended: [String: Any] { get set }
     
     func getUpcomingMovies()
     func getTopRatedMovies()
     func getRecommendedMovies()
-    func startFetchTopRatedMovieProviders()
+    func startFetchMovieProviders(forMovies: [MovieWrapper])
     func handleFilterOption(_ option: FilterButton.FilterOption)
     func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section)
 }
@@ -54,6 +55,7 @@ class HomePresenter: HomePresenterProtocol {
     //Platforms availables for top rated movies.
     //Dictionary with movie name as key and platforms array as value.
     var platformsTopRated: [String : Any] = [:]
+    var platformsRecommended: [String: Any] = [:]
     var i = 0
 
     init(view: HomeViewProtocol, interactor: HomeInteractorProtocol, router: HomeRouterProtocol) {
@@ -85,22 +87,28 @@ class HomePresenter: HomePresenterProtocol {
             let wrappers = self.interactor?.generateMoviesWarappers(movies, forSection: .topRated) ?? []
             self.topRatedMovies = wrappers
             self.updateCollectionViewData()
-            self.startFetchTopRatedMovieProviders()
+            self.startFetchMovieProviders(forMovies: self.topRatedMovies)
+            //self.startFetchTopRatedMovieProviders()
         }
     }
     
-    func startFetchTopRatedMovieProviders() {
-        self.topRatedMovies.forEach({
-            getProvidedPlatforms(for: $0.movie.original_title ?? "" )
+    func startFetchMovieProviders(forMovies: [MovieWrapper]) {
+        forMovies.forEach({
+            getProvidedPlatforms(movie: $0)
         })
     }
     
-    private func getProvidedPlatforms(for movieName: String) {
-        interactor?.getMovieProviders(for: movieName) { platforms, error in
+    private func getProvidedPlatforms(movie: MovieWrapper) {
+        interactor?.getMovieProviders(for: movie.movie.original_title ?? "") { platforms, error in
             guard let platforms = platforms else {
                 return
             }
-            self.platformsTopRated.updateValue(platforms, forKey: movieName)
+            if movie.section == .recommended {
+                self.platformsRecommended.updateValue(platforms, forKey: movie.movie.original_title ?? "")
+            } else {
+                self.platformsTopRated.updateValue(platforms, forKey: movie.movie.original_title ?? "")
+            }
+            
             //Realod first 3 items.
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 if self.i < 4 {
@@ -118,6 +126,7 @@ class HomePresenter: HomePresenterProtocol {
             let wraperrs = self.interactor?.generateMoviesWarappers(movies, forSection: .recommended) ?? []
             self.allRecommendedMovies = wraperrs
             self.filtredRecommendedMovies = self.filterMoviesBy(lang: self.selectedLang, movies: self.allRecommendedMovies)
+            self.startFetchMovieProviders(forMovies: self.filtredRecommendedMovies)
             self.updateCollectionViewData()
         }
     }
