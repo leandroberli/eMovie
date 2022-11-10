@@ -22,6 +22,7 @@ class HomeCollectionBuilder {
         
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(UINib(nibName: "MovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "MovieCollectionViewCell")
+        collectionView.register(UINib(nibName: "RecommendedMovieCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "RecommendedMovieCollectionViewCell")
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: HomeViewController.sectionHeaderElementKind,
           withReuseIdentifier: SectionHeaderView.reuseIdentifier)
         collectionView.register(RecommendedHeaderView.self, forSupplementaryViewOfKind: HomeViewController.sectionHeaderElementKind,
