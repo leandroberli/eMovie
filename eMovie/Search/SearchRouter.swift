@@ -31,6 +31,6 @@ class SearchRouter: SearchRouterProtocol {
     
     func navigateToMovieDetail(from: SearchView?, movie: Movie) {
         let detailModule = MovieDetailRouter.createMovieDetailModule(forMovie: movie)
-        from?.navigationController?.pushViewController(detailModule, animated: true)
+        from?.navigationController?.pushViewController(detailModule, animated: false)
     }
 }

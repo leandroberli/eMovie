@@ -151,7 +151,7 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
             switch result {
             case .success( _):
                 DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.5) {
+                    UIView.animate(withDuration: 0.3) {
                         self.posterImageView.alpha = 1
                         self.overlayPosterView.alpha = 1
                     }
@@ -190,6 +190,10 @@ class MovieDetailViewController: UIViewController, MovieDetailViewProtocol {
             
             platformView.addGestureRecognizer(tap)
         })
+        
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.movieProvidersButtonsStackView.layoutSubviews()
+        }
     }
     
     @objc func navigateToPlatform(sender: Any) {

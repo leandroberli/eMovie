@@ -89,6 +89,10 @@ class SearchViewController: SearchView {
 
 //MARK: Search bar
 extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.resignFirstResponder()
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         let text = searchController.searchBar.text ?? ""
         if !text.isEmpty {
@@ -140,5 +144,4 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UISc
         })
     }    
 }
-
 
