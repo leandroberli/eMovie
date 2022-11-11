@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func generateWindow(scene: UIWindowScene) -> UIWindow {
-        let rootController = TabBarRouter.createTabBarModule()
+        let rootController = StartOnboardingRouter.generateOnboardingModule()
         let window = UIWindow(windowScene: scene)
         window.rootViewController = rootController
         window.makeKeyAndVisible()

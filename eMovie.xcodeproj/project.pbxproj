@@ -50,6 +50,10 @@
 		9A77B8EF290D5AB7003EEE36 /* NetworkStatusHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77B8EE290D5AB7003EEE36 /* NetworkStatusHandler.swift */; };
 		9A77B8F2290D99C9003EEE36 /* HomePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */; };
 		9A77B8F4290DE8F8003EEE36 /* movies.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A77B8F3290DE8F8003EEE36 /* movies.json */; };
+		9A9C79E3291D8F1E0019BF99 /* StartOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9C79E1291D8F1E0019BF99 /* StartOnboardingViewController.swift */; };
+		9A9C79E4291D8F1E0019BF99 /* StartOnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A9C79E2291D8F1E0019BF99 /* StartOnboardingViewController.xib */; };
+		9A9C79E6291D8F340019BF99 /* StartOnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9C79E5291D8F340019BF99 /* StartOnboardingPresenter.swift */; };
+		9A9C79E8291D8F3F0019BF99 /* StartOnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9C79E7291D8F3F0019BF99 /* StartOnboardingRouter.swift */; };
 		9A9E043729149BF800C11AF4 /* RequesToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9E043629149BF800C11AF4 /* RequesToken.swift */; };
 		9A9E043B29149DB500C11AF4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9E043929149DB500C11AF4 /* ProfileViewController.swift */; };
 		9A9E043C29149DB500C11AF4 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A9E043A29149DB500C11AF4 /* ProfileViewController.xib */; };
@@ -138,6 +142,10 @@
 		9A77B8EE290D5AB7003EEE36 /* NetworkStatusHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusHandler.swift; sourceTree = "<group>"; };
 		9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterTests.swift; sourceTree = "<group>"; };
 		9A77B8F3290DE8F8003EEE36 /* movies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = movies.json; sourceTree = "<group>"; };
+		9A9C79E1291D8F1E0019BF99 /* StartOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartOnboardingViewController.swift; sourceTree = "<group>"; };
+		9A9C79E2291D8F1E0019BF99 /* StartOnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StartOnboardingViewController.xib; sourceTree = "<group>"; };
+		9A9C79E5291D8F340019BF99 /* StartOnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartOnboardingPresenter.swift; sourceTree = "<group>"; };
+		9A9C79E7291D8F3F0019BF99 /* StartOnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartOnboardingRouter.swift; sourceTree = "<group>"; };
 		9A9E043629149BF800C11AF4 /* RequesToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequesToken.swift; sourceTree = "<group>"; };
 		9A9E043929149DB500C11AF4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9A9E043A29149DB500C11AF4 /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
@@ -285,6 +293,7 @@
 		9A5CA7A4290A018000C6FD0D /* eMovie */ = {
 			isa = PBXGroup;
 			children = (
+				9A9C79E0291D8ED00019BF99 /* Onboarding */,
 				9AAC44A4291759D000266847 /* Search */,
 				9A3B795C29169B80009268A7 /* TabBar */,
 				9A3B795129153781009268A7 /* Login */,
@@ -381,6 +390,17 @@
 				9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		9A9C79E0291D8ED00019BF99 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				9A9C79E2291D8F1E0019BF99 /* StartOnboardingViewController.xib */,
+				9A9C79E1291D8F1E0019BF99 /* StartOnboardingViewController.swift */,
+				9A9C79E5291D8F340019BF99 /* StartOnboardingPresenter.swift */,
+				9A9C79E7291D8F3F0019BF99 /* StartOnboardingRouter.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		9A9E043829149D8D00C11AF4 /* Profile */ = {
@@ -536,6 +556,7 @@
 				9AB49956290C0E9D0084B7CC /* MovieDetailViewController.xib in Resources */,
 				9AA9B0FB2917FD1A00009888 /* MovieSearchResultTableCell.xib in Resources */,
 				9A5CA7DF290A030300C6FD0D /* HomeViewController.xib in Resources */,
+				9A9C79E4291D8F1E0019BF99 /* StartOnboardingViewController.xib in Resources */,
 				9AAC44A8291759EC00266847 /* SearchViewController.xib in Resources */,
 				9A5CA7AD290A018000C6FD0D /* Main.storyboard in Resources */,
 				9AAF79D6291C70A800041612 /* RecommendedMovieCollectionViewCell.xib in Resources */,
@@ -630,6 +651,7 @@
 				9A3B79682916B6B4009268A7 /* Login.swift in Sources */,
 				9AA9B0FA2917FD1A00009888 /* MovieSearchResultTableCell.swift in Sources */,
 				9A3B79752916FFA9009268A7 /* ApiResponseError.swift in Sources */,
+				9A9C79E8291D8F3F0019BF99 /* StartOnboardingRouter.swift in Sources */,
 				9A3B7959291537AA009268A7 /* LoginInteractor.swift in Sources */,
 				9AAC44AC29175A9200266847 /* SearchInteractor.swift in Sources */,
 				9A5CA7DE290A030300C6FD0D /* HomeViewController.swift in Sources */,
@@ -659,6 +681,7 @@
 				9A3B796C2916B726009268A7 /* Account.swift in Sources */,
 				9A5CA7EA290A0D3200C6FD0D /* Movie.swift in Sources */,
 				9A3B79662916A376009268A7 /* ProfileInteractor.swift in Sources */,
+				9A9C79E6291D8F340019BF99 /* StartOnboardingPresenter.swift in Sources */,
 				9A3B79642916A36B009268A7 /* ProfileRouter.swift in Sources */,
 				9A9E043729149BF800C11AF4 /* RequesToken.swift in Sources */,
 				9A77B8EF290D5AB7003EEE36 /* NetworkStatusHandler.swift in Sources */,
@@ -666,6 +689,7 @@
 				9A1D1E2729116FD100E286AE /* MovieDetailRouter.swift in Sources */,
 				9A3B79732916ED58009268A7 /* LoginButton.swift in Sources */,
 				9A3B797C29170B79009268A7 /* HomeCollectionBuilder.swift in Sources */,
+				9A9C79E3291D8F1E0019BF99 /* StartOnboardingViewController.swift in Sources */,
 				9A3B797729170023009268A7 /* CoreHTTPClient.swift in Sources */,
 				9A5CA7F2290ABA9B00C6FD0D /* HomePresenter.swift in Sources */,
 				9A3B79712916EBA8009268A7 /* LoginTextfield.swift in Sources */,

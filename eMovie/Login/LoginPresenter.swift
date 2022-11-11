@@ -13,6 +13,8 @@ protocol LoginPresenterProtocol {
     var view: LoginViewController? { get set }
     var router: LoginRouterProtocol? { get set }
     
+    var fromOnboarding: Bool { get set }
+    
     func didReceivedRequestToken(_ token: String)
     func didReceivedSessionToken(_ token: String)
     func didReceivedError(_ error: MovieError)
@@ -23,6 +25,7 @@ protocol LoginPresenterProtocol {
 }
 
 class LoginPresenter: LoginPresenterProtocol {
+    var fromOnboarding: Bool = false
     var interactor: LoginInteractorProtocol?
     var view: LoginViewController?
     var router: LoginRouterProtocol?
@@ -62,7 +65,7 @@ class LoginPresenter: LoginPresenterProtocol {
     }
     
     func didReceivedSessionToken(_ token: String) {
-        router?.finishLoginProcess(fromView: self.view)
+        fromOnboarding ? router?.finishLoginProcessFromOnboarding(fromView: self.view) : router?.finishLoginProcessFromProfile(fromView: self.view)
     }
     
     func didReceivedError(_ error: MovieError) {

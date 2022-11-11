@@ -10,7 +10,8 @@ import UIKit
 
 protocol LoginRouterProtocol {
     static func createLoginModule() -> UIViewController
-    func finishLoginProcess(fromView: LoginViewController?)
+    func finishLoginProcessFromProfile(fromView: LoginViewController?)
+    func finishLoginProcessFromOnboarding(fromView: LoginViewController?)
 }
 
 class LoginRouter: LoginRouterProtocol {
@@ -31,10 +32,15 @@ class LoginRouter: LoginRouterProtocol {
         return nav
     }
     
-    func finishLoginProcess(fromView: LoginViewController?) {
+    func finishLoginProcessFromProfile(fromView: LoginViewController?) {
         let profileModule = ProfileRouter.createProfileModule()
-        
         fromView?.tabBarController?.viewControllers?.append(profileModule)
         fromView?.tabBarController?.viewControllers?.remove(at: 2)
+    }
+    
+    func finishLoginProcessFromOnboarding(fromView: LoginViewController?) {
+        let profileModule = TabBarRouter.createTabBarModule()
+        profileModule.modalPresentationStyle = .fullScreen
+        fromView?.navigationController?.present(profileModule, animated: true)
     }
 }

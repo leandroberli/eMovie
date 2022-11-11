@@ -31,7 +31,6 @@ class TabBarRouter: TabBarRouterProtocol {
             tabBarController.viewControllers?.append(loginModule)
         }
         
-        let navController = tabBarController
-        return navController
+        return tabBarController
     }
 }
