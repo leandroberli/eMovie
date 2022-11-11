@@ -89,23 +89,23 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         
         //For header views
         dataSource.supplementaryViewProvider = { (collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? in
-            let section = Section.allCases[indexPath.section]
-            
-            if section == .recommended {
-                guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RecommendedHeaderView.reuseIdentifier, for: indexPath) as? RecommendedHeaderView else {
-                    fatalError("Cannot create header view")
-                }
-                //Presenter handles filter buttons logic.
-                supplementaryView.presenter = self.presenter
-                supplementaryView.label.text = Section.allCases[indexPath.section].rawValue
-                return supplementaryView
-            } else {
+            //Hide header with filters options.
+//            let section = Section.allCases[indexPath.section]
+//            if section == .recommended {
+//                guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RecommendedHeaderView.reuseIdentifier, for: indexPath) as? RecommendedHeaderView else {
+//                    fatalError("Cannot create header view")
+//                }
+//                //Presenter handles filter buttons logic.
+//                supplementaryView.presenter = self.presenter
+//                supplementaryView.label.text = Section.allCases[indexPath.section].rawValue
+//                return supplementaryView
+//            } else {
                 guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as? SectionHeaderView else {
                     fatalError("Cannot create header view")
                 }
                 supplementaryView.label.text = Section.allCases[indexPath.section].rawValue
                 return supplementaryView
-            }
+//            }
         }
     }
     

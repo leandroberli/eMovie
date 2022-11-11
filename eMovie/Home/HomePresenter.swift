@@ -125,7 +125,8 @@ class HomePresenter: HomePresenterProtocol {
             let movies = res?.results ?? []
             let wraperrs = self.interactor?.generateMoviesWarappers(movies, forSection: .recommended) ?? []
             self.allRecommendedMovies = wraperrs
-            self.filtredRecommendedMovies = self.filterMoviesBy(lang: self.selectedLang, movies: self.allRecommendedMovies)
+            self.filtredRecommendedMovies = wraperrs
+            //self.filtredRecommendedMovies = self.filterMoviesBy(lang: self.selectedLang, movies: self.allRecommendedMovies)
             self.startFetchMovieProviders(forMovies: self.filtredRecommendedMovies)
             self.updateCollectionViewData()
         }
