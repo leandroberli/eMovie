@@ -11,17 +11,28 @@ import Kingfisher
 protocol HomeViewProtocol: AnyObject {
     var presenter: HomePresenterProtocol? { get set }
     func updateCollectionData()
-    func updateTopRatedVisibleCells(index: IndexPath)
+    func updateVisibleCells()
 }
 
 class HomeViewController: UIViewController, HomeViewProtocol {
     
     static let sectionHeaderElementKind = "section-header-element-kind"
     
-    enum Section: String, CaseIterable {
-        case upcoming = "Próximos estrenos"
-        case topRated = "Tendencia"
-        case recommended = "Recomendados para ti"
+    enum Section: Int, CaseIterable {
+        case upcoming = 0
+        case topRated = 1
+        case recommended = 2
+        
+        var title: String {
+            switch self {
+            case .topRated:
+                return "Top rated"
+            case .recommended:
+                return "Recommended for you!"
+            case .upcoming:
+                return "Upcoming..."
+            }
+        }
     }
     
     var presenter: HomePresenterProtocol?
@@ -37,10 +48,15 @@ class HomeViewController: UIViewController, HomeViewProtocol {
         presenter?.getRecommendedMovies()
     }
     
-    func updateTopRatedVisibleCells(index: IndexPath) {
-        let item = dataSource.itemIdentifier(for: index)!
+    func updateVisibleCells() {
+        let visibleIndexes = collectionView.indexPathsForVisibleItems
         var newSnapshot = dataSource.snapshot()
-        newSnapshot.reloadItems([item])
+        var itemsToReload: [MovieWrapper] = []
+        for index in visibleIndexes {
+            let dataItem = dataSource.itemIdentifier(for: index)!
+            itemsToReload.append(dataItem)
+        }
+        newSnapshot.reloadItems(itemsToReload)
         dataSource.apply(newSnapshot)
     }
     
@@ -103,7 +119,7 @@ class HomeViewController: UIViewController, HomeViewProtocol {
                 guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as? SectionHeaderView else {
                     fatalError("Cannot create header view")
                 }
-                supplementaryView.label.text = Section.allCases[indexPath.section].rawValue
+                supplementaryView.label.text = Section.allCases[indexPath.section].title
                 return supplementaryView
 //            }
         }

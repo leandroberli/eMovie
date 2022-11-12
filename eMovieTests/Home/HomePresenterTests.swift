@@ -62,4 +62,17 @@ final class HomePresenterTests: XCTestCase {
         XCTAssertTrue(router.selectedMovie?.id == sut.upcomingMovies[index].movie.id)
         XCTAssertTrue(router.navigateMovieDetailCalled)
     }
+    
+    func testTopRatedLoadData_shouldLoadMoviesAndProviders() throws {
+        let exp = self.expectation(description: "Expected load movies and platforms for top rated movies")
+        mockInteractor.expectation = exp
+        
+        sut.getTopRatedMovies()
+    
+        self.wait(for: [exp], timeout: 10)
+        
+        sut.topRatedMovies.forEach({
+            XCTAssertNotNil(sut.platformsTopRated[$0.movie.original_title!])
+        })
+    }
 }

@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="278" height="251"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pla" translatesAutoresizingMaskIntoConstraints="NO" id="2bp-MN-bvE">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2bp-MN-bvE">
                         <rect key="frame" x="0.0" y="0.0" width="278" height="251"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axd-ma-gsi">
@@ -44,7 +44,4 @@
             <point key="canvasLocation" x="226.15384615384613" y="92.061611374407576"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="pla" width="128" height="128"/>
-    </resources>
 </document>

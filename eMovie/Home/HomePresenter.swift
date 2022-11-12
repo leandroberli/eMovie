@@ -82,24 +82,39 @@ class HomePresenter: HomePresenterProtocol {
     //MARK: Top rated
     func getTopRatedMovies() {
         interactor?.getTopRatedMovies(page: Int.random(in: 1..<10)) { res, error in
-            //self.topRatedMovies = movies ?? []
             let movies = res?.results ?? []
             let wrappers = self.interactor?.generateMoviesWarappers(movies, forSection: .topRated) ?? []
             self.topRatedMovies = wrappers
             self.updateCollectionViewData()
             self.startFetchMovieProviders(forMovies: self.topRatedMovies)
-            //self.startFetchTopRatedMovieProviders()
         }
     }
     
+    let topRateGroup = DispatchGroup()
+    let recommendedGroup = DispatchGroup()
+    
     func startFetchMovieProviders(forMovies: [MovieWrapper]) {
         forMovies.forEach({
+            $0.section == .topRated ? topRateGroup.enter() : recommendedGroup.enter()
             getProvidedPlatforms(movie: $0)
         })
+        
+        if forMovies.first?.section == .topRated {
+            self.topRateGroup.notify(queue: .main) {
+                print("FINISH TOP RATED PROVIDERS REQS")
+                self.view?.updateVisibleCells()
+            }
+        } else {
+            self.recommendedGroup.notify(queue: .main) {
+                print("FINISH RECOMMENDED PROVIDERS REQS")
+                self.view?.updateVisibleCells()
+            }
+        }
     }
     
     private func getProvidedPlatforms(movie: MovieWrapper) {
         interactor?.getMovieProviders(for: movie.movie.original_title ?? "") { platforms, error in
+            movie.section == .topRated ? self.topRateGroup.leave() : self.recommendedGroup.leave()
             guard let platforms = platforms else {
                 return
             }
@@ -107,14 +122,6 @@ class HomePresenter: HomePresenterProtocol {
                 self.platformsRecommended.updateValue(platforms, forKey: movie.movie.original_title ?? "")
             } else {
                 self.platformsTopRated.updateValue(platforms, forKey: movie.movie.original_title ?? "")
-            }
-            
-            //Realod first 3 items.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                if self.i < 4 {
-                    self.view?.updateTopRatedVisibleCells(index: IndexPath(item: self.i, section: 1))
-                }
-                self.i += 1
             }
         }
     }
