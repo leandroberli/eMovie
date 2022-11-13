@@ -17,10 +17,12 @@ class HomeRouter: HomeRouterProtocol {
     
     class func createHomeModule() -> UIViewController {
         let homeController = HomeViewController()
-        let interactor: HomeInteractorProtocol = HomeInteractor(httpClient: HTTPClient())
+        var interactor: HomeInteractorProtocol = HomeInteractor(httpClient: HTTPClient())
         let router: HomeRouterProtocol = HomeRouter()
         let presenter = HomePresenter(view: homeController, interactor: interactor, router: router)
+        
         homeController.presenter = presenter
+        interactor.presenter = presenter
         
         let item = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
         homeController.tabBarItem = item

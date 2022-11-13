@@ -10,47 +10,43 @@ import XCTest
 @testable import eMovie
 
 class MockHomeInteractor: HomeInteractorProtocol {
+    func generateMoviesWarappers(_ movies: [eMovie.Movie], forSection: eMovie.HomeViewController.Section) -> [eMovie.MovieWrapper] {
+        return []
+    }
+    
+    var providerClient: eMovie.MovieProviderClient?
+    var presenter: eMovie.HomePresenterProtocol?
+    
+    func getTopRatedMovies(page: Int) {
+        guard let movies = loadJson(filename: "movies") else { return }
+        let wrapers = movies.map({ return MovieWrapper(section: .topRated, movie: $0)})
+        presenter?.didReceivedTopRatedMovies(data: .success(wrapers))
+    }
+    
+    func getUpcomingMovies(page: Int) {
+        guard let movies = loadJson(filename: "movies") else { return }
+        let wrapers = movies.map({ return MovieWrapper(section: .upcoming, movie: $0)})
+        presenter?.didReceivedUpcomingMovies(data: .success(wrapers))
+    }
+    
+    func getRecommendedMovies(page: Int) {
+        guard let movies = loadJson(filename: "movies") else { return }
+        let wrapers = movies.map({ return MovieWrapper(section: .recommended, movie: $0)})
+        presenter?.didReceivedRecommendedMovies(data: .success(wrapers))
+    }
+    
+    var getProvidersCalled = false
+    
+    func getProviders(forMovies: [eMovie.MovieWrapper]) {
+        let result: Result<[String: [ProviderPlataform]],Error> = .success([:])
+        getProvidersCalled = true
+        presenter?.didReceivedProvidersData(data: result, fromSection: forMovies.first?.section ?? .upcoming)
+       //expectation?.fulfill()
+    }
+    
     var httpClient: eMovie.HTTPClient?
     var expectation: XCTestExpectation?
     var simulateError = false
-    
-    func getMovieProviders(for movieName: String, callback: @escaping ([eMovie.ProviderPlataform]?, Error?) -> Void) {
-        MovieProviderClient().getMovieProvider(movieName: movieName) { res, err in
-            callback(res?.platforms,err)
-            self.expectation?.fulfill()
-        }
-    }
-    
-    func generateMoviesWarappers(_ movies: [eMovie.Movie], forSection: eMovie.HomeViewController.Section) -> [eMovie.MovieWrapper] {
-        let wrappers = movies.map({ return MovieWrapper(section: forSection, movie: $0)})
-        return wrappers
-    }
-    
-    func getTopRatedMovies(page: Int, completion: @escaping (eMovie.ResultReponse<eMovie.Movie>?, Error?) -> Void) {
-        if !simulateError {
-            let movies = loadJson(filename: "movies")
-            let response = ResultReponse<Movie>(page: 1, results: movies ?? [], total_pages: 10, total_results: 100)
-            completion(response, nil)
-        }
-    }
-    
-    func getUpcomingMovies(page: Int, completion: @escaping (eMovie.ResultReponse<eMovie.Movie>?, Error?) -> Void) {
-        if !simulateError {
-            let movies = loadJson(filename: "movies")
-            //let wrappers = movies?.map({ return MovieWrapper(section: .upcoming, movie: $0)})
-            let response = ResultReponse<Movie>(page: 1, results: movies ?? [], total_pages: 10, total_results: 100)
-            
-            completion(response, nil)
-        }
-    }
-    
-    func getRecommendedMovies(page: Int, completion: @escaping (eMovie.ResultReponse<eMovie.Movie>?, Error?) -> Void) {
-        if !simulateError {
-            let movies = loadJson(filename: "movies")
-            let response = ResultReponse<Movie>(page: 1, results: movies ?? [], total_pages: 10, total_results: 100)
-            completion(response, nil)
-        }
-    }
     
     func loadJson(filename fileName: String) -> [Movie]? {
         guard let pathString = Bundle(for: type(of: self)).path(forResource: "movies", ofType: "json") else {

@@ -10,13 +10,17 @@ import XCTest
 @testable import eMovie
 
 class MockHomeView: UIViewController, HomeViewProtocol {
-    func updateTopRatedVisibleCells(index: IndexPath) {
+    func updateVisibleCells() {
+        updateCollectionVisibleCellsCalled = true
+        visibleCellsExp?.fulfill()
         return
     }
     
     var presenter: eMovie.HomePresenterProtocol?
+    var visibleCellsExp: XCTestExpectation?
     var expectation: XCTestExpectation?
     var updateCollectionDataCalled = false
+    var updateCollectionVisibleCellsCalled = false
     
     func updateCollectionData() {
         updateCollectionDataCalled = true

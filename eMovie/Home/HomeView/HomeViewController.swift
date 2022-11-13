@@ -14,7 +14,9 @@ protocol HomeViewProtocol: AnyObject {
     func updateVisibleCells()
 }
 
-class HomeViewController: UIViewController, HomeViewProtocol {
+typealias HomeView = HomeViewProtocol & UIViewController
+
+class HomeViewController: HomeView {
     
     static let sectionHeaderElementKind = "section-header-element-kind"
     

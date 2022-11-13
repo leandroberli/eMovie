@@ -20,6 +20,8 @@ final class HomePresenterTests: XCTestCase {
         mockInteractor = MockHomeInteractor()
         router = MockHomeRouter()
         sut = HomePresenter(view: mockView, interactor: mockInteractor, router: router)
+        mockView.presenter = sut
+        mockInteractor.presenter = sut
     }
 
     override func tearDownWithError() throws {
@@ -49,30 +51,27 @@ final class HomePresenterTests: XCTestCase {
         })
     }
     
-    func testDidSelectUpcomingMovie_shouldNavigateToMovieDetail() throws {
-        let exp = self.expectation(description: "Expect navigate to upcoming movie detail.")
-        let index = 4
-        router.expectation = exp
+    func testTopRatedDataDownloaded_ShouldUpdateCollection() throws {
+        let exp = self.expectation(description: "Top movies data has received, then update collection view")
+        mockView.expectation = exp
         
-        sut.getUpcomingMovies()
-        sut.navigateToMovieDetail(movieIndex: index, fromSection: .upcoming)
+        sut.getTopRatedMovies()
         
         self.wait(for: [exp], timeout: 5)
         
-        XCTAssertTrue(router.selectedMovie?.id == sut.upcomingMovies[index].movie.id)
-        XCTAssertTrue(router.navigateMovieDetailCalled)
+        XCTAssertTrue(mockView.updateCollectionDataCalled)
     }
     
-    func testTopRatedLoadData_shouldLoadMoviesAndProviders() throws {
-        let exp = self.expectation(description: "Expected load movies and platforms for top rated movies")
-        mockInteractor.expectation = exp
+    func testTopRateMoviesDataDownloaded_ShouldGetProvidersAndUpdateCells() throws {
+        let exp = self.expectation(description: "Top movies data received, then get each providers and update cell for show logos.")
+        mockView.visibleCellsExp = exp
         
         sut.getTopRatedMovies()
-    
-        self.wait(for: [exp], timeout: 10)
         
-        sut.topRatedMovies.forEach({
-            XCTAssertNotNil(sut.platformsTopRated[$0.movie.original_title!])
-        })
+        self.wait(for: [exp], timeout: 5)
+        
+        XCTAssertTrue(mockInteractor.getProvidersCalled)
+        XCTAssertTrue(mockView.updateCollectionVisibleCellsCalled)
     }
+    
 }

@@ -14,7 +14,7 @@ struct MovieWrapper: Hashable {
 }
 
 protocol HomePresenterProtocol: AnyObject {
-    var view: HomeViewProtocol? { get set }
+    var view: HomeView? { get set }
     var interactor: HomeInteractorProtocol? { get set }
     var router: HomeRouterProtocol? { get set }
     
@@ -27,15 +27,20 @@ protocol HomePresenterProtocol: AnyObject {
     var platformsRecommended: [String: Any] { get set }
     
     func getUpcomingMovies()
+    func didReceivedUpcomingMovies(data: Result<[MovieWrapper],Error>)
     func getTopRatedMovies()
+    func didReceivedTopRatedMovies(data: Result<[MovieWrapper], Error>)
     func getRecommendedMovies()
-    func startFetchMovieProviders(forMovies: [MovieWrapper])
+    func didReceivedRecommendedMovies(data: Result<[MovieWrapper], Error>)
+    func executeGetProvidersRequests(forMovies: [MovieWrapper])
+    func didReceivedProvidersData(data: Result<[String: [ProviderPlataform]], Error>, fromSection: HomeViewController.Section)
+    
     func handleFilterOption(_ option: FilterButton.FilterOption)
     func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section)
 }
 
 class HomePresenter: HomePresenterProtocol {
-    weak var view: HomeViewProtocol?
+    weak var view: HomeView?
     var interactor: HomeInteractorProtocol?
     var router: HomeRouterProtocol?
     
@@ -58,84 +63,81 @@ class HomePresenter: HomePresenterProtocol {
     var platformsRecommended: [String: Any] = [:]
     var i = 0
 
-    init(view: HomeViewProtocol, interactor: HomeInteractorProtocol, router: HomeRouterProtocol) {
+    init(view: HomeView, interactor: HomeInteractorProtocol, router: HomeRouterProtocol) {
         self.view = view
         self.interactor = interactor
         self.router = router
     }
-    
-    private func updateCollectionViewData() {
-        DispatchQueue.main.async {
-            self.view?.updateCollectionData()
-        }
-    }
-    
+
     //MARK: Upcoming movies
     func getUpcomingMovies() {
-        interactor?.getUpcomingMovies(page: Int.random(in: 1..<10)) { res, error in
-            let movies = res?.results ?? []
-            self.upcomingMovies = (self.interactor?.generateMoviesWarappers(movies, forSection: .upcoming)) ?? []
-            self.updateCollectionViewData()
+        interactor?.getUpcomingMovies(page: Int.random(in: 1..<10))
+    }
+    
+    func didReceivedUpcomingMovies(data: Result<[MovieWrapper], Error>) {
+        switch data {
+        case .success(let data):
+            self.upcomingMovies = data
+            DispatchQueue.main.async {
+                self.view?.updateCollectionData()
+            }
+        case .failure:
+            return
         }
     }
     
     //MARK: Top rated
     func getTopRatedMovies() {
-        interactor?.getTopRatedMovies(page: Int.random(in: 1..<10)) { res, error in
-            let movies = res?.results ?? []
-            let wrappers = self.interactor?.generateMoviesWarappers(movies, forSection: .topRated) ?? []
-            self.topRatedMovies = wrappers
-            self.updateCollectionViewData()
-            self.startFetchMovieProviders(forMovies: self.topRatedMovies)
-        }
+        interactor?.getTopRatedMovies(page: Int.random(in: 1..<10))
     }
     
-    let topRateGroup = DispatchGroup()
-    let recommendedGroup = DispatchGroup()
-    
-    func startFetchMovieProviders(forMovies: [MovieWrapper]) {
-        forMovies.forEach({
-            $0.section == .topRated ? topRateGroup.enter() : recommendedGroup.enter()
-            getProvidedPlatforms(movie: $0)
-        })
-        
-        if forMovies.first?.section == .topRated {
-            self.topRateGroup.notify(queue: .main) {
-                print("FINISH TOP RATED PROVIDERS REQS")
-                self.view?.updateVisibleCells()
+    func didReceivedTopRatedMovies(data: Result<[MovieWrapper], Error>) {
+        switch data {
+        case .success(let data):
+            self.topRatedMovies = data
+            self.executeGetProvidersRequests(forMovies: data)
+            DispatchQueue.main.async {
+                self.view?.updateCollectionData()
             }
-        } else {
-            self.recommendedGroup.notify(queue: .main) {
-                print("FINISH RECOMMENDED PROVIDERS REQS")
-                self.view?.updateVisibleCells()
-            }
+        case .failure:
+            return
         }
     }
+
+    func executeGetProvidersRequests(forMovies: [MovieWrapper]) {
+        interactor?.getProviders(forMovies: forMovies)
+    }
     
-    private func getProvidedPlatforms(movie: MovieWrapper) {
-        interactor?.getMovieProviders(for: movie.movie.original_title ?? "") { platforms, error in
-            movie.section == .topRated ? self.topRateGroup.leave() : self.recommendedGroup.leave()
-            guard let platforms = platforms else {
-                return
-            }
-            if movie.section == .recommended {
-                self.platformsRecommended.updateValue(platforms, forKey: movie.movie.original_title ?? "")
+    func didReceivedProvidersData(data: Result<[String: [ProviderPlataform]], Error>, fromSection: HomeViewController.Section) {
+        switch data {
+        case .success(let data):
+            if fromSection == .topRated {
+                self.platformsTopRated = data
             } else {
-                self.platformsTopRated.updateValue(platforms, forKey: movie.movie.original_title ?? "")
+                self.platformsRecommended = data
             }
+            self.view?.updateVisibleCells()
+        case .failure:
+            return
         }
     }
     
     //MARK: Recommended movies
     func getRecommendedMovies() {
-        interactor?.getRecommendedMovies(page: Int.random(in: 1..<10)) { res, error in
-            let movies = res?.results ?? []
-            let wraperrs = self.interactor?.generateMoviesWarappers(movies, forSection: .recommended) ?? []
-            self.allRecommendedMovies = wraperrs
-            self.filtredRecommendedMovies = wraperrs
-            //self.filtredRecommendedMovies = self.filterMoviesBy(lang: self.selectedLang, movies: self.allRecommendedMovies)
-            self.startFetchMovieProviders(forMovies: self.filtredRecommendedMovies)
-            self.updateCollectionViewData()
+        interactor?.getRecommendedMovies(page: Int.random(in: 1..<10))
+    }
+    
+    func didReceivedRecommendedMovies(data: Result<[MovieWrapper], Error>) {
+        switch data {
+        case .success(let data):
+            self.allRecommendedMovies = data
+            self.filtredRecommendedMovies = data
+            self.executeGetProvidersRequests(forMovies: data)
+            DispatchQueue.main.async {
+                self.view?.updateCollectionData()
+            }
+        case .failure:
+            return
         }
     }
     
@@ -146,7 +148,7 @@ class HomePresenter: HomePresenterProtocol {
         case .lang:
             self.filtredRecommendedMovies = self.filterMoviesBy(lang: selectedLang, movies: allRecommendedMovies)
         }
-        updateCollectionViewData()
+        self.view?.updateCollectionData()
     }
     
     private func filterMoviesBy(lang: String, movies: [MovieWrapper]) -> [MovieWrapper] {
