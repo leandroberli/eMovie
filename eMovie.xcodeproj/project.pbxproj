@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		17BACA01A045D2D3395F7CAE /* Pods_eMovie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B378A270EC351C263A129544 /* Pods_eMovie.framework */; };
+		9A1AECCC2922CA9A00619687 /* MockDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AECCB2922CA9A00619687 /* MockDetailView.swift */; };
+		9A1AECCE2922CAB600619687 /* MockDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1AECCD2922CAB600619687 /* MockDetailInteractor.swift */; };
 		9A1D1E202911675700E286AE /* MockHomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1D1E1F2911675700E286AE /* MockHomeInteractor.swift */; };
 		9A1D1E232911696500E286AE /* MockHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1D1E222911696500E286AE /* MockHomeView.swift */; };
 		9A1D1E2529116C7600E286AE /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1D1E2429116C7600E286AE /* HomeRouter.swift */; };
 		9A1D1E2729116FD100E286AE /* MovieDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1D1E2629116FD100E286AE /* MovieDetailRouter.swift */; };
 		9A1D1E2B291174D400E286AE /* MovieDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1D1E2A291174D400E286AE /* MovieDetailInteractor.swift */; };
 		9A1D1E2D2911837900E286AE /* MockHomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1D1E2C2911837900E286AE /* MockHomeRouter.swift */; };
+		9A3569BE29207DA600C6E6A2 /* HomeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3569BD29207DA600C6E6A2 /* HomeViewControllerTests.swift */; };
 		9A3B795429153792009268A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B795229153792009268A7 /* LoginViewController.swift */; };
 		9A3B795529153792009268A7 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A3B795329153792009268A7 /* LoginViewController.xib */; };
 		9A3B7957291537A0009268A7 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B7956291537A0009268A7 /* LoginPresenter.swift */; };
@@ -76,6 +79,7 @@
 		9AB49958290C11750084B7CC /* MovieDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB49957290C11750084B7CC /* MovieDetailPresenter.swift */; };
 		9AB4995A290C19C40084B7CC /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB49959290C19C40084B7CC /* MovieDetail.swift */; };
 		9AB4995C290C4C8E0084B7CC /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4995B290C4C8E0084B7CC /* Video.swift */; };
+		9AF26A64292145DB00BB9071 /* MovieDetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF26A63292145DB00BB9071 /* MovieDetailPresenterTests.swift */; };
 		DD9CE1DF99BC0780ACE242F2 /* Pods_eMovieTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC5F55695E5C6DE1640CBB5 /* Pods_eMovieTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -95,12 +99,15 @@
 		330CA8C627B076D0DF4BD147 /* Pods-eMovieTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eMovieTests.debug.xcconfig"; path = "Target Support Files/Pods-eMovieTests/Pods-eMovieTests.debug.xcconfig"; sourceTree = "<group>"; };
 		64744A5F6A73176F85A49CAF /* Pods-eMovie-eMovieUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eMovie-eMovieUITests.release.xcconfig"; path = "Target Support Files/Pods-eMovie-eMovieUITests/Pods-eMovie-eMovieUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6CC5F55695E5C6DE1640CBB5 /* Pods_eMovieTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eMovieTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A1AECCB2922CA9A00619687 /* MockDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockDetailView.swift; path = eMovieTests/Home/MockDetailView.swift; sourceTree = SOURCE_ROOT; };
+		9A1AECCD2922CAB600619687 /* MockDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockDetailInteractor.swift; path = eMovieTests/Home/MockDetailInteractor.swift; sourceTree = SOURCE_ROOT; };
 		9A1D1E1F2911675700E286AE /* MockHomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeInteractor.swift; sourceTree = "<group>"; };
 		9A1D1E222911696500E286AE /* MockHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeView.swift; sourceTree = "<group>"; };
 		9A1D1E2429116C7600E286AE /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		9A1D1E2629116FD100E286AE /* MovieDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailRouter.swift; sourceTree = "<group>"; };
 		9A1D1E2A291174D400E286AE /* MovieDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailInteractor.swift; sourceTree = "<group>"; };
 		9A1D1E2C2911837900E286AE /* MockHomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeRouter.swift; sourceTree = "<group>"; };
+		9A3569BD29207DA600C6E6A2 /* HomeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerTests.swift; sourceTree = "<group>"; };
 		9A3B795229153792009268A7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9A3B795329153792009268A7 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		9A3B7956291537A0009268A7 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
@@ -168,6 +175,7 @@
 		9AB49957290C11750084B7CC /* MovieDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailPresenter.swift; sourceTree = "<group>"; };
 		9AB49959290C19C40084B7CC /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		9AB4995B290C4C8E0084B7CC /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		9AF26A63292145DB00BB9071 /* MovieDetailPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MovieDetailPresenterTests.swift; path = eMovieTests/Home/MovieDetailPresenterTests.swift; sourceTree = SOURCE_ROOT; };
 		AA0DA9627C15633F55B385E3 /* Pods-eMovie-eMovieUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eMovie-eMovieUITests.debug.xcconfig"; path = "Target Support Files/Pods-eMovie-eMovieUITests/Pods-eMovie-eMovieUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AACF565F378F576647E84CB8 /* Pods-eMovie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eMovie.debug.xcconfig"; path = "Target Support Files/Pods-eMovie/Pods-eMovie.debug.xcconfig"; sourceTree = "<group>"; };
 		B378A270EC351C263A129544 /* Pods_eMovie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_eMovie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -388,6 +396,7 @@
 			children = (
 				9A1D1E212911695900E286AE /* Mocks */,
 				9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */,
+				9A3569BD29207DA600C6E6A2 /* HomeViewControllerTests.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -441,6 +450,9 @@
 		9AAFB5C5290EE44E00DBD790 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				9AF26A63292145DB00BB9071 /* MovieDetailPresenterTests.swift */,
+				9A1AECCB2922CA9A00619687 /* MockDetailView.swift */,
+				9A1AECCD2922CAB600619687 /* MockDetailInteractor.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -702,8 +714,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A3569BE29207DA600C6E6A2 /* HomeViewControllerTests.swift in Sources */,
 				9A77B8F2290D99C9003EEE36 /* HomePresenterTests.swift in Sources */,
+				9A1AECCC2922CA9A00619687 /* MockDetailView.swift in Sources */,
+				9AF26A64292145DB00BB9071 /* MovieDetailPresenterTests.swift in Sources */,
 				9A1D1E202911675700E286AE /* MockHomeInteractor.swift in Sources */,
+				9A1AECCE2922CAB600619687 /* MockDetailInteractor.swift in Sources */,
 				9A1D1E232911696500E286AE /* MockHomeView.swift in Sources */,
 				9A1D1E2D2911837900E286AE /* MockHomeRouter.swift in Sources */,
 			);
