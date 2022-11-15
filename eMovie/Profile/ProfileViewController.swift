@@ -66,6 +66,7 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
                 fatalError("Cannot create header view")
             }
             supplementaryView.label.text = "Favoritos"
+            supplementaryView.imageView.image = UIImage(systemName: "heart.fill")
             return supplementaryView
         }
     }

@@ -32,7 +32,7 @@ class HomeViewController: HomeView {
             case .recommended:
                 return "Recommended for you!"
             case .upcoming:
-                return "Upcoming..."
+                return "Upcoming"
             }
         }
     }
@@ -41,6 +41,8 @@ class HomeViewController: HomeView {
     var dataSource: UICollectionViewDiffableDataSource<Section, MovieWrapper>! = nil
     var collectionView: UICollectionView!
     
+    var refreshControl: UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollection()
@@ -48,7 +50,19 @@ class HomeViewController: HomeView {
         presenter?.getTopRatedMovies()
         presenter?.getUpcomingMovies()
         presenter?.getRecommendedMovies()
+        
+        refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlAction), for: .valueChanged)
+        
     }
+    
+    @objc func refreshControlAction(){
+        presenter?.getUpcomingMovies()
+        presenter?.getTopRatedMovies()
+        presenter?.getRecommendedMovies()
+    }
+    
     
     func updateVisibleCells() {
         let visibleIndexes = collectionView.indexPathsForVisibleItems
@@ -121,7 +135,7 @@ class HomeViewController: HomeView {
                 guard let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as? SectionHeaderView else {
                     fatalError("Cannot create header view")
                 }
-                supplementaryView.label.text = Section.allCases[indexPath.section].title
+                supplementaryView.confiugreSection(Section.allCases[indexPath.section])
                 return supplementaryView
 //            }
         }
@@ -129,6 +143,7 @@ class HomeViewController: HomeView {
     
     //This function trigger configureDataSource function.
     func updateCollectionData() {
+        refreshControl.endRefreshing()
         let snapshot = snapshotForCurrentState()
         dataSource.apply(snapshot, animatingDifferences: true)
     }
