@@ -33,7 +33,7 @@ class CoreHTTPClient {
             if let data = data, let res = response as? HTTPURLResponse {
                 let dataString = String(data: data, encoding: .utf8)
                 print("-----URL REQUEST: ", request.url?.absoluteURL ?? "")
-                //print(" DATA RESPONSE: ", dataString ?? "")
+                print(" DATA RESPONSE: ", dataString ?? "")
                 if (200...299).contains(res.statusCode) {
                     do {
                         let data = try JSONDecoder().decode(responseType.self, from: data)

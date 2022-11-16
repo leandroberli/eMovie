@@ -10,6 +10,12 @@ import XCTest
 @testable import eMovie
 
 class MockHomeInteractor: HomeInteractorProtocol {
+    func providersDataReceived(_ data: [String : [eMovie.ProviderPlataform]], forSection: eMovie.HomeViewController.Section) {
+        
+    }
+    
+    var providersProcess: eMovie.GetProvidersProcessProtocol?
+    
     func generateMoviesWarappers(_ movies: [eMovie.Movie], forSection: eMovie.HomeViewController.Section) -> [eMovie.MovieWrapper] {
         return []
     }

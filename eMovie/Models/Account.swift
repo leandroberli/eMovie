@@ -11,7 +11,7 @@ struct Account: Codable {
     var id: Int
     var name: String
     var username: String
-    var avatar: Avatar
+    //var avatar: Avatar
 }
 
 struct Avatar: Codable {

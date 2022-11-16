@@ -50,6 +50,7 @@
 		9A5CA7F0290AB84F00C6FD0D /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5CA7EF290AB84F00C6FD0D /* HTTPClient.swift */; };
 		9A5CA7F2290ABA9B00C6FD0D /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5CA7F1290ABA9B00C6FD0D /* HomePresenter.swift */; };
 		9A5CA7F7290AD50900C6FD0D /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5CA7F6290AD50900C6FD0D /* SectionHeaderView.swift */; };
+		9A5EEAED29244B450022F324 /* GetProvidersProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5EEAEC29244B450022F324 /* GetProvidersProcess.swift */; };
 		9A77B8EF290D5AB7003EEE36 /* NetworkStatusHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77B8EE290D5AB7003EEE36 /* NetworkStatusHandler.swift */; };
 		9A77B8F2290D99C9003EEE36 /* HomePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */; };
 		9A77B8F4290DE8F8003EEE36 /* movies.json in Resources */ = {isa = PBXBuildFile; fileRef = 9A77B8F3290DE8F8003EEE36 /* movies.json */; };
@@ -146,6 +147,7 @@
 		9A5CA7EF290AB84F00C6FD0D /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		9A5CA7F1290ABA9B00C6FD0D /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		9A5CA7F6290AD50900C6FD0D /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		9A5EEAEC29244B450022F324 /* GetProvidersProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetProvidersProcess.swift; sourceTree = "<group>"; };
 		9A77B8EE290D5AB7003EEE36 /* NetworkStatusHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusHandler.swift; sourceTree = "<group>"; };
 		9A77B8F1290D99C9003EEE36 /* HomePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterTests.swift; sourceTree = "<group>"; };
 		9A77B8F3290DE8F8003EEE36 /* movies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = movies.json; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				9A5CA7F1290ABA9B00C6FD0D /* HomePresenter.swift */,
 				9AAFB5C629100B7A00DBD790 /* HomeInteractor.swift */,
 				9A1D1E2429116C7600E286AE /* HomeRouter.swift */,
+				9A5EEAEC29244B450022F324 /* GetProvidersProcess.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -415,8 +418,8 @@
 		9A9E043829149D8D00C11AF4 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				9A9E043929149DB500C11AF4 /* ProfileViewController.swift */,
 				9A9E043A29149DB500C11AF4 /* ProfileViewController.xib */,
+				9A9E043929149DB500C11AF4 /* ProfileViewController.swift */,
 				9A3B79612916A35E009268A7 /* ProfilePresenter.swift */,
 				9A3B79632916A36B009268A7 /* ProfileRouter.swift */,
 				9A3B79652916A376009268A7 /* ProfileInteractor.swift */,
@@ -665,6 +668,7 @@
 				9A3B79752916FFA9009268A7 /* ApiResponseError.swift in Sources */,
 				9A9C79E8291D8F3F0019BF99 /* StartOnboardingRouter.swift in Sources */,
 				9A3B7959291537AA009268A7 /* LoginInteractor.swift in Sources */,
+				9A5EEAED29244B450022F324 /* GetProvidersProcess.swift in Sources */,
 				9AAC44AC29175A9200266847 /* SearchInteractor.swift in Sources */,
 				9A5CA7DE290A030300C6FD0D /* HomeViewController.swift in Sources */,
 				9A3B795429153792009268A7 /* LoginViewController.swift in Sources */,

@@ -20,8 +20,14 @@ class ProfileRouter: ProfileRouterProtocol {
         var interactor: ProfileInteractorProtocol = ProfileInteractor()
         let router: ProfileRouterProtocol = ProfileRouter()
         let presenter = ProfilePresenter(view: viewController, interactor: interactor, router: router)
+    
         viewController.presenter = presenter
         interactor.presenter = presenter
+         
+        let providersProcess = GetProvidersProcess()
+        providersProcess.delegate = interactor
+        interactor.providersProcess = providersProcess
+        
         
         let item3 = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
         viewController.tabBarItem = item3

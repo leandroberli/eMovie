@@ -7,16 +7,23 @@
 
 import Foundation
 
-protocol ProfileInteractorProtocol {
+protocol ProfileInteractorProtocol: GetProvidersProcessDelegate {
     var httpClient: HTTPClient? { get set }
     var presenter: ProfilePresenterProtocol? { get set }
+    var providersProcess: GetProvidersProcessProtocol? { get set }
     
     func getAccountDetail()
     func getFavoriteMovies()
+    func getProvidersMovies(forMovies: [MovieWrapper])
     func deleteSessionToken()
 }
 
 class ProfileInteractor: ProfileInteractorProtocol {
+    func providersDataReceived(_ data: [String : [ProviderPlataform]], forSection: HomeViewController.Section) {
+        presenter?.didReceivedProvidersMoviesData(data)
+    }
+    
+    var providersProcess: GetProvidersProcessProtocol?
     var presenter: ProfilePresenterProtocol?
     var httpClient: HTTPClient? = HTTPClient()
     
@@ -27,6 +34,10 @@ class ProfileInteractor: ProfileInteractorProtocol {
         DispatchQueue.main.async {
             self.presenter?.didReceivedDeleteSessionData()
         }
+    }
+    
+    func getProvidersMovies(forMovies: [MovieWrapper]) {
+        providersProcess?.startProcess(forMovies: forMovies)
     }
     
     func getFavoriteMovies() {

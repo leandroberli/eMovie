@@ -7,10 +7,10 @@
 
 import Foundation
 
-protocol HomeInteractorProtocol {
+protocol HomeInteractorProtocol: GetProvidersProcessDelegate {
     var httpClient: HTTPClient? { get set }
-    var providerClient: MovieProviderClient? { get set}
     var presenter: HomePresenterProtocol? { get set }
+    var providersProcess: GetProvidersProcessProtocol? { get set }
     
     func getTopRatedMovies(page: Int)
     func getUpcomingMovies(page: Int)
@@ -20,12 +20,13 @@ protocol HomeInteractorProtocol {
 }
 
 class HomeInteractor: HomeInteractorProtocol {
-    var providerClient: MovieProviderClient? = MovieProviderClient()
+    var providersProcess: GetProvidersProcessProtocol? = GetProvidersProcess()
     var presenter: HomePresenterProtocol?
     var httpClient: HTTPClient? = HTTPClient()
     
-    init(httpClient: HTTPClient) {
+    init(httpClient: HTTPClient, providerProcess: GetProvidersProcessProtocol) {
         self.httpClient = httpClient
+        self.providersProcess = providerProcess
     }
     
     func getTopRatedMovies(page: Int) {
@@ -53,30 +54,17 @@ class HomeInteractor: HomeInteractorProtocol {
     }
     
     func getProviders(forMovies: [MovieWrapper]) {
-        let section = forMovies.first?.section ?? .topRated
-        let group = DispatchGroup()
-        var providers: [String: [ProviderPlataform]] = [:]
-        
-        forMovies.forEach({
-            group.enter()
-            
-            let movieName = $0.movie.original_title ?? ""
-            providerClient?.getMovieProvider(movieName: movieName) { res, err in
-                if let provs = res?.platforms {
-                    providers.updateValue(provs, forKey: movieName)
-                }
-                group.leave()
-            }
-        })
-        
-        group.notify(queue: .main) {
-            print("ALL PROVIDER REQUEST FROM SECTION \(section.title) FINISHED")
-            self.presenter?.didReceivedProvidersData(data: .success(providers), fromSection: section)
-        }
+        providersProcess?.startProcess(forMovies: forMovies)
     }
     
     func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper] {
         let wrappers = movies.map({ return MovieWrapper(section: forSection, movie: $0)})
         return wrappers
+    }
+}
+
+extension HomeInteractor: GetProvidersProcessDelegate {
+    func providersDataReceived(_ data: [String : [ProviderPlataform]], forSection: HomeViewController.Section) {
+        self.presenter?.didReceivedProvidersData(data: .success(data), fromSection: forSection)
     }
 }

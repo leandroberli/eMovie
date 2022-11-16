@@ -17,10 +17,12 @@ class HomeRouter: HomeRouterProtocol {
     
     class func createHomeModule() -> UIViewController {
         let homeController = HomeViewController()
-        var interactor: HomeInteractorProtocol = HomeInteractor(httpClient: HTTPClient())
+        var providersProcess: GetProvidersProcessProtocol = GetProvidersProcess()
+        var interactor: HomeInteractorProtocol = HomeInteractor(httpClient: HTTPClient(), providerProcess: providersProcess)
+        providersProcess.delegate = interactor
+        
         let router: HomeRouterProtocol = HomeRouter()
         let presenter = HomePresenter(view: homeController, interactor: interactor, router: router)
-        
         homeController.presenter = presenter
         interactor.presenter = presenter
         
@@ -28,7 +30,6 @@ class HomeRouter: HomeRouterProtocol {
         homeController.tabBarItem = item
         
         let nav = UINavigationController(rootViewController: homeController)
-        
         return nav
     }
     

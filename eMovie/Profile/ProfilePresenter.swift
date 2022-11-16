@@ -11,17 +11,26 @@ protocol ProfilePresenterProtocol {
     var view: ProfileViewController? { get set }
     var interactor: ProfileInteractorProtocol? { get set }
     var router: ProfileRouterProtocol? { get set }
+    var providers: [String : [ProviderPlataform]]? { get set }
     
     func didTapLogoutButton()
     func didTapFavoriteItem(at index: Int)
     func didReceivedDeleteSessionData()
     func didReceivedFavoriteMoviesData(_ data: [MovieWrapper])
     func didReceivedAccountDetailsData(_ data: Account?)
+    func didReceivedProvidersMoviesData(_ data:  [String : [ProviderPlataform]]?)
     func getAccountDetails()
     func getFavoriteMovies()
 }
 
 class ProfilePresenter: ProfilePresenterProtocol {
+    var providers: [String : [ProviderPlataform]]?
+    
+    func didReceivedProvidersMoviesData(_ data:  [String : [ProviderPlataform]]?) {
+        self.providers = data
+        self.view?.updateCellsForProvidersData(data: nil)
+    }
+    
     func didTapFavoriteItem(at index: Int) {
         let movie = favorites[index]
         self.router?.navigateToMovieDetail(fromView: self.view, movie: movie.movie)
@@ -30,6 +39,7 @@ class ProfilePresenter: ProfilePresenterProtocol {
     func didReceivedFavoriteMoviesData(_ data: [MovieWrapper]) {
         self.favorites = data
         self.view?.updateFavoriteMovies(data: data)
+        self.interactor?.getProvidersMovies(forMovies: data)
     }
     
     var view: ProfileViewController?

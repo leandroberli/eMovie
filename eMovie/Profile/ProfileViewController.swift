@@ -13,9 +13,22 @@ protocol ProfileViewProtocol {
     
     func updateAccountDetail(withData: Account?)
     func updateFavoriteMovies(data: [MovieWrapper])
+    func updateCellsForProvidersData(data: Any?)
 }
 
 class ProfileViewController: UIViewController, ProfileViewProtocol {
+    func updateCellsForProvidersData(data: Any?) {
+        let visibleIndexes = collectionView.indexPathsForVisibleItems
+        var newSnapshot = dataSource.snapshot()
+        var itemsToReload: [MovieWrapper] = []
+        for index in visibleIndexes {
+            let dataItem = dataSource.itemIdentifier(for: index)!
+            itemsToReload.append(dataItem)
+        }
+        newSnapshot.reloadItems(itemsToReload)
+        dataSource.apply(newSnapshot)
+    }
+    
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
     
@@ -41,7 +54,6 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
     
     private func configNavbar() {
         let appearance = UINavigationBarAppearance()
-        //appearance.backgroundColor = .black
         appearance.accessibilityPath?.lineWidth = 0
         appearance.shadowColor = nil
         appearance.shadowImage = nil
@@ -58,6 +70,8 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
                 fatalError("Could not create new cell")
             }
             cell.setupMovie(movie.movie)
+            let providers = self.presenter?.providers?[movie.movie.original_title ?? ""] as? [ProviderPlataform]
+            cell.setupProvidersView(data: providers)
             return cell
         }
         
