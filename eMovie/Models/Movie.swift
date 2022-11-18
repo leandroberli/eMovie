@@ -7,11 +7,18 @@
 
 import Foundation
 
-struct ResultReponse<Result: Codable>: Codable {
+struct ResultReponse<ResultsType: Codable>: Codable {
     var page: Int
-    var results: [Result]
-    var total_pages: Int
-    var total_results: Int
+    var results: [ResultsType]
+    var totalPages: Int
+    var totalResults: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case page
+        case results
+        case totalPages = "total_pages"
+        case totalResults = "total_results"
+    }
 }
 
 struct Movie: Codable, Hashable {

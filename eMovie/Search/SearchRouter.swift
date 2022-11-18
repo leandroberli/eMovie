@@ -22,6 +22,11 @@ class SearchRouter: SearchRouterProtocol {
         let router: SearchRouterProtocol = SearchRouter()
         var interactor: SearchInteractorProtocol = SearchInteractor(httpClient: HTTPClient())
         let presenter = SearchPresenter(view: searchController, interactor: interactor, router: router)
+        let providersProcess = GetProvidersProcess()
+        
+        providersProcess.delegate = interactor
+        interactor.providersProcess = providersProcess
+        
         searchController.presenter = presenter
         interactor.presenter = presenter
         

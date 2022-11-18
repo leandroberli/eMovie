@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 struct MovieWrapper: Hashable {
-    var section: HomeViewController.Section
+    var section: Section
     var movie: Movie
 }
 
@@ -33,10 +33,10 @@ protocol HomePresenterProtocol: AnyObject {
     func getRecommendedMovies()
     func didReceivedRecommendedMovies(data: Result<[MovieWrapper], Error>)
     func executeGetProvidersRequests(forMovies: [MovieWrapper])
-    func didReceivedProvidersData(data: Result<[String: [ProviderPlataform]], Error>, fromSection: HomeViewController.Section)
+    func didReceivedProvidersData(data: Result<[String: [ProviderPlataform]], Error>, fromSection: Section)
     
     func handleFilterOption(_ option: FilterButton.FilterOption)
-    func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section)
+    func navigateToMovieDetail(movieIndex: Int, fromSection: Section)
 }
 
 class HomePresenter: HomePresenterProtocol {
@@ -108,7 +108,7 @@ class HomePresenter: HomePresenterProtocol {
         interactor?.getProviders(forMovies: forMovies)
     }
     
-    func didReceivedProvidersData(data: Result<[String: [ProviderPlataform]], Error>, fromSection: HomeViewController.Section) {
+    func didReceivedProvidersData(data: Result<[String: [ProviderPlataform]], Error>, fromSection: Section) {
         switch data {
         case .success(let data):
             if fromSection == .topRated {
@@ -161,15 +161,15 @@ class HomePresenter: HomePresenterProtocol {
         return Array(filtredMovies)
     }
     
-    func navigateToMovieDetail(movieIndex: Int, fromSection: HomeViewController.Section) {
-        guard let viewController = self.view as? UIViewController else {
+    func navigateToMovieDetail(movieIndex: Int, fromSection: Section) {
+        guard let viewController = self.view else {
             return
         }
         let movie = getMovie(withIndex: movieIndex, andSection: fromSection)
         router?.navigateMovieDetailScreen(from: viewController, andMovie: movie)
     }
     
-    private func getMovie(withIndex: Int, andSection: HomeViewController.Section) -> Movie {
+    private func getMovie(withIndex: Int, andSection: Section) -> Movie {
         switch andSection {
         case .recommended:
             return filtredRecommendedMovies[withIndex].movie
@@ -177,6 +177,8 @@ class HomePresenter: HomePresenterProtocol {
             return topRatedMovies[withIndex].movie
         case .upcoming:
             return upcomingMovies[withIndex].movie
+        default:
+            return filtredRecommendedMovies[withIndex].movie
         }
     }
 }

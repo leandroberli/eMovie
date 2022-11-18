@@ -19,7 +19,7 @@ protocol ProfileInteractorProtocol: GetProvidersProcessDelegate {
 }
 
 class ProfileInteractor: ProfileInteractorProtocol {
-    func providersDataReceived(_ data: [String : [ProviderPlataform]], forSection: HomeViewController.Section) {
+    func providersDataReceived(_ data: [String : [ProviderPlataform]], forSection: Section) {
         presenter?.didReceivedProvidersMoviesData(data)
     }
     
@@ -57,7 +57,7 @@ class ProfileInteractor: ProfileInteractorProtocol {
         }
     }
     
-    func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper] {
+    func generateMoviesWarappers(_ movies: [Movie], forSection: Section) -> [MovieWrapper] {
         let wrappers = movies.map({ return MovieWrapper(section: forSection, movie: $0)})
         return wrappers
     }

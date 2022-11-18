@@ -19,24 +19,6 @@ typealias HomeView = HomeViewProtocol & UIViewController
 class HomeViewController: HomeView {
     
     static let sectionHeaderElementKind = "section-header-element-kind"
-    
-    enum Section: Int, CaseIterable {
-        case upcoming = 0
-        case topRated = 1
-        case recommended = 2
-        
-        var title: String {
-            switch self {
-            case .topRated:
-                return "Top rated"
-            case .recommended:
-                return "Recommended for you!"
-            case .upcoming:
-                return "Upcoming"
-            }
-        }
-    }
-    
     var presenter: HomePresenterProtocol?
     var dataSource: UICollectionViewDiffableDataSource<Section, MovieWrapper>! = nil
     var collectionView: UICollectionView!
@@ -115,6 +97,8 @@ class HomeViewController: HomeView {
                 cell.setupMovie(wrapper?.movie)
                 let providers = self.presenter?.platformsRecommended[wrapper?.movie.original_title ?? ""] as? [ProviderPlataform]
                 cell.setupProvidersView(data: providers)
+                return cell
+            default:
                 return cell
             }
         }

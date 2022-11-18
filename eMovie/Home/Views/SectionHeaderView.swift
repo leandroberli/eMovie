@@ -12,6 +12,7 @@ class SectionHeaderView: UICollectionReusableView {
     
     var label = UILabel()
     var imageView: UIImageView!
+    var topLabelConstraint: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,7 +26,7 @@ class SectionHeaderView: UICollectionReusableView {
 
 extension SectionHeaderView {
     
-    func confiugreSection(_ section: HomeViewController.Section ) {
+    func confiugreSection(_ section: Section ) {
         label.text = section.title
         switch section {
         case .recommended:
@@ -36,6 +37,13 @@ extension SectionHeaderView {
             return
         case .upcoming:
             imageView.image = UIImage(systemName: "timer")
+            return
+        case .lastViewed:
+            imageView.image = UIImage(systemName: "timer")
+            topLabelConstraint.constant = 10
+            return
+        case .favorites:
+            imageView.image = UIImage(systemName: "heart.fill")
             return
         }
     }
@@ -48,10 +56,11 @@ extension SectionHeaderView {
         label.adjustsFontForContentSizeCategory = true
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         
+        topLabelConstraint = label.topAnchor.constraint(equalTo: topAnchor, constant: 27)
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 27),
+            topLabelConstraint,
             label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
         

@@ -9,7 +9,7 @@ import Foundation
 
 
 protocol GetProvidersProcessDelegate {
-    func providersDataReceived(_ data:  [String: [ProviderPlataform]], forSection: HomeViewController.Section)
+    func providersDataReceived(_ data:  [String: [ProviderPlataform]], forSection: Section)
 }
 
 /// Defines process for get providers for each movie.

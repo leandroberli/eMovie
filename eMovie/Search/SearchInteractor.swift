@@ -7,29 +7,24 @@
 
 import Foundation
 
-protocol SearchInteractorProtocol {
+protocol SearchInteractorProtocol: GetProvidersProcessDelegate {
     var presenter: SearchPresenterProtocol? { get set }
     var httpClient: HTTPClientProtocol? { get set }
+    var providersProcess: GetProvidersProcessProtocol? { get set }
     
     func searchQuery(param: String, page: Int)
-    func getMovieProviders(for movieName: String)
+    func getMovieProviders(forMovies: [MovieWrapper])
 }
 
 class SearchInteractor: SearchInteractorProtocol {
     
-    func getMovieProviders(for movieName: String) {
-        MovieProviderClient().getMovieProvider(movieName: movieName ) { itemProvider, error in
-            let providersArray = itemProvider?.platforms ?? []
-            DispatchQueue.main.async {
-                self.presenter?.platforms.updateValue(providersArray, forKey: movieName)
-                self.presenter?.didReceivedProvidersData(data: providersArray)
-            }
-        }
-    }
-    
+    var providersProcess: GetProvidersProcessProtocol?
     var presenter: SearchPresenterProtocol?
-    
     var httpClient: HTTPClientProtocol?
+    
+    func getMovieProviders(forMovies: [MovieWrapper]) {
+        providersProcess?.startProcess(forMovies: forMovies)
+    }
     
     init(httpClient: HTTPClientProtocol) {
         self.httpClient = httpClient
@@ -42,6 +37,10 @@ class SearchInteractor: SearchInteractorProtocol {
             }
         }
     }
-    
-    
+}
+
+extension SearchInteractor: GetProvidersProcessDelegate {
+    func providersDataReceived(_ data: [String : [ProviderPlataform]], forSection: Section) {
+        self.presenter?.movieProvidersDataReceived(data)
+    }
 }

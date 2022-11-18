@@ -15,7 +15,7 @@ protocol HomeInteractorProtocol: GetProvidersProcessDelegate {
     func getTopRatedMovies(page: Int)
     func getUpcomingMovies(page: Int)
     func getRecommendedMovies(page: Int)
-    func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper]
+    func generateMoviesWarappers(_ movies: [Movie], forSection: Section) -> [MovieWrapper]
     func getProviders(forMovies: [MovieWrapper])
 }
 
@@ -57,14 +57,14 @@ class HomeInteractor: HomeInteractorProtocol {
         providersProcess?.startProcess(forMovies: forMovies)
     }
     
-    func generateMoviesWarappers(_ movies: [Movie], forSection: HomeViewController.Section) -> [MovieWrapper] {
+    func generateMoviesWarappers(_ movies: [Movie], forSection: Section) -> [MovieWrapper] {
         let wrappers = movies.map({ return MovieWrapper(section: forSection, movie: $0)})
         return wrappers
     }
 }
 
 extension HomeInteractor: GetProvidersProcessDelegate {
-    func providersDataReceived(_ data: [String : [ProviderPlataform]], forSection: HomeViewController.Section) {
+    func providersDataReceived(_ data: [String : [ProviderPlataform]], forSection: Section) {
         self.presenter?.didReceivedProvidersData(data: .success(data), fromSection: forSection)
     }
 }

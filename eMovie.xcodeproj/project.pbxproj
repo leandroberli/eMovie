@@ -80,6 +80,7 @@
 		9AB49958290C11750084B7CC /* MovieDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB49957290C11750084B7CC /* MovieDetailPresenter.swift */; };
 		9AB4995A290C19C40084B7CC /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB49959290C19C40084B7CC /* MovieDetail.swift */; };
 		9AB4995C290C4C8E0084B7CC /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB4995B290C4C8E0084B7CC /* Video.swift */; };
+		9AC4E52229252B13001312E6 /* RecentMoviesViewedHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC4E52129252B13001312E6 /* RecentMoviesViewedHandler.swift */; };
 		9AF26A64292145DB00BB9071 /* MovieDetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF26A63292145DB00BB9071 /* MovieDetailPresenterTests.swift */; };
 		DD9CE1DF99BC0780ACE242F2 /* Pods_eMovieTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC5F55695E5C6DE1640CBB5 /* Pods_eMovieTests.framework */; };
 /* End PBXBuildFile section */
@@ -177,6 +178,7 @@
 		9AB49957290C11750084B7CC /* MovieDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailPresenter.swift; sourceTree = "<group>"; };
 		9AB49959290C19C40084B7CC /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
 		9AB4995B290C4C8E0084B7CC /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		9AC4E52129252B13001312E6 /* RecentMoviesViewedHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMoviesViewedHandler.swift; sourceTree = "<group>"; };
 		9AF26A63292145DB00BB9071 /* MovieDetailPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MovieDetailPresenterTests.swift; path = eMovieTests/Home/MovieDetailPresenterTests.swift; sourceTree = SOURCE_ROOT; };
 		AA0DA9627C15633F55B385E3 /* Pods-eMovie-eMovieUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eMovie-eMovieUITests.debug.xcconfig"; path = "Target Support Files/Pods-eMovie-eMovieUITests/Pods-eMovie-eMovieUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AACF565F378F576647E84CB8 /* Pods-eMovie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-eMovie.debug.xcconfig"; path = "Target Support Files/Pods-eMovie/Pods-eMovie.debug.xcconfig"; sourceTree = "<group>"; };
@@ -440,12 +442,13 @@
 			isa = PBXGroup;
 			children = (
 				9AA9B0F72917FCEE00009888 /* Cells */,
-				9AAC44A5291759EC00266847 /* SearchViewController.swift */,
 				9AAC44A6291759EC00266847 /* SearchViewController.xib */,
+				9AAC44A5291759EC00266847 /* SearchViewController.swift */,
 				9AAC44A929175A0E00266847 /* SearchRouter.swift */,
 				9AAC44AB29175A9200266847 /* SearchInteractor.swift */,
 				9AAC44AD29175B7500266847 /* SearchPresenter.swift */,
 				9AA9B0FC29183E8A00009888 /* UISearchBar+Extension.swift */,
+				9AC4E52129252B13001312E6 /* RecentMoviesViewedHandler.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				9AA9B0FF29183F3800009888 /* MovieProviderClient.swift in Sources */,
 				9A5CA7E6290A0B9A00C6FD0D /* UIView+Extension.swift in Sources */,
 				9AAC44A7291759EC00266847 /* SearchViewController.swift in Sources */,
+				9AC4E52229252B13001312E6 /* RecentMoviesViewedHandler.swift in Sources */,
 				9A9E043B29149DB500C11AF4 /* ProfileViewController.swift in Sources */,
 				9A5CA7A6290A018000C6FD0D /* AppDelegate.swift in Sources */,
 				9A3B79622916A35E009268A7 /* ProfilePresenter.swift in Sources */,

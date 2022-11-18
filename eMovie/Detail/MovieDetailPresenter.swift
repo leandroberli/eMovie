@@ -38,6 +38,7 @@ class MovieDetailPresenter: MovieDetailPresenterProtocol {
         self.view = view
         self.interactor = interactor
         self.router = router
+        RecentMoviesViewedHandler.shared.addViewed(movie: movie)
     }
     
     func getMovieDetail() {

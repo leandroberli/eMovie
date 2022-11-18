@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
     @IBOutlet weak var usernameLabel: UILabel!
     
     var presenter: ProfilePresenterProtocol?
-    var dataSource: UICollectionViewDiffableDataSource<HomeViewController.Section, MovieWrapper>! = nil
+    var dataSource: UICollectionViewDiffableDataSource<Section, MovieWrapper>! = nil
     var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -65,7 +65,7 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
     }
     
     func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<HomeViewController.Section, MovieWrapper>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, movie: MovieWrapper) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, MovieWrapper>(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, movie: MovieWrapper) -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as? MovieCollectionViewCell else {
                 fatalError("Could not create new cell")
             }
@@ -85,9 +85,9 @@ class ProfileViewController: UIViewController, ProfileViewProtocol {
         }
     }
     
-    func snapshotForCurrentState(data: [MovieWrapper]) -> NSDiffableDataSourceSnapshot<HomeViewController.Section, MovieWrapper> {
-        var snapshot = NSDiffableDataSourceSnapshot<HomeViewController.Section, MovieWrapper>()
-        snapshot.appendSections([HomeViewController.Section.upcoming])
+    func snapshotForCurrentState(data: [MovieWrapper]) -> NSDiffableDataSourceSnapshot<Section, MovieWrapper> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, MovieWrapper>()
+        snapshot.appendSections([Section.upcoming])
         snapshot.appendItems(data)
         return snapshot
     }
