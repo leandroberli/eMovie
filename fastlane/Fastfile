@@ -21,6 +21,7 @@ platform :ios do
     # add actions here: https://docs.fastlane.tools/actions
   end
   lane :tests do
+    cocoapods()
     run_tests(scheme: "eMovie")
   end
 end
