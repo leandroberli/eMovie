@@ -1,0 +1,49 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@leandroberli 
+leandroberli
+/
+workflowTest
+Private
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+Settings
+workflowTest/.github/workflows/main.yml
+@leandroberli
+leandroberli Create main.yml
+Latest commit 9f0cd03 4 days ago
+ History
+ 1 contributor
+20 lines (17 sloc)  360 Bytes
+
+name: Unit testing 
+
+on:
+  push:
+    branches: [ ci, develop ]
+  pull_request:
+    branches: [ ci, develop ]
+
+jobs:    
+  test:
+    name: Unit testing
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Bundle Install
+      run: bundle install
+    - name: Unit tests
+      run: bundle exec fastlane tests
